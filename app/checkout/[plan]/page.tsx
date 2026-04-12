@@ -1,0 +1,1156 @@
+"use client"
+
+import { useState, useEffect, useCallback, useRef } from "react"
+import { useParams } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield } from "lucide-react"
+import { trackEvent } from "@/components/meta-pixel"
+
+// ── Dados dos planos (sincronizados com api/pix/route.ts) ────────────
+const plansData: Record<string, {
+  name: string
+  price: number
+  originalPrice: number
+  description: string
+  inputPlaceholder: string
+  features: string[]
+}> = {
+  "nome-cpf": {
+    name: "Pelo NOME OU CPF",
+    price: 40,
+    originalPrice: 70,
+    description: "Investigação completa a partir de nome ou CPF",
+    inputPlaceholder: "Nome parcial, nome abreviado ou nome completo. CPF ou outras informações disponíveis.",
+    features: [
+      "Nome Completo e Data de Nascimento",
+      "Telefone(s) Celular e Fixo",
+      "Endereço(s) Atualizados",
+      "E-mail(s) e Redes Sociais",
+      "Faixa de Renda e Profissão",
+    ],
+  },
+  "celular-placa": {
+    name: "Pelo N° Celular ou Placa",
+    price: 79,
+    originalPrice: 115,
+    description: "Descubra tudo sobre o titular do número ou veículo",
+    inputPlaceholder: "Número do celular, placa do veículo ou outras informações disponíveis",
+    features: [
+      "Nome Completo e CPF do Titular",
+      "Telefone(s) e Endereço(s)",
+      "Nome da Mãe e Vínculos",
+      "E-mail(s) e Redes Sociais",
+      "Faixa de Renda e Profissão",
+    ],
+  },
+  "premium": {
+    name: "Investigação Premium",
+    price: 197,
+    originalPrice: 307,
+    description: "Dossiê completo com 20+ bancos de dados oficiais",
+    inputPlaceholder: "Nome, CPF, telefone ou outras informações disponíveis",
+    features: [
+      "Tudo dos planos básicos +",
+      "Veículos, Placa e Modelo",
+      "Parentes Próximos (Nome e CPF)",
+      "Score, Dívidas e Processos Judiciais",
+      "Participação em Empresas (CNPJ)",
+    ],
+  },
+}
+
+// ── Estados possíveis do checkout ────────────────────────────────────
+type CheckoutStep = "form" | "payment" | "pix" | "success"
+
+// ── Stepper visual ──────────────────────────────────────────────────
+const stepLabels = ["Dados", "Pagamento", "Investigação"]
+const stepMap: Record<CheckoutStep, number> = { form: 0, payment: 1, pix: 1, success: 2 }
+
+function CheckoutStepper({ current }: { current: CheckoutStep }) {
+  const activeIndex = stepMap[current]
+  return (
+    <div className="flex items-center justify-center gap-1 mb-6" aria-label={`Etapa ${activeIndex + 1} de 3: ${stepLabels[activeIndex]}`}>
+      {stepLabels.map((label, i) => (
+        <div key={label} className="flex items-center gap-1">
+          <div className="flex flex-col items-center">
+            <div
+              className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
+              style={{
+                background: i <= activeIndex ? "var(--primary)" : "var(--border)",
+                color: i <= activeIndex ? "white" : "var(--muted)",
+              }}
+            >
+              {i < activeIndex ? "✓" : i + 1}
+            </div>
+            <span
+              className="text-[0.6rem] mt-1 font-medium"
+              style={{ color: i <= activeIndex ? "var(--primary)" : "var(--muted)" }}
+            >
+              {label}
+            </span>
+          </div>
+          {i < stepLabels.length - 1 && (
+            <div
+              className="w-8 md:w-12 h-px mb-4"
+              style={{ background: i < activeIndex ? "var(--primary)" : "var(--border)" }}
+              aria-hidden="true"
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ── Tipo para dados do PIX ───────────────────────────────────────────
+interface PixPaymentData {
+  qr_code: string
+  qr_code_base64: string
+  transaction_id: string
+  expires_at: string | null
+  created_at: number
+}
+
+export default function CheckoutPage() {
+  const params = useParams()
+  const planSlug = typeof params.plan === "string" ? params.plan : ""
+  const plan = plansData[planSlug]
+
+  // Form
+  const [nome, setNome] = useState("")
+  const [phone, setPhone] = useState("")
+  const [phoneError, setPhoneError] = useState("")
+  const [email, setEmail] = useState("")
+  const [dados, setDados] = useState("")
+
+  // Checkout state
+  const [step, setStep] = useState<CheckoutStep>("form")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [pixData, setPixData] = useState<PixPaymentData | null>(null)
+  const [copied, setCopied] = useState(false)
+  const [pixError, setPixError] = useState("")
+  const [timeLeft, setTimeLeft] = useState<number | null>(null)
+  const [paymentStatus, setPaymentStatus] = useState<string>("waiting")
+
+  // Refs para cleanup
+  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const copiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const totalPrice = plan?.price || 0
+
+  // ── ViewContent quando a página carrega ───────────────────────────────
+  useEffect(() => {
+    if (plan) {
+      trackEvent("ViewContent", {
+        content_name: plan.name,
+        content_category: planSlug,
+        value: plan.price,
+        currency: "BRL",
+      })
+    }
+  }, [planSlug, plan])
+
+  // ── Cleanup geral ao desmontar ──────────────────────────────────────
+  useEffect(() => {
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current)
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current)
+      if (countdownRef.current) clearInterval(countdownRef.current)
+    }
+  }, [])
+
+  // ── Polling de status do pagamento ──────────────────────────────────
+  const startPolling = useCallback((transactionId: string) => {
+    // Limpa polling anterior se existir
+    if (pollingRef.current) clearInterval(pollingRef.current)
+
+    let attempts = 0
+    const MAX_ATTEMPTS = 180 // 15 min com intervalo de 5s
+
+    const checkStatus = async () => {
+      attempts++
+      if (attempts > MAX_ATTEMPTS) {
+        if (pollingRef.current) clearInterval(pollingRef.current)
+        setPaymentStatus("expired")
+        return
+      }
+
+      try {
+        const res = await fetch(`/api/pix/status?id=${encodeURIComponent(transactionId)}`)
+        if (!res.ok) return
+
+        const data = await res.json()
+
+        if (data.status === "paid") {
+          if (pollingRef.current) clearInterval(pollingRef.current)
+          if (countdownRef.current) clearInterval(countdownRef.current)
+          setPaymentStatus("paid")
+          setStep("success")
+          window.scrollTo({ top: 0, behavior: "instant" })
+          // Rastrear compra
+          if (plan) {
+            trackEvent("Purchase", {
+              value: plan.price,
+              currency: "BRL",
+              content_name: plan.name,
+              content_category: planSlug,
+            })
+          }
+        } else if (data.status === "refused" || data.status === "chargedback") {
+          if (pollingRef.current) clearInterval(pollingRef.current)
+          setPaymentStatus("refused")
+          setPixError("Pagamento recusado. Tente novamente.")
+        }
+      } catch {
+        // Erro silencioso no polling — vai tentar de novo
+      }
+    }
+
+    // Primeira verificação após 3s, depois a cada 5s
+    setTimeout(checkStatus, 3000)
+    pollingRef.current = setInterval(checkStatus, 5000)
+  }, [])
+
+  // ── Countdown de expiração ──────────────────────────────────────────
+  const startCountdown = useCallback((expiresAt: string | null, createdAt: number) => {
+    if (countdownRef.current) clearInterval(countdownRef.current)
+
+    // Se tem data de expiração, usa ela; senão estima 30 min
+    const expirationTime = expiresAt
+      ? new Date(expiresAt).getTime()
+      : createdAt + 30 * 60 * 1000
+
+    const updateCountdown = () => {
+      const remaining = Math.max(0, expirationTime - Date.now())
+      setTimeLeft(Math.floor(remaining / 1000))
+
+      if (remaining <= 0) {
+        if (countdownRef.current) clearInterval(countdownRef.current)
+        if (pollingRef.current) clearInterval(pollingRef.current)
+        setPaymentStatus("expired")
+      }
+    }
+
+    updateCountdown()
+    countdownRef.current = setInterval(updateCountdown, 1000)
+  }, [])
+
+  // ── Formata tempo restante ──────────────────────────────────────────
+  const formatTimeLeft = (seconds: number): string => {
+    const m = Math.floor(seconds / 60)
+    const s = seconds % 60
+    return `${m}:${s.toString().padStart(2, "0")}`
+  }
+
+  // ── Plano não encontrado ───────────────────────────────────────────
+  if (!plan) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "var(--background)" }}>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Plano não encontrado</h1>
+          <Link
+            href="/#planos"
+            className="inline-flex items-center gap-2 text-sm font-semibold"
+            style={{ color: "var(--primary)" }}
+          >
+            <ArrowLeft size={16} />
+            Voltar para os planos
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  // ── Máscara de telefone brasileiro ──────────────────────────────────
+  const formatPhone = (value: string) => {
+    // Remove tudo que não for dígito
+    const digits = value.replace(/\D/g, "").slice(0, 11)
+    if (digits.length <= 2) return digits
+    if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+    if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+  }
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhone(e.target.value)
+    setPhone(formatted)
+    if (phoneError) setPhoneError("")
+  }
+
+  const validatePhone = (value: string) => {
+    const digits = value.replace(/\D/g, "")
+    if (digits.length < 10) return "Telefone incompleto. Informe DDD + número."
+    if (digits.length === 10 || digits.length === 11) return ""
+    return "Formato inválido."
+  }
+
+  // ── Submit do formulário ────────────────────────────────────────────
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const phoneValidation = validatePhone(phone)
+    if (phoneValidation) {
+      setPhoneError(phoneValidation)
+      return
+    }
+
+    // Validação client-side básica
+    if (!nome.trim() || !phone.trim() || !dados.trim()) {
+      return
+    }
+
+    setIsSubmitting(true)
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setStep("payment")
+      window.scrollTo({ top: 0, behavior: "instant" })
+      // Rastrear iniciação de checkout
+      trackEvent("InitiateCheckout", {
+        value: totalPrice,
+        currency: "BRL",
+        content_category: planSlug,
+      })
+    }, 400)
+  }
+
+  // ── Gerar PIX ──────────────────────────────────────────────────────
+  const handlePayment = async () => {
+    setIsSubmitting(true)
+    setPixError("")
+
+    try {
+      // 1. Envia dados para Formspree (fire-and-forget, mas com log de erro)
+      const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID || "xzdkqqkp"
+      fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plano: plan.name,
+          valor: `R$${totalPrice},00`,
+          nome,
+          whatsapp: phone,
+          email: email || "Não informado",
+          dados_investigar: dados,
+          metodo_pagamento: "Pix",
+        }),
+      }).catch((err) => console.error("[Formspree] Erro ao enviar lead:", err))
+
+      // 2. Gera PIX via API (enviar planSlug ao invés de planName)
+      const pixResponse = await fetch("/api/pix", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planSlug,
+          customerName: nome,
+          customerPhone: phone,
+          customerEmail: email || undefined,
+        }),
+      })
+
+      if (!pixResponse.ok) {
+        const errorData = await pixResponse.json().catch(() => ({ error: "Erro desconhecido" }))
+        setPixError(errorData.error || "Erro ao gerar PIX. Tente novamente.")
+        return
+      }
+
+      const pixResult = await pixResponse.json()
+
+      if (pixResult.success) {
+        const paymentData: PixPaymentData = {
+          qr_code: pixResult.qr_code,
+          qr_code_base64: pixResult.qr_code_base64,
+          transaction_id: pixResult.transaction_id,
+          expires_at: pixResult.expires_at || null,
+          created_at: Date.now(),
+        }
+
+        setPixData(paymentData)
+        setStep("pix")
+        setPaymentStatus("waiting")
+        window.scrollTo({ top: 0, behavior: "instant" })
+
+        // Inicia polling e countdown
+        startPolling(pixResult.transaction_id)
+        startCountdown(pixResult.expires_at, paymentData.created_at)
+      } else {
+        setPixError(pixResult.error || "Erro ao gerar PIX. Tente novamente.")
+      }
+    } catch (error) {
+      console.error("Erro ao processar pagamento:", error)
+      setPixError("Erro de conexão. Verifique sua internet e tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  // ── Copiar código PIX ──────────────────────────────────────────────
+  const copyPixCode = async () => {
+    if (!pixData?.qr_code) return
+
+    try {
+      await navigator.clipboard.writeText(pixData.qr_code)
+      setCopied(true)
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current)
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 3000)
+    } catch {
+      // Fallback para navegadores que não suportam clipboard API
+      try {
+        const textarea = document.createElement("textarea")
+        textarea.value = pixData.qr_code
+        textarea.style.position = "fixed"
+        textarea.style.opacity = "0"
+        document.body.appendChild(textarea)
+        textarea.select()
+        document.execCommand("copy")
+        document.body.removeChild(textarea)
+        setCopied(true)
+        if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current)
+        copiedTimeoutRef.current = setTimeout(() => setCopied(false), 3000)
+      } catch {
+        setPixError("Não foi possível copiar. Selecione o código manualmente.")
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════
+  //  TELA: QR CODE PIX
+  // ════════════════════════════════════════════════════════════════════
+  if (step === "pix" && pixData) {
+    return (
+      <div className="min-h-screen py-8 px-4" style={{ background: "var(--background)" }}>
+        <div className="max-w-md mx-auto">
+          {/* Header */}
+          <div className="mb-6">
+            <button
+              onClick={() => {
+                if (pollingRef.current) clearInterval(pollingRef.current)
+                if (countdownRef.current) clearInterval(countdownRef.current)
+                setStep("payment")
+                setPixData(null)
+                setPaymentStatus("waiting")
+                setTimeLeft(null)
+                window.scrollTo({ top: 0, behavior: "instant" })
+              }}
+              className="inline-flex items-center gap-2 text-sm font-medium mb-6"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              <ArrowLeft size={16} />
+              Voltar
+            </button>
+
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/logo.png"
+                alt="Detetive VIP"
+                width={160}
+                height={40}
+                style={{ height: "40px", width: "auto" }}
+              />
+            </div>
+          </div>
+
+          <CheckoutStepper current="pix" />
+
+          <div className="text-center mb-6">
+            <h1
+              className="text-xl md:text-2xl font-bold mb-2"
+              style={{ color: "var(--primary-dark)" }}
+            >
+              Pague com Pix
+            </h1>
+            <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
+              Escaneie o QR Code ou copie o código
+            </p>
+          </div>
+
+          {/* Countdown de expiração */}
+          {timeLeft !== null && timeLeft > 0 && paymentStatus === "waiting" && (
+            <div
+              className="flex items-center justify-center gap-2 mb-4 py-2 px-4 rounded-lg mx-auto w-fit"
+              style={{
+                background: timeLeft < 300 ? "rgba(220, 38, 38, 0.1)" : "rgba(37, 211, 102, 0.08)",
+                color: timeLeft < 300 ? "#dc2626" : "var(--muted-foreground)",
+              }}
+            >
+              <Clock size={14} />
+              <span className="text-sm font-medium">
+                Expira em {formatTimeLeft(timeLeft)}
+              </span>
+            </div>
+          )}
+
+          {/* Status de expiração */}
+          {paymentStatus === "expired" && (
+            <div
+              className="mb-4 p-4 rounded-xl text-center"
+              style={{ background: "rgba(220, 38, 38, 0.1)", border: "1px solid rgba(220, 38, 38, 0.3)" }}
+            >
+              <p className="text-sm font-semibold" style={{ color: "#dc2626" }}>
+                QR Code expirado
+              </p>
+              <button
+                onClick={() => {
+                  setStep("payment")
+                  setPixData(null)
+                  setPaymentStatus("waiting")
+                  setTimeLeft(null)
+                  window.scrollTo({ top: 0, behavior: "instant" })
+                }}
+                className="mt-2 text-sm font-semibold underline"
+                style={{ color: "var(--primary)" }}
+              >
+                Gerar novo QR Code
+              </button>
+            </div>
+          )}
+
+          {/* Indicador de verificação ativa */}
+          {paymentStatus === "waiting" && (
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Loader2 size={14} className="animate-spin" style={{ color: "var(--whatsapp)" }} />
+              <span className="text-xs" style={{ color: "var(--muted)" }}>
+                Aguardando confirmação do pagamento...
+              </span>
+            </div>
+          )}
+
+          {/* QR Code Card */}
+          <div
+            className="p-6 rounded-2xl text-center mb-4"
+            style={{
+              background: "var(--background-card)",
+              border: "1px solid var(--border)",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
+              opacity: paymentStatus === "expired" ? 0.4 : 1,
+              pointerEvents: paymentStatus === "expired" ? "none" : "auto",
+            }}
+          >
+            {/* Amount */}
+            <div className="mb-4">
+              <span className="text-sm" style={{ color: "var(--muted)" }}>Valor a pagar</span>
+              <p className="font-bold text-2xl" style={{ color: "var(--whatsapp)" }}>
+                R$ {totalPrice},00
+              </p>
+            </div>
+
+            {/* QR Code */}
+            <div
+              className="inline-block p-4 rounded-xl mb-4"
+              style={{ background: "white" }}
+            >
+              {pixData.qr_code_base64 ? (
+                <img
+                  src={pixData.qr_code_base64.startsWith("data:") ? pixData.qr_code_base64 : `data:image/png;base64,${pixData.qr_code_base64}`}
+                  alt={`QR Code PIX para pagamento de R$ ${totalPrice},00`}
+                  className="w-48 h-48 md:w-56 md:h-56"
+                />
+              ) : (
+                <div className="w-48 h-48 md:w-56 md:h-56 flex items-center justify-center bg-gray-100 rounded">
+                  <span className="text-sm text-gray-500">QR Code indisponível</span>
+                </div>
+              )}
+            </div>
+
+            {/* Pix Code */}
+            <div className="mb-4">
+              <p className="text-xs mb-2" style={{ color: "var(--muted)" }}>
+                Ou copie o código Pix:
+              </p>
+              <div
+                className="p-3 rounded-lg text-xs break-all max-h-20 overflow-y-auto text-left select-all"
+                style={{
+                  background: "var(--background-secondary)",
+                  color: "var(--muted-foreground)",
+                  fontFamily: "monospace",
+                }}
+              >
+                {pixData.qr_code}
+              </div>
+            </div>
+
+            {/* Copy Button */}
+            <button
+              onClick={copyPixCode}
+              className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide transition-all active:scale-[0.98]"
+              style={{
+                background: copied ? "var(--success)" : "var(--whatsapp)",
+                boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
+              }}
+            >
+              {copied ? (
+                <>
+                  <Check size={18} />
+                  Código Copiado!
+                </>
+              ) : (
+                <>
+                  <Copy size={18} />
+                  Copiar Código Pix
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Instructions */}
+          <div
+            className="p-4 rounded-xl text-sm"
+            style={{
+              background: "rgba(37, 211, 102, 0.05)",
+              border: "1px solid rgba(37, 211, 102, 0.2)",
+            }}
+          >
+            <h4 className="font-semibold mb-2" style={{ color: "var(--foreground)" }}>
+              Como pagar:
+            </h4>
+            <ol className="space-y-1 text-xs" style={{ color: "var(--muted-foreground)" }}>
+              <li>1. Abra o app do seu banco</li>
+              <li>2. Escolha pagar com Pix</li>
+              <li>3. Escaneie o QR Code ou cole o código</li>
+              <li>4. Confirme o pagamento</li>
+            </ol>
+            <p className="mt-3 text-xs font-medium" style={{ color: "var(--whatsapp)" }}>
+              Assim que o pagamento for confirmado, você receberá o resultado no WhatsApp em até 5 minutos.
+            </p>
+          </div>
+
+          {/* Error */}
+          {pixError && (
+            <div
+              className="mt-4 p-3 rounded-lg text-sm text-center"
+              style={{ background: "rgba(220, 38, 38, 0.1)", color: "#dc2626" }}
+            >
+              {pixError}
+            </div>
+          )}
+
+          {/* Security Badge */}
+          <div className="mt-6 flex items-center justify-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
+            <Lock size={14} aria-hidden="true" />
+            <span>Pagamento 100% seguro</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ════════════════════════════════════════════════════════════════════
+  //  TELA: PAGAMENTO
+  // ════════════════════════════════════════════════════════════════════
+  if (step === "payment") {
+    return (
+      <div className="min-h-screen py-8 px-4" style={{ background: "var(--background)" }}>
+        <div className="max-w-lg mx-auto">
+          {/* Header */}
+          <div className="mb-6">
+            <button
+              onClick={() => { setStep("form"); window.scrollTo({ top: 0, behavior: "instant" }) }}
+              className="inline-flex items-center gap-2 text-sm font-medium mb-6"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              <ArrowLeft size={16} />
+              Voltar
+            </button>
+
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/logo.png"
+                alt="Detetive VIP"
+                width={160}
+                height={40}
+                style={{ height: "40px", width: "auto" }}
+              />
+            </div>
+          </div>
+
+          <CheckoutStepper current="payment" />
+
+          <div className="text-center mb-6">
+            <h1
+              className="text-2xl md:text-3xl font-bold mb-2"
+              style={{ color: "var(--primary-dark)" }}
+            >
+              {plan.name}
+            </h1>
+            <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
+              Falta pouco para descobrir a verdade
+            </p>
+          </div>
+
+          {/* Order Summary */}
+          <div
+            className="p-4 rounded-xl mb-4"
+            style={{
+              background: "var(--background-card)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
+                  {plan.name}
+                </h3>
+                <p className="text-xs" style={{ color: "var(--muted)" }}>
+                  {phone}
+                </p>
+              </div>
+              <ExternalLink size={16} style={{ color: "var(--muted)" }} aria-hidden="true" />
+            </div>
+            <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid var(--border)" }}>
+              <span className="text-sm" style={{ color: "var(--muted-foreground)" }}>Total</span>
+              <span className="font-bold text-lg" style={{ color: "var(--primary)" }}>
+                R$ {totalPrice},00
+              </span>
+            </div>
+          </div>
+
+          {/* Payment Section */}
+          <div
+            className="p-4 rounded-xl"
+            style={{
+              background: "var(--background-card)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <Lock size={18} style={{ color: "var(--foreground)" }} aria-hidden="true" />
+              <h3 className="font-semibold" style={{ color: "var(--foreground)" }}>
+                Pagamento Seguro
+              </h3>
+            </div>
+            <p className="font-bold text-lg mb-3" style={{ color: "var(--primary)" }}>
+              R$ {totalPrice},00
+            </p>
+            <p className="text-xs mb-4" style={{ color: "var(--muted)" }}>
+              <span className="inline-block w-2 h-2 rounded-full mr-1" style={{ background: "var(--success)" }} />
+              Pagamento 100% seguro
+            </p>
+
+            {/* Payment Method - Pix Only */}
+            <div
+              className="flex items-center gap-3 p-4 rounded-xl"
+              style={{
+                background: "rgba(37, 211, 102, 0.05)",
+                border: "2px solid var(--whatsapp)",
+              }}
+            >
+              <Image src="/pix-icon.png" alt="Pix" width={28} height={28} />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
+                    Pix
+                  </span>
+                  <span
+                    className="text-[0.6rem] font-semibold px-2 py-0.5 rounded-full"
+                    style={{ background: "var(--whatsapp)", color: "white" }}
+                  >
+                    Receba a verdade em minutos
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Error Message */}
+            {pixError && (
+              <div
+                className="mt-4 p-3 rounded-lg text-sm text-center"
+                style={{ background: "rgba(220, 38, 38, 0.1)", color: "#dc2626" }}
+              >
+                {pixError}
+              </div>
+            )}
+
+            {/* Pay Button */}
+            <button
+              onClick={handlePayment}
+              disabled={isSubmitting}
+              className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide mt-6 transition-all active:scale-[0.98] disabled:opacity-70"
+              style={{
+                background: "var(--whatsapp)",
+                boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
+              }}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Gerando PIX...
+                </>
+              ) : (
+                <>
+                  <Lock size={16} />
+                  Pagar R$ {totalPrice},00 com Pix
+                </>
+              )}
+            </button>
+
+            <p className="text-center text-[0.65rem] mt-3" style={{ color: "var(--muted)" }}>
+              Garantia: se não encontrarmos, devolvemos 100% do valor
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ════════════════════════════════════════════════════════════════════
+  //  TELA: SUCESSO
+  // ════════════════════════════════════════════════════════════════════
+  if (step === "success") {
+    return (
+      <div className="min-h-screen py-8 px-4" style={{ background: "var(--background)" }}>
+        <div className="text-center max-w-md mx-auto">
+          {/* Header */}
+          <div className="mb-6">
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/logo.png"
+                alt="Detetive VIP"
+                width={160}
+                height={40}
+                style={{ height: "40px", width: "auto" }}
+              />
+            </div>
+          </div>
+
+          <CheckoutStepper current="success" />
+
+          <div
+            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+            style={{ background: "rgba(37, 211, 102, 0.15)" }}
+          >
+            <CheckCircle2 size={40} style={{ color: "var(--success)" }} />
+          </div>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--foreground)" }}>
+            Pagamento Confirmado!
+          </h1>
+          <p className="mb-1 text-sm font-medium" style={{ color: "var(--whatsapp)" }}>
+            R$ {totalPrice},00 — {plan.name}
+          </p>
+          <p className="mb-6 text-sm" style={{ color: "var(--muted-foreground)" }}>
+            Você receberá o resultado da investigação no WhatsApp em até 5 minutos. Para agilizar, envie uma mensagem confirmando seu pedido:
+          </p>
+
+          <a
+            href={`https://wa.me/5586999488117?text=${encodeURIComponent(`Olá! Acabei de pagar o plano ${plan.name} (R$${plan.price}). Meu nome: ${nome}. Dados para investigação: ${dados}. Aguardo o resultado!`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide transition-all active:scale-[0.98] w-full max-w-xs mb-4"
+            style={{
+              background: "var(--whatsapp)",
+              boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Falar no WhatsApp
+          </a>
+
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            <ArrowLeft size={16} />
+            Voltar ao Início
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  // ════════════════════════════════════════════════════════════════════
+  //  TELA: FORMULÁRIO
+  // ════════════════════════════════════════════════════════════════════
+  return (
+    <div className="min-h-screen py-8 px-4" style={{ background: "var(--background)" }}>
+      <div className="max-w-lg mx-auto">
+        {/* Header */}
+        <div className="mb-6">
+          <Link
+            href="/#planos"
+            className="inline-flex items-center gap-2 text-sm font-medium mb-6"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            <ArrowLeft size={16} />
+            Voltar
+          </Link>
+
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/logo.png"
+              alt="Detetive VIP"
+              width={160}
+              height={40}
+              style={{ height: "40px", width: "auto" }}
+            />
+          </div>
+        </div>
+
+        <CheckoutStepper current="form" />
+
+        {/* Plan Info */}
+        <div className="text-center mb-6">
+          <h1
+            className="text-2xl md:text-3xl font-bold mb-1"
+            style={{ color: "var(--primary-dark)" }}
+          >
+            {plan.name}
+          </h1>
+          <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
+            {plan.description}
+          </p>
+          <div className="mt-3 inline-flex items-baseline gap-1">
+            <span className="text-xs line-through mr-2" style={{ color: "var(--muted)" }}>
+              R$ {plan.originalPrice},00
+            </span>
+            <span className="text-lg" style={{ color: "var(--primary)" }}>R$</span>
+            <span
+              className="text-4xl font-extrabold"
+              style={{ color: "var(--primary-dark)" }}
+            >
+              {plan.price}
+            </span>
+            <span style={{ color: "var(--primary)" }}>,00</span>
+          </div>
+        </div>
+
+        {/* O que você vai receber */}
+        <div
+          className="p-4 rounded-xl mb-6"
+          style={{
+            background: "rgba(184, 150, 63, 0.04)",
+            border: "1px solid rgba(184, 150, 63, 0.12)",
+          }}
+        >
+          <h3 className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "var(--primary)" }}>
+            O que você vai receber:
+          </h3>
+          <ul className="space-y-1.5">
+            {plan.features.map((feature) => (
+              <li key={feature} className="flex items-center gap-2 text-[0.8rem]" style={{ color: "var(--muted-foreground)" }}>
+                <Check size={14} className="shrink-0" style={{ color: "var(--success)" }} aria-hidden="true" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Social proof micro */}
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <div className="flex -space-x-2" aria-hidden="true">
+            {["CM", "AR", "RS"].map((initials) => (
+              <div
+                key={initials}
+                className="w-6 h-6 rounded-full flex items-center justify-center text-[0.5rem] font-bold border-2 border-white"
+                style={{ background: "var(--background-elevated)", color: "var(--primary)" }}
+              >
+                {initials}
+              </div>
+            ))}
+          </div>
+          <span className="text-xs" style={{ color: "var(--muted)" }}>
+            <strong style={{ color: "var(--foreground)" }}>127 investigações</strong> realizadas esta semana
+          </span>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Nome - Required */}
+          <div>
+            <label
+              htmlFor="nome"
+              className="block text-sm font-medium mb-2"
+              style={{ color: "var(--foreground)" }}
+            >
+              Seu Nome
+            </label>
+            <input
+              type="text"
+              id="nome"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              placeholder="Digite seu nome"
+              required
+              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
+              style={{
+                background: "var(--background-card)",
+                border: "1px solid var(--border)",
+                color: "var(--foreground)",
+              }}
+            />
+          </div>
+
+          {/* Phone - Required */}
+          <div>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium mb-1"
+              style={{ color: "var(--foreground)" }}
+            >
+              Seu Número de Telefone/WhatsApp
+            </label>
+            <p
+              className="text-[0.75rem] mb-2"
+              style={{ color: "var(--muted)" }}
+            >
+              Você vai receber o resultado da investigação por lá em até 5 minutos
+            </p>
+            <input
+              type="tel"
+              id="phone"
+              value={phone}
+              onChange={handlePhoneChange}
+              onBlur={() => {
+                const err = validatePhone(phone)
+                if (err) setPhoneError(err)
+              }}
+              placeholder="(00) 00000-0000"
+              inputMode="numeric"
+              autoComplete="tel"
+              required
+              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
+              style={{
+                background: "var(--background-card)",
+                border: phoneError ? "1px solid var(--destructive)" : "1px solid var(--border)",
+                color: "var(--foreground)",
+              }}
+            />
+            {phoneError && (
+              <p className="mt-1.5 text-xs" style={{ color: "var(--destructive)" }}>
+                {phoneError}
+              </p>
+            )}
+          </div>
+
+          {/* Email - Optional */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium mb-2"
+              style={{ color: "var(--foreground)" }}
+            >
+              Seu E-mail <span style={{ color: "var(--muted)" }}>(opcional)</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="seu@email.com"
+              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
+              style={{
+                background: "var(--background-card)",
+                border: "1px solid var(--border)",
+                color: "var(--foreground)",
+              }}
+            />
+          </div>
+
+          {/* Dados para Investigar */}
+          <div>
+            <label
+              htmlFor="dados"
+              className="block text-sm font-medium mb-2"
+              style={{ color: "var(--foreground)" }}
+            >
+              Dados para Investigar
+            </label>
+            <textarea
+              id="dados"
+              value={dados}
+              onChange={(e) => setDados(e.target.value)}
+              placeholder={plan.inputPlaceholder}
+              required
+              rows={4}
+              maxLength={2000}
+              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors resize-none focus:ring-2"
+              style={{
+                background: "var(--background-card)",
+                border: "1px solid var(--border)",
+                color: "var(--foreground)",
+              }}
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isSubmitting || !nome.trim() || !phone.trim() || !dados.trim()}
+            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide transition-all active:scale-[0.98] disabled:opacity-70"
+            style={{
+              background: "var(--whatsapp)",
+              boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
+            }}
+          >
+            {isSubmitting ? "Enviando..." : "Ir para Pagamento Seguro"}
+            <ArrowRight size={18} />
+          </button>
+        </form>
+
+        {/* Guarantee */}
+        <div
+          className="mt-6 p-4 rounded-xl flex items-start gap-3"
+          style={{
+            background: "rgba(37, 211, 102, 0.04)",
+            border: "1px solid rgba(37, 211, 102, 0.12)",
+          }}
+        >
+          <Shield size={20} className="shrink-0 mt-0.5" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
+          <div>
+            <p className="text-xs font-bold mb-0.5" style={{ color: "var(--foreground)" }}>
+              Garantia de Resultado
+            </p>
+            <p className="text-[0.7rem] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+              Se não encontrarmos as informações solicitadas, devolvemos 100% do seu dinheiro. Sem burocracia.
+            </p>
+          </div>
+        </div>
+
+        {/* Security Info */}
+        <div
+          className="mt-6 flex flex-col items-center gap-2 text-[0.75rem]"
+          style={{ color: "var(--muted)" }}
+        >
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex items-center gap-1.5">
+              <Lock size={14} aria-hidden="true" />
+              Pagamento seguro e dados protegidos
+            </div>
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 size={14} aria-hidden="true" />
+              Em conformidade com a LGPD
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5 text-center px-4">
+            <CheckCircle2 size={14} className="shrink-0" aria-hidden="true" />
+            <span>Entrega da investigação 100% discreta no seu WhatsApp/e-mail, não aparece como contato de detetive/investigador, fique tranquilo(a).</span>
+          </div>
+        </div>
+
+        {/* Legal Box */}
+        <div
+          className="mt-8 p-5 rounded-xl text-center"
+          style={{
+            background: "var(--background-secondary)",
+            border: "1px solid var(--border)",
+          }}
+        >
+          <h4
+            className="font-semibold text-sm mb-2"
+            style={{ color: "var(--foreground)" }}
+          >
+            Sigilo Profissional Garantido
+          </h4>
+          <p
+            className="text-[0.75rem] leading-relaxed"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            Todas as informações fornecidas são tratadas com absoluta confidencialidade, conforme a Lei 13.432/2017 que regulamenta a profissão de detetive particular no Brasil. O sigilo profissional é um dos pilares éticos da nossa atividade, garantindo total proteção e privacidade dos seus dados durante todo o processo investigativo.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
