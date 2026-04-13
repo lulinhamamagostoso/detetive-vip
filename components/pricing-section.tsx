@@ -74,6 +74,7 @@ const plans = [
       "Faixa de Renda/Profissão",
       "Participação em Empresa (CNPJ)",
       "Processos Judiciais",
+      "E muito mais: resumo investigativo, parecer do analista, pontos de atenção e análise de risco completa",
     ],
     note: "*Direito a 1 investigação.",
   },
@@ -317,12 +318,23 @@ export function PricingSection() {
                       : "0 4px 14px rgba(37, 211, 102, 0.3)",
                   }}
                 >
-                  {plan.popular ? "QUERO O DOSSIÊ COMPLETO" : "CONTRATE JÁ"}
+                  {plan.popular ? "QUERO INVESTIGAÇÃO COMPLETA" : "CONTRATE JÁ"}
                 </a>
 
                 <p className="text-center text-[0.65rem] mt-2 leading-relaxed" style={{ color: "var(--muted)" }}>
                   Pagamento único · Sem assinatura · Resultado em 5min
                 </p>
+                {plan.popular && (
+                  <div className="text-center mt-2.5">
+                    <a
+                      href="#relatorio-heading"
+                      className="inline-flex items-center gap-1 text-[0.7rem] font-semibold underline underline-offset-2 transition-colors hover:opacity-80"
+                      style={{ color: "var(--primary)" }}
+                    >
+                      {"Ver demonstra\u00E7\u00E3o da investiga\u00E7\u00E3o completa \u2193"}
+                    </a>
+                  </div>
+                )}
               </div>
             </article>
           ))}
