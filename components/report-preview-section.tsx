@@ -127,7 +127,7 @@ export function ReportPreviewSection() {
                 <span className="text-[0.62rem] font-semibold" style={{ color: "#4ade80" }}>{"INVESTIGA\u00C7\u00C3O CONCLU\u00CDDA"}</span>
               </div>
               <span className="text-[0.55rem] text-white/30">|</span>
-              <span className="text-[0.55rem] text-white/40">Plano Premium</span>
+              <span className="text-[0.55rem] text-white/40">Investiga&#231;&#227;o Premium</span>
             </div>
           </div>
 
