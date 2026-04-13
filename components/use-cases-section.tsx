@@ -51,7 +51,7 @@ export function UseCasesSection() {
             className="font-serif text-2xl md:text-4xl font-bold leading-tight tracking-tight mb-2"
           >
             Se Identificou com Alguma{" "}
-            <em className="italic" style={{ color: "var(--primary)" }}>Situa\u00E7\u00E3o</em>?
+            <em className="italic" style={{ color: "var(--primary)" }}>{"Situa\u00E7\u00E3o"}</em>?
           </h2>
           <p
             className="text-sm md:text-base leading-relaxed max-w-lg mx-auto"
@@ -101,10 +101,10 @@ export function UseCasesSection() {
               boxShadow: "0 4px 14px rgba(37, 211, 102, 0.3)",
             }}
           >
-            Iniciar Minha Investiga\u00E7\u00E3o
+            {"Iniciar Minha Investiga\u00E7\u00E3o"}
           </a>
           <p className="text-[0.7rem] mt-2" style={{ color: "var(--muted)" }}>
-            Resultado em at\u00E9 5 minutos no seu WhatsApp
+            {"Resultado em at\u00E9 5 minutos no seu WhatsApp"}
           </p>
         </div>
       </div>
