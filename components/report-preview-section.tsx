@@ -79,6 +79,25 @@ function Sub({ children }: { children: React.ReactNode }) {
   return <div className="text-[0.6rem] mt-0.5" style={{ color: "var(--muted)" }}>{children}</div>
 }
 
+function Note({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="my-3 py-2.5 px-3.5 rounded-lg text-[0.72rem] leading-relaxed" style={{ background: "rgba(59,130,246,0.04)", borderLeft: "2px solid rgba(59,130,246,0.25)", color: "var(--muted-foreground)" }}>
+      <span className="font-bold text-[0.58rem] uppercase tracking-wider block mb-0.5" style={{ color: "rgba(59,130,246,0.6)" }}>{"Observa\u00E7\u00E3o do analista"}</span>
+      {children}
+    </div>
+  )
+}
+
+function RedFlag({ children, severity = "high" }: { children: React.ReactNode; severity?: "high" | "medium" }) {
+  const isHigh = severity === "high"
+  return (
+    <div className="flex items-start gap-2.5 py-2 px-3 rounded-lg" style={{ background: isHigh ? "rgba(220,38,38,0.04)" : "rgba(234,179,8,0.04)" }}>
+      <span className="mt-0.5 w-2 h-2 rounded-full shrink-0" style={{ background: isHigh ? "#dc2626" : "#ca8a04" }} />
+      <span className="text-[0.72rem] leading-snug" style={{ color: "var(--foreground)" }}>{children}</span>
+    </div>
+  )
+}
+
 /* ── Component ── */
 
 export function ReportPreviewSection() {
@@ -134,6 +153,65 @@ export function ReportPreviewSection() {
           {/* ── Report Body ── */}
           <div className="px-5 md:px-7 py-5 md:py-6">
 
+            {/* ── RESUMO DA INVESTIGAÇÃO ── */}
+            <div className="mb-6 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(184,150,63,0.15)", background: "linear-gradient(135deg, rgba(184,150,63,0.03) 0%, rgba(184,150,63,0.07) 100%)" }}>
+              <div className="px-4 md:px-5 py-3 flex items-center gap-2" style={{ borderBottom: "1px solid rgba(184,150,63,0.1)" }}>
+                <Briefcase size={14} strokeWidth={2.5} style={{ color: "var(--primary)" }} />
+                <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--primary)" }}>
+                  {"Resumo da Investiga\u00E7\u00E3o"}
+                </span>
+              </div>
+              <div className="px-4 md:px-5 py-4">
+                <p className="text-[0.78rem] md:text-[0.82rem] leading-[1.7]" style={{ color: "var(--foreground)" }}>
+                  {"A investigada "}<Blur>Maria Eduarda Santos Silva</Blur>{", 38 anos, CPF "}<Blur intensity="medium">312.456.789-01</Blur>
+                  {", foi "}
+                  <strong>{"identificada e localizada com sucesso"}</strong>
+                  {" atrav\u00E9s do cruzamento de 32 bases de dados oficiais e p\u00FAblicas. Residente na regi\u00E3o de "}
+                  <Blur>{"S\u00E3o Paulo/SP"}</Blur>
+                  {" (Jardim Europa), exerce a profiss\u00E3o de "}<Blur>Analista de Marketing</Blur>
+                  {" e mant\u00E9m participa\u00E7\u00E3o societ\u00E1ria em empresa ativa no ramo de consultoria."}
+                </p>
+                <p className="text-[0.78rem] md:text-[0.82rem] leading-[1.7] mt-3" style={{ color: "var(--foreground)" }}>
+                  {"A an\u00E1lise revelou pontos cr\u00EDticos: "}
+                  <strong style={{ color: "#dc2626" }}>{"restri\u00E7\u00E3o financeira ativa"}</strong>
+                  {" no Serasa no valor de "}<Blur>R$ 2.340,00</Blur>
+                  {", envolvimento como r\u00E9 em a\u00E7\u00E3o c\u00EDvel de cobran\u00E7a no TJSP, e exposi\u00E7\u00E3o em "}
+                  <strong style={{ color: "#dc2626" }}>{"3 vazamentos de dados"}</strong>
+                  {" com senhas comprometidas. O perfil digital indica presen\u00E7a ativa em 4 redes sociais com perfil p\u00FAblico no Instagram (2.847 seguidores)."}
+                </p>
+              </div>
+            </div>
+
+            {/* ── PONTOS DE ATENÇÃO ── */}
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-2.5">
+                <AlertCircle size={14} strokeWidth={2.5} style={{ color: "#dc2626" }} />
+                <span className="text-[0.62rem] font-bold uppercase tracking-[0.14em]" style={{ color: "#dc2626" }}>
+                  {"Pontos de Aten\u00E7\u00E3o"}
+                </span>
+              </div>
+              <div className="space-y-1.5">
+                <RedFlag>
+                  <strong>{"Restri\u00E7\u00E3o financeira ativa (Serasa)"}</strong>
+                  {" \u2014 D\u00EDvida estimada de "}<Blur>R$ 2.340,00</Blur>{" com institui\u00E7\u00E3o banc\u00E1ria"}
+                </RedFlag>
+                <RedFlag>
+                  <strong>{"Processo judicial em andamento"}</strong>
+                  {" \u2014 R\u00E9 em a\u00E7\u00E3o de cobran\u00E7a no TJSP (c\u00EDvel)"}
+                </RedFlag>
+                <RedFlag severity="medium">
+                  <strong>{"3 vazamentos de dados detectados"}</strong>
+                  {" \u2014 Senhas e dados pessoais expostos em bases comprometidas"}
+                </RedFlag>
+                <RedFlag severity="medium">
+                  <strong>{"CPF consultado 7 vezes nos \u00FAltimos 30 dias"}</strong>
+                  {" \u2014 Atividade acima da m\u00E9dia para o perfil"}
+                </RedFlag>
+              </div>
+            </div>
+
+            <div className="h-px mb-2" style={{ background: "rgba(0,0,0,0.04)" }} />
+
             {/* DADOS PESSOAIS */}
             <Cat icon={User}>Dados Pessoais</Cat>
             <DataRow label="Nome Completo"><Blur>Maria Eduarda Santos Silva</Blur></DataRow>
@@ -148,6 +226,10 @@ export function ReportPreviewSection() {
             <DataRow label="Escolaridade"><Blur>Ensino Superior Completo</Blur></DataRow>
             <DataRow label="Profiss&#227;o"><Blur>Analista de Marketing</Blur></DataRow>
             <DataRow label="Estado Civil"><Blur>Solteira</Blur></DataRow>
+
+            <Note>
+              {"Investigada mudou-se 3 vezes nos \u00FAltimos 10 anos, todas dentro do estado de SP. Endere\u00E7o atual confirmado atrav\u00E9s de cruzamento com registros de consumo."}
+            </Note>
 
             {/* E-MAILS */}
             <Cat icon={Mail}>{"E-mails Vinculados"}</Cat>
@@ -256,6 +338,10 @@ export function ReportPreviewSection() {
               </ListItem>
             </div>
 
+            <Note>
+              {"Investigada possui perfil p\u00FAblico no Instagram com exposi\u00E7\u00E3o significativa (fotos de viagens, localiza\u00E7\u00F5es, rotina). Perfil do LinkedIn confirma v\u00EDnculo empregat\u00EDcio atual."}
+            </Note>
+
             {/* FINANCEIRO */}
             <Cat icon={CreditCard}>{"Informa\u00E7\u00F5es Financeiras"}</Cat>
             <DataRow label="Score Cr&#233;dito" highlight>
@@ -293,6 +379,10 @@ export function ReportPreviewSection() {
                 <Sub>{"TJSP \u00B7 Trabalhista \u00B7 "}<Blur intensity="light">{"vs. Empresa ABC Ltda"}</Blur>{" \u00B7 Encerrado 2022"}</Sub>
               </ListItem>
             </div>
+
+            <Note>
+              {"O processo c\u00EDvel de cobran\u00E7a movido pelo Banco Ita\u00FA \u00E9 compat\u00EDvel com a restri\u00E7\u00E3o Serasa identificada. O processo trabalhista (encerrado) indica passagem anterior por empresa do ramo de varejo."}
+            </Note>
 
             {/* VEÍCULOS */}
             <Cat icon={Car}>{"Ve\u00EDculos"}</Cat>
@@ -370,6 +460,40 @@ export function ReportPreviewSection() {
               <Blur intensity="medium">2</Blur>{" senha(s) encontrada(s)"}
             </DataRow>
             <DataRow label="Chave PIX"><Blur intensity="medium">{"CPF, e-mail, celular"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(3 chaves)</span></DataRow>
+
+            {/* ── Parecer do Analista ── */}
+            <div className="mt-8 mb-6 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(26,26,31,0.08)", background: "linear-gradient(135deg, #1a1a1f 0%, #2a2a32 100%)" }}>
+              <div className="px-4 md:px-5 py-3 flex items-center gap-2" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                <FileText size={13} strokeWidth={2.5} style={{ color: "rgba(184,150,63,0.8)" }} />
+                <span className="text-[0.62rem] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(184,150,63,0.8)" }}>
+                  {"Parecer do Analista"}
+                </span>
+              </div>
+              <div className="px-4 md:px-5 py-4">
+                <p className="text-[0.75rem] md:text-[0.8rem] leading-[1.7] text-white/70">
+                  {"Com base nos dados levantados, a investigada apresenta perfil de "}
+                  <strong className="text-white/90">{"risco moderado"}</strong>
+                  {". Os principais fatores s\u00E3o: restri\u00E7\u00E3o financeira ativa com d\u00EDvida em aberto, processo judicial como r\u00E9, e exposi\u00E7\u00E3o em m\u00FAltiplos vazamentos de dados. Por outro lado, mant\u00E9m CPF regular, v\u00EDnculo empregat\u00EDcio est\u00E1vel e endere\u00E7o fixo h\u00E1 mais de 5 anos."}
+                </p>
+                <p className="text-[0.75rem] md:text-[0.8rem] leading-[1.7] text-white/70 mt-2.5">
+                  <strong className="text-white/90">{"Recomenda\u00E7\u00E3o: "}</strong>
+                  {"Em caso de transa\u00E7\u00E3o financeira, recomenda-se cautela e verifica\u00E7\u00E3o adicional de garantias. Para outros fins, o perfil n\u00E3o apresenta ind\u00EDcios de fraude ou falsidade ideol\u00F3gica."}
+                </p>
+                <div className="flex items-center gap-3 mt-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[0.55rem] text-white/30">{"N\u00EDvel de confian\u00E7a:"}</span>
+                    <div className="flex gap-0.5">
+                      {[1,2,3,4,5].map((i) => (
+                        <span key={i} className="w-3 h-1.5 rounded-sm" style={{ background: i <= 4 ? "rgba(184,150,63,0.7)" : "rgba(255,255,255,0.1)" }} />
+                      ))}
+                    </div>
+                    <span className="text-[0.55rem] font-semibold" style={{ color: "rgba(184,150,63,0.7)" }}>Alto</span>
+                  </div>
+                  <span className="text-[0.55rem] text-white/20">|</span>
+                  <span className="text-[0.55rem] text-white/30">{"Analista: "}<Blur intensity="light"><span className="text-white/50">R. Mendes</span></Blur></span>
+                </div>
+              </div>
+            </div>
 
             {/* ── Locked Premium+ ── */}
             <div className="mt-8 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(184,150,63,0.15)", background: "linear-gradient(135deg, rgba(184,150,63,0.03) 0%, rgba(184,150,63,0.06) 100%)" }}>
