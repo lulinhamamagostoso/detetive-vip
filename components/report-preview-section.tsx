@@ -145,13 +145,13 @@ export function ReportPreviewSection() {
             <DataRow label="RG"><Blur intensity="medium">42.567.890-3 SSP/SP</Blur></DataRow>
             <DataRow label="Data de Nasc."><Blur>15/03/1988</Blur> <span className="text-[0.65rem]" style={{ color: "var(--muted)" }}>(38 anos)</span></DataRow>
             <DataRow label="Sexo">Feminino</DataRow>
-            <DataRow label={"Nome da M\u00E3e"}><Blur>Ana Carolina Santos</Blur></DataRow>
-            <DataRow label="Signo">{"Peixes"}</DataRow>
-            <DataRow label={"Situa\u00E7\u00E3o CPF"}><Badge v="success">Regular</Badge></DataRow>
-            <DataRow label={"\u00D3bito">Nada consta</DataRow>
-            <DataRow label={"Escolaridade"}><Blur>{"Ensino Superior Completo"}</Blur></DataRow>
-            <DataRow label={"Profiss\u00E3o"}><Blur>{"Analista de Marketing"}</Blur></DataRow>
-            <DataRow label={"Estado Civil"}><Blur>{"Solteira"}</Blur></DataRow>
+            <DataRow label="Nome da M&#227;e"><Blur>Ana Carolina Santos</Blur></DataRow>
+            <DataRow label="Signo">Peixes</DataRow>
+            <DataRow label="Situa&#231;&#227;o CPF"><Badge v="success">Regular</Badge></DataRow>
+            <DataRow label="&#211;bito">Nada consta</DataRow>
+            <DataRow label="Escolaridade"><Blur>Ensino Superior Completo</Blur></DataRow>
+            <DataRow label="Profiss&#227;o"><Blur>Analista de Marketing</Blur></DataRow>
+            <DataRow label="Estado Civil"><Blur>Solteira</Blur></DataRow>
 
             {/* E-MAILS */}
             <Cat icon={Mail}>{"E-mails Vinculados"}</Cat>
@@ -262,19 +262,19 @@ export function ReportPreviewSection() {
 
             {/* FINANCEIRO */}
             <Cat icon={CreditCard}>{"Informa\u00E7\u00F5es Financeiras"}</Cat>
-            <DataRow label={"Score Cr\u00E9dito"} highlight>
+            <DataRow label="Score Cr&#233;dito" highlight>
               <Blur>742</Blur>
               <span className="ml-1"><Badge v="success">Bom</Badge></span>
             </DataRow>
             <DataRow label="Faixa de Renda"><Blur>R$ 5.000 - 8.000</Blur></DataRow>
-            <DataRow label={"Restri\u00E7\u00F5es"} highlight>
+            <DataRow label="Restri&#231;&#245;es" highlight>
               <Blur intensity="medium">1</Blur>{" registro(s) "}
               <Alert>Negativado</Alert>
             </DataRow>
-            <DataRow label={"D\u00EDvida Estimada"}><Blur>R$ 2.340,00</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(Serasa)</span></DataRow>
+            <DataRow label="D&#237;vida Estimada"><Blur>R$ 2.340,00</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(Serasa)</span></DataRow>
             <DataRow label="Cheques s/Fundo">Nada consta</DataRow>
-            <DataRow label={"Benef\u00EDcios Sociais"}>Nada consta</DataRow>
-            <DataRow label={"Imposto de Renda"}>
+            <DataRow label="Benef&#237;cios Sociais">Nada consta</DataRow>
+            <DataRow label="Imposto de Renda">
               <Blur intensity="medium">{"Declarante"}</Blur>{" "}
               <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(2024/2025)</span>
             </DataRow>
@@ -360,20 +360,20 @@ export function ReportPreviewSection() {
 
             {/* HISTÓRICO DE CONSULTAS */}
             <Cat icon={Shield}>{"Hist\u00F3rico de Consultas ao CPF"}</Cat>
-            <DataRow label={"\u00DAltima Consulta"}><Blur>{"08/04/2026"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>{"(4 dias atr\u00E1s)"}</span></DataRow>
-            <DataRow label={"Consultas 30d"}><Blur intensity="medium">7</Blur> {"consultas"}</DataRow>
-            <DataRow label={"Origem"}><Blur intensity="light">{"Institui\u00E7\u00E3o financeira, com\u00E9rcio"}</Blur></DataRow>
+            <DataRow label="&#218;ltima Consulta"><Blur>{"08/04/2026"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>{"(4 dias atr\u00E1s)"}</span></DataRow>
+            <DataRow label="Consultas 30d"><Blur intensity="medium">7</Blur> {"consultas"}</DataRow>
+            <DataRow label="Origem"><Blur intensity="light">{"Institui\u00E7\u00E3o financeira, com\u00E9rcio"}</Blur></DataRow>
 
             {/* DADOS DIGITAIS */}
             <Cat icon={Wifi}>{"Presen\u00E7a Digital"}</Cat>
-            <DataRow label={"Vazamentos"}>
+            <DataRow label="Vazamentos">
               <Blur intensity="medium">3</Blur>{" banco(s) de dados "}
               <Alert>{"Exposi\u00E7\u00E3o"}</Alert>
             </DataRow>
-            <DataRow label={"Senhas Vazadas"}>
+            <DataRow label="Senhas Vazadas">
               <Blur intensity="medium">2</Blur>{" senha(s) encontrada(s)"}
             </DataRow>
-            <DataRow label={"Chave PIX"}><Blur intensity="medium">{"CPF, e-mail, celular"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(3 chaves)</span></DataRow>
+            <DataRow label="Chave PIX"><Blur intensity="medium">{"CPF, e-mail, celular"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(3 chaves)</span></DataRow>
 
             {/* ── Locked Premium+ ── */}
             <div className="mt-8 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(184,150,63,0.15)", background: "linear-gradient(135deg, rgba(184,150,63,0.03) 0%, rgba(184,150,63,0.06) 100%)" }}>
