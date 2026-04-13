@@ -4,15 +4,6 @@ import { Lock, Eye, ChevronRight, MapPin, Phone, CreditCard, Car, User, AlertCir
 
 /* ── Helpers ── */
 
-function Blur({ children, intensity = "full" }: { children: React.ReactNode; intensity?: "full" | "medium" | "light" }) {
-  const b = intensity === "full" ? "blur(6px)" : intensity === "medium" ? "blur(4px)" : "blur(3px)"
-  return (
-    <span className="select-none inline-block" style={{ filter: b, WebkitUserSelect: "none" }} aria-hidden="true">
-      {children}
-    </span>
-  )
-}
-
 function DataRow({ label, children, highlight }: { label: string; children: React.ReactNode; highlight?: boolean }) {
   return (
     <div
@@ -117,7 +108,7 @@ export function ReportPreviewSection() {
             <em className="italic" style={{ color: "var(--primary)" }}>Receber</em>
           </h2>
           <p className="text-sm md:text-base leading-relaxed max-w-lg mx-auto" style={{ color: "var(--muted-foreground)" }}>
-            {"Relat\u00F3rio real de investiga\u00E7\u00E3o com dados censurados por sigilo."}
+            {"Exemplo ilustrativo de uma investiga\u00E7\u00E3o completa com dados fict\u00EDcios."}
           </p>
         </div>
 
@@ -163,21 +154,18 @@ export function ReportPreviewSection() {
               </div>
               <div className="px-4 md:px-5 py-4">
                 <p className="text-[0.78rem] md:text-[0.82rem] leading-[1.7]" style={{ color: "var(--foreground)" }}>
-                  {"A investigada "}<Blur>Maria Eduarda Santos Silva</Blur>{", 38 anos, CPF "}<Blur intensity="medium">312.456.789-01</Blur>
-                  {", foi "}
-                  <strong>{"identificada e localizada com sucesso"}</strong>
-                  {" atrav\u00E9s do cruzamento de 32 bases de dados oficiais e p\u00FAblicas. Residente na regi\u00E3o de "}
-                  <Blur>{"S\u00E3o Paulo/SP"}</Blur>
-                  {" (Jardim Europa), exerce a profiss\u00E3o de "}<Blur>Analista de Marketing</Blur>
-                  {" e mant\u00E9m participa\u00E7\u00E3o societ\u00E1ria em empresa ativa no ramo de consultoria."}
+                  {"O investigado "}
+                  <strong>Fulano Beltrano Ciclano da Silva</strong>
+                  {", 36 anos, CPF 000.111.222-33, foi "}
+                  <strong>{"identificado e localizado com sucesso"}</strong>
+                  {" atrav\u00E9s do cruzamento de 32 bases de dados oficiais e p\u00FAblicas. Residente na regi\u00E3o de S\u00E3o Paulo/SP (Jardim Modelo), exerce a profiss\u00E3o de Analista de Sistemas e mant\u00E9m participa\u00E7\u00E3o societ\u00E1ria em empresa ativa no ramo de tecnologia."}
                 </p>
                 <p className="text-[0.78rem] md:text-[0.82rem] leading-[1.7] mt-3" style={{ color: "var(--foreground)" }}>
                   {"A an\u00E1lise revelou pontos cr\u00EDticos: "}
                   <strong style={{ color: "#dc2626" }}>{"restri\u00E7\u00E3o financeira ativa"}</strong>
-                  {" no Serasa no valor de "}<Blur>R$ 2.340,00</Blur>
-                  {", envolvimento como r\u00E9 em a\u00E7\u00E3o c\u00EDvel de cobran\u00E7a no TJSP, e exposi\u00E7\u00E3o em "}
+                  {" no Serasa no valor de R$ 3.150,00, envolvimento como r\u00E9 em a\u00E7\u00E3o c\u00EDvel de cobran\u00E7a no TJSP, e exposi\u00E7\u00E3o em "}
                   <strong style={{ color: "#dc2626" }}>{"3 vazamentos de dados"}</strong>
-                  {" com senhas comprometidas. O perfil digital indica presen\u00E7a ativa em 4 redes sociais com perfil p\u00FAblico no Instagram (2.847 seguidores)."}
+                  {" com senhas comprometidas. O perfil digital indica presen\u00E7a ativa em 4 redes sociais com perfil p\u00FAblico no Instagram (1.523 seguidores)."}
                 </p>
               </div>
             </div>
@@ -193,7 +181,7 @@ export function ReportPreviewSection() {
               <div className="space-y-1.5">
                 <RedFlag>
                   <strong>{"Restri\u00E7\u00E3o financeira ativa (Serasa)"}</strong>
-                  {" \u2014 D\u00EDvida estimada de "}<Blur>R$ 2.340,00</Blur>{" com institui\u00E7\u00E3o banc\u00E1ria"}
+                  {" \u2014 D\u00EDvida estimada de R$ 3.150,00 com institui\u00E7\u00E3o banc\u00E1ria"}
                 </RedFlag>
                 <RedFlag>
                   <strong>{"Processo judicial em andamento"}</strong>
@@ -214,21 +202,21 @@ export function ReportPreviewSection() {
 
             {/* DADOS PESSOAIS */}
             <Cat icon={User}>Dados Pessoais</Cat>
-            <DataRow label="Nome Completo"><Blur>Maria Eduarda Santos Silva</Blur></DataRow>
-            <DataRow label="CPF"><Blur intensity="medium">312.456.789-01</Blur></DataRow>
-            <DataRow label="RG"><Blur intensity="medium">42.567.890-3 SSP/SP</Blur></DataRow>
-            <DataRow label="Data de Nasc."><Blur>15/03/1988</Blur> <span className="text-[0.65rem]" style={{ color: "var(--muted)" }}>(38 anos)</span></DataRow>
-            <DataRow label="Sexo">Feminino</DataRow>
-            <DataRow label="Nome da M&#227;e"><Blur>Ana Carolina Santos</Blur></DataRow>
-            <DataRow label="Signo">Peixes</DataRow>
+            <DataRow label="Nome Completo">Fulano Beltrano Ciclano da Silva</DataRow>
+            <DataRow label="CPF">000.111.222-33</DataRow>
+            <DataRow label="RG">00.000.000-0 SSP/SP</DataRow>
+            <DataRow label="Data de Nasc.">01/01/1990 <span className="text-[0.65rem]" style={{ color: "var(--muted)" }}>(36 anos)</span></DataRow>
+            <DataRow label="Sexo">Masculino</DataRow>
+            <DataRow label="Nome da M&#227;e">Fulana Beltrana da Silva</DataRow>
+            <DataRow label="Signo">{"Capric\u00F3rnio"}</DataRow>
             <DataRow label="Situa&#231;&#227;o CPF"><Badge v="success">Regular</Badge></DataRow>
             <DataRow label="&#211;bito">Nada consta</DataRow>
-            <DataRow label="Escolaridade"><Blur>Ensino Superior Completo</Blur></DataRow>
-            <DataRow label="Profiss&#227;o"><Blur>Analista de Marketing</Blur></DataRow>
-            <DataRow label="Estado Civil"><Blur>Solteira</Blur></DataRow>
+            <DataRow label="Escolaridade">Ensino Superior Completo</DataRow>
+            <DataRow label="Profiss&#227;o">Analista de Sistemas</DataRow>
+            <DataRow label="Estado Civil">Casado(a)</DataRow>
 
             <Note>
-              {"Investigada mudou-se 3 vezes nos \u00FAltimos 10 anos, todas dentro do estado de SP. Endere\u00E7o atual confirmado atrav\u00E9s de cruzamento com registros de consumo."}
+              {"Investigado mudou-se 3 vezes nos \u00FAltimos 10 anos, todas dentro do estado de SP. Endere\u00E7o atual confirmado atrav\u00E9s de cruzamento com registros de consumo."}
             </Note>
 
             {/* E-MAILS */}
@@ -236,15 +224,15 @@ export function ReportPreviewSection() {
             <div className="space-y-1.5 py-1.5">
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur intensity="medium">{"maria.eduarda88@gmail.com"}</Blur>
+                  fulano.beltrano@gmail.com
                   <Badge v="success">Ativo</Badge>
                   <Badge v="info">Principal</Badge>
                 </div>
-                <Sub>Vinculado a 3 plataformas &middot; {"Criado em ~2012"}</Sub>
+                <Sub>{"Vinculado a 3 plataformas \u00B7 Criado em ~2012"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur intensity="medium">{"meduarda@empresa.com.br"}</Blur>
+                  fulano@empresa.com.br
                   <Badge v="success">Ativo</Badge>
                   <Badge v="neutral">Corporativo</Badge>
                 </div>
@@ -252,7 +240,7 @@ export function ReportPreviewSection() {
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur intensity="medium">{"duda_santos@hotmail.com"}</Blur>
+                  fulaninho123@hotmail.com
                   <Badge v="warning">Inativo</Badge>
                 </div>
               </ListItem>
@@ -262,16 +250,16 @@ export function ReportPreviewSection() {
             <Cat icon={MapPin}>{"Endere\u00E7os Vinculados"}</Cat>
             <div className="space-y-1.5 py-1.5">
               <ListItem>
-                <div>{"Rua "}<Blur>das Palmeiras</Blur>{", "}<Blur>847</Blur>{" \u2014 "}<Blur>Jardim Europa</Blur>{", "}<Blur>{"S\u00E3o Paulo"}</Blur>/SP</div>
-                <Sub>{"CEP: "}<Blur intensity="light">01234-567</Blur>{" \u00B7 Registrado desde 2019 \u00B7 "}<Badge v="success">Atual</Badge></Sub>
+                <div>{"Rua das Flores, 123 \u2014 Jardim Modelo, S\u00E3o Paulo/SP"}</div>
+                <Sub>{"CEP: 01234-567 \u00B7 Registrado desde 2019 \u00B7 "}<Badge v="success">Atual</Badge></Sub>
               </ListItem>
               <ListItem>
-                <div>{"Av. "}<Blur>Paulista</Blur>{", "}<Blur>1578</Blur>{" Apto "}<Blur>204</Blur>{" \u2014 "}<Blur>Bela Vista</Blur>{", "}<Blur>{"S\u00E3o Paulo"}</Blur>/SP</div>
-                <Sub>{"CEP: "}<Blur intensity="light">04567-890</Blur>{" \u00B7 2016\u20132019"}</Sub>
+                <div>{"Av. Brasil, 456 Apto 78 \u2014 Centro, Rio de Janeiro/RJ"}</div>
+                <Sub>{"CEP: 20040-020 \u00B7 2016\u20132019"}</Sub>
               </ListItem>
               <ListItem>
-                <div>{"Rua "}<Blur>{"dos Ip\u00EAs"}</Blur>{", "}<Blur>312</Blur>{" \u2014 "}<Blur>Centro</Blur>{", "}<Blur>Campinas</Blur>/SP</div>
-                <Sub>{"CEP: "}<Blur intensity="light">13015-000</Blur>{" \u00B7 2012\u20132016"}</Sub>
+                <div>{"Rua dos Girassois, 789 \u2014 Vila Nova, Campinas/SP"}</div>
+                <Sub>{"CEP: 13015-000 \u00B7 2012\u20132016"}</Sub>
               </ListItem>
             </div>
 
@@ -280,25 +268,25 @@ export function ReportPreviewSection() {
             <div className="space-y-1.5 py-1.5">
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  {"("}<Blur intensity="medium">11</Blur>{") "}<Blur>98765</Blur>-<Blur>4321</Blur>
+                  (11) 99999-0000
                   <Badge v="success">Ativo</Badge>
                   <Badge v="info">WhatsApp</Badge>
                 </div>
-                <Sub>{"Operadora: "}<Blur intensity="light">Vivo</Blur>{" \u00B7 Tipo: M\u00F3vel \u00B7 Desde 2017"}</Sub>
+                <Sub>{"Operadora: Vivo \u00B7 Tipo: M\u00F3vel \u00B7 Desde 2017"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  {"("}<Blur intensity="medium">11</Blur>{") "}<Blur>3456</Blur>-<Blur>7890</Blur>
+                  (11) 3333-4444
                   <Badge v="neutral">Fixo</Badge>
                 </div>
-                <Sub>{"Operadora: "}<Blur intensity="light">NET/Claro</Blur>{" \u00B7 Vinculado ao endere\u00E7o 1"}</Sub>
+                <Sub>{"Operadora: NET/Claro \u00B7 Vinculado ao endere\u00E7o 1"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  {"("}<Blur intensity="medium">21</Blur>{") "}<Blur>91234</Blur>-<Blur>5678</Blur>
+                  (21) 98888-7777
                   <Badge v="warning">Inativo</Badge>
                 </div>
-                <Sub>{"Operadora: "}<Blur intensity="light">TIM</Blur>{" \u00B7 \u00DAltimo uso: 2021"}</Sub>
+                <Sub>{"Operadora: TIM \u00B7 \u00DAltimo uso: 2021"}</Sub>
               </ListItem>
             </div>
 
@@ -308,56 +296,56 @@ export function ReportPreviewSection() {
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-semibold text-[0.72rem]">Instagram</span>
-                  <Blur intensity="medium">@maria.eduarda_</Blur>
+                  @fulano.beltrano
                   <Badge v="success">Ativo</Badge>
                 </div>
-                <Sub><Blur intensity="light">2.847 seguidores</Blur>{" \u00B7 Perfil aberto \u00B7 "}<Blur intensity="light">1.230 fotos</Blur></Sub>
+                <Sub>{"1.523 seguidores \u00B7 Perfil aberto \u00B7 847 fotos"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-semibold text-[0.72rem]">Facebook</span>
-                  <Blur intensity="medium">Maria Eduarda Santos</Blur>
+                  Fulano Beltrano da Silva
                   <Badge v="success">Ativo</Badge>
                 </div>
-                <Sub>{"Perfil desde 2011 \u00B7 "}<Blur intensity="light">{"S\u00E3o Paulo, SP"}</Blur></Sub>
+                <Sub>{"Perfil desde 2011 \u00B7 S\u00E3o Paulo, SP"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-semibold text-[0.72rem]">LinkedIn</span>
-                  <Blur intensity="medium">Maria Eduarda S.</Blur>
+                  Fulano B. Silva
                   <Badge v="success">Ativo</Badge>
                 </div>
-                <Sub><Blur intensity="light">{"Analista de Marketing na Empresa XYZ"}</Blur></Sub>
+                <Sub>Analista de Sistemas na Empresa Exemplo S.A.</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-semibold text-[0.72rem]">TikTok</span>
-                  <Blur intensity="medium">@dudasantos88</Blur>
+                  @fulaninho123
                   <Badge v="warning">Inativo</Badge>
                 </div>
               </ListItem>
             </div>
 
             <Note>
-              {"Investigada possui perfil p\u00FAblico no Instagram com exposi\u00E7\u00E3o significativa (fotos de viagens, localiza\u00E7\u00F5es, rotina). Perfil do LinkedIn confirma v\u00EDnculo empregat\u00EDcio atual."}
+              {"Investigado possui perfil p\u00FAblico no Instagram com exposi\u00E7\u00E3o significativa (fotos de viagens, localiza\u00E7\u00F5es, rotina). Perfil do LinkedIn confirma v\u00EDnculo empregat\u00EDcio atual."}
             </Note>
 
             {/* FINANCEIRO */}
             <Cat icon={CreditCard}>{"Informa\u00E7\u00F5es Financeiras"}</Cat>
             <DataRow label="Score Cr&#233;dito" highlight>
-              <Blur>742</Blur>
+              742
               <span className="ml-1"><Badge v="success">Bom</Badge></span>
             </DataRow>
-            <DataRow label="Faixa de Renda"><Blur>R$ 5.000 - 8.000</Blur></DataRow>
+            <DataRow label="Faixa de Renda">R$ 5.000 - 8.000</DataRow>
             <DataRow label="Restri&#231;&#245;es" highlight>
-              <Blur intensity="medium">1</Blur>{" registro(s) "}
+              {"1 registro(s) "}
               <Alert>Negativado</Alert>
             </DataRow>
-            <DataRow label="D&#237;vida Estimada"><Blur>R$ 2.340,00</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(Serasa)</span></DataRow>
+            <DataRow label="D&#237;vida Estimada">R$ 3.150,00 <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(Serasa)</span></DataRow>
             <DataRow label="Cheques s/Fundo">Nada consta</DataRow>
             <DataRow label="Benef&#237;cios Sociais">Nada consta</DataRow>
             <DataRow label="Imposto de Renda">
-              <Blur intensity="medium">{"Declarante"}</Blur>{" "}
+              {"Declarante "}
               <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(2024/2025)</span>
             </DataRow>
 
@@ -366,22 +354,22 @@ export function ReportPreviewSection() {
             <div className="space-y-1.5 py-1.5">
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur intensity="medium">{"Processo n\u00BA 1234567-89.2023.8.26.0001"}</Blur>
+                  {"Processo n\u00BA 0000000-00.0000.0.00.0000"}
                   <Alert>{"R\u00E9"}</Alert>
                 </div>
-                <Sub>{"TJSP \u00B7 C\u00EDvel \u00B7 Cobran\u00E7a \u00B7 "}<Blur intensity="light">{"Banco Ita\u00FA S.A."}</Blur>{" \u00B7 Em andamento"}</Sub>
+                <Sub>{"TJSP \u00B7 C\u00EDvel \u00B7 Cobran\u00E7a \u00B7 Banco Exemplo S.A. \u00B7 Em andamento"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur intensity="medium">{"Processo n\u00BA 9876543-21.2021.8.26.0100"}</Blur>
-                  <Badge v="neutral">Autora</Badge>
+                  {"Processo n\u00BA 0000000-00.0000.0.00.0001"}
+                  <Badge v="neutral">Autor</Badge>
                 </div>
-                <Sub>{"TJSP \u00B7 Trabalhista \u00B7 "}<Blur intensity="light">{"vs. Empresa ABC Ltda"}</Blur>{" \u00B7 Encerrado 2022"}</Sub>
+                <Sub>{"TJSP \u00B7 Trabalhista \u00B7 vs. Empresa ABC Ltda \u00B7 Encerrado 2022"}</Sub>
               </ListItem>
             </div>
 
             <Note>
-              {"O processo c\u00EDvel de cobran\u00E7a movido pelo Banco Ita\u00FA \u00E9 compat\u00EDvel com a restri\u00E7\u00E3o Serasa identificada. O processo trabalhista (encerrado) indica passagem anterior por empresa do ramo de varejo."}
+              {"O processo c\u00EDvel de cobran\u00E7a movido pelo Banco Exemplo \u00E9 compat\u00EDvel com a restri\u00E7\u00E3o Serasa identificada. O processo trabalhista (encerrado) indica passagem anterior por empresa do ramo de varejo."}
             </Note>
 
             {/* VEÍCULOS */}
@@ -389,19 +377,17 @@ export function ReportPreviewSection() {
             <div className="space-y-1.5 py-1.5">
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur>Toyota Corolla XEi 2021/2022</Blur>
-                  {" \u00B7 Placa: "}<Blur intensity="medium">ABC-1D23</Blur>
+                  {"Toyota Corolla XEi 2021/2022 \u00B7 Placa: ABC-1D23"}
                   <Badge v="success">Regular</Badge>
                 </div>
-                <Sub>{"Cor: "}<Blur intensity="light">Prata</Blur>{" \u00B7 RENAVAM: "}<Blur intensity="light">12345678901</Blur>{" \u00B7 IPVA 2026: Pago"}</Sub>
+                <Sub>{"Cor: Prata \u00B7 RENAVAM: 00000000000 \u00B7 IPVA 2026: Pago"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur>Honda CG 160 Start 2020</Blur>
-                  {" \u00B7 Placa: "}<Blur intensity="medium">XYZ-9H87</Blur>
+                  {"Honda CG 160 Start 2020 \u00B7 Placa: XYZ-9H87"}
                   <Badge v="warning">{"D\u00E9bitos"}</Badge>
                 </div>
-                <Sub>{"Cor: "}<Blur intensity="light">Preta</Blur>{" \u00B7 IPVA 2026: "}<Alert>Pendente</Alert>{" \u00B7 Multas: "}<Blur intensity="light">2</Blur></Sub>
+                <Sub>{"Cor: Preta \u00B7 IPVA 2026: "}<Alert>Pendente</Alert>{" \u00B7 Multas: 2"}</Sub>
               </ListItem>
             </div>
 
@@ -409,18 +395,18 @@ export function ReportPreviewSection() {
             <Cat icon={Users}>{"Parentes e V\u00EDnculos"}</Cat>
             <div className="space-y-1.5 py-1.5">
               {[
-                { nome: "Carlos Eduardo Santos", parentesco: "Pai", cpf: "123.456.789-00" },
-                { nome: "Ana Carolina Santos", parentesco: "M\u00E3e", cpf: "987.654.321-00" },
-                { nome: "Pedro Henrique Santos Silva", parentesco: "Irm\u00E3o", cpf: "456.789.123-00" },
-                { nome: "Luiza Santos Oliveira", parentesco: "Irm\u00E3", cpf: "654.321.987-00" },
-                { nome: "Roberto Lima Pereira", parentesco: "Ex-c\u00F4njuge", cpf: "111.222.333-44" },
+                { nome: "Ciclano Pai da Silva", parentesco: "Pai", cpf: "000.000.000-01" },
+                { nome: "Fulana Beltrana da Silva", parentesco: "M\u00E3e", cpf: "000.000.000-02" },
+                { nome: "Beltrano Filho da Silva", parentesco: "Irm\u00E3o", cpf: "000.000.000-03" },
+                { nome: "Ciclana Irm\u00E3 da Silva", parentesco: "Irm\u00E3", cpf: "000.000.000-04" },
+                { nome: "Deltrana Pereira Souza", parentesco: "Ex-c\u00F4njuge", cpf: "000.000.000-05" },
               ].map((p) => (
                 <ListItem key={p.cpf}>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <Blur>{p.nome}</Blur>
+                    {p.nome}
                     <Badge v="neutral">{p.parentesco}</Badge>
                   </div>
-                  <Sub>{"CPF: "}<Blur intensity="light">{p.cpf}</Blur></Sub>
+                  <Sub>{"CPF: "}{p.cpf}</Sub>
                 </ListItem>
               ))}
             </div>
@@ -430,36 +416,36 @@ export function ReportPreviewSection() {
             <div className="space-y-1.5 py-1.5">
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur>{"ME Santos Consultoria LTDA"}</Blur>
+                  Empresa Exemplo Tecnologia LTDA
                   <Badge v="success">Ativa</Badge>
                 </div>
-                <Sub>{"CNPJ: "}<Blur intensity="light">12.345.678/0001-90</Blur>{" \u00B7 S\u00F3cia (50%) \u00B7 Desde 2020"}</Sub>
+                <Sub>{"CNPJ: 00.000.000/0001-00 \u00B7 S\u00F3cio (50%) \u00B7 Desde 2020"}</Sub>
               </ListItem>
               <ListItem>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Blur>{"Duda Mkt Digital MEI"}</Blur>
+                  Fulano Digital MEI
                   <Badge v="warning">Baixada</Badge>
                 </div>
-                <Sub>{"CNPJ: "}<Blur intensity="light">98.765.432/0001-10</Blur>{" \u00B7 Titular \u00B7 2018\u20132020"}</Sub>
+                <Sub>{"CNPJ: 00.000.000/0002-00 \u00B7 Titular \u00B7 2018\u20132020"}</Sub>
               </ListItem>
             </div>
 
             {/* HISTÓRICO DE CONSULTAS */}
             <Cat icon={Shield}>{"Hist\u00F3rico de Consultas ao CPF"}</Cat>
-            <DataRow label="&#218;ltima Consulta"><Blur>{"08/04/2026"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>{"(4 dias atr\u00E1s)"}</span></DataRow>
-            <DataRow label="Consultas 30d"><Blur intensity="medium">7</Blur> {"consultas"}</DataRow>
-            <DataRow label="Origem"><Blur intensity="light">{"Institui\u00E7\u00E3o financeira, com\u00E9rcio"}</Blur></DataRow>
+            <DataRow label="&#218;ltima Consulta">{"08/04/2026 "}<span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>{"(4 dias atr\u00E1s)"}</span></DataRow>
+            <DataRow label="Consultas 30d">{"7 consultas"}</DataRow>
+            <DataRow label="Origem">{"Institui\u00E7\u00E3o financeira, com\u00E9rcio"}</DataRow>
 
             {/* DADOS DIGITAIS */}
             <Cat icon={Wifi}>{"Presen\u00E7a Digital"}</Cat>
             <DataRow label="Vazamentos">
-              <Blur intensity="medium">3</Blur>{" banco(s) de dados "}
+              {"3 banco(s) de dados "}
               <Alert>{"Exposi\u00E7\u00E3o"}</Alert>
             </DataRow>
             <DataRow label="Senhas Vazadas">
-              <Blur intensity="medium">2</Blur>{" senha(s) encontrada(s)"}
+              {"2 senha(s) encontrada(s)"}
             </DataRow>
-            <DataRow label="Chave PIX"><Blur intensity="medium">{"CPF, e-mail, celular"}</Blur> <span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(3 chaves)</span></DataRow>
+            <DataRow label="Chave PIX">{"CPF, e-mail, celular "}<span className="text-[0.6rem]" style={{ color: "var(--muted)" }}>(3 chaves)</span></DataRow>
 
             {/* ── Parecer do Analista ── */}
             <div className="mt-8 mb-6 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(26,26,31,0.08)", background: "linear-gradient(135deg, #1a1a1f 0%, #2a2a32 100%)" }}>
@@ -471,7 +457,7 @@ export function ReportPreviewSection() {
               </div>
               <div className="px-4 md:px-5 py-4">
                 <p className="text-[0.75rem] md:text-[0.8rem] leading-[1.7] text-white/70">
-                  {"Com base nos dados levantados, a investigada apresenta perfil de "}
+                  {"Com base nos dados levantados, o investigado apresenta perfil de "}
                   <strong className="text-white/90">{"risco moderado"}</strong>
                   {". Os principais fatores s\u00E3o: restri\u00E7\u00E3o financeira ativa com d\u00EDvida em aberto, processo judicial como r\u00E9, e exposi\u00E7\u00E3o em m\u00FAltiplos vazamentos de dados. Por outro lado, mant\u00E9m CPF regular, v\u00EDnculo empregat\u00EDcio est\u00E1vel e endere\u00E7o fixo h\u00E1 mais de 5 anos."}
                 </p>
@@ -490,7 +476,7 @@ export function ReportPreviewSection() {
                     <span className="text-[0.55rem] font-semibold" style={{ color: "rgba(184,150,63,0.7)" }}>Alto</span>
                   </div>
                   <span className="text-[0.55rem] text-white/20">|</span>
-                  <span className="text-[0.55rem] text-white/30">{"Analista: "}<Blur intensity="light"><span className="text-white/50">R. Mendes</span></Blur></span>
+                  <span className="text-[0.55rem] text-white/30">{"Analista: F. Exemplo"}</span>
                 </div>
               </div>
             </div>
@@ -536,11 +522,6 @@ export function ReportPreviewSection() {
             </span>
           </div>
         </div>
-
-        {/* Caption */}
-        <p className="text-center text-[0.65rem] mt-4" style={{ color: "var(--muted)" }}>
-          {"Dados fict\u00EDcios para demonstra\u00E7\u00E3o. Relat\u00F3rio real censurado por sigilo profissional (Lei 13.432/17)."}
-        </p>
       </div>
     </section>
   )
