@@ -380,7 +380,7 @@ export function ReportPreviewSection() {
                   { label: "Hist\u00F3rico de trabalho", count: "4 empresas" },
                   { label: "Passagens a\u00E9reas recentes", count: "2 viagens" },
                   { label: "Registros de im\u00F3veis", count: "1 propriedade" },
-                  { label: {"Hist\u00F3rico de telefones"}, count: "6 n\u00FAmeros" },
+                  { label: "Hist\u00F3rico de telefones", count: "6 n\u00FAmeros" },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center justify-between py-1.5 px-3 rounded-md" style={{ background: "rgba(255,255,255,0.5)" }}>
                     <div className="flex items-center gap-2">
