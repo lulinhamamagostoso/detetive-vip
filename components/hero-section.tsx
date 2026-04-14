@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import { MagnifyingGlass, Fingerprint } from "@phosphor-icons/react/dist/ssr"
 
 const trustItems = [
   { label: "100% Sigiloso" },
@@ -67,7 +68,7 @@ function TypewriterCard() {
 
   return (
     <div
-      className="md:hidden my-4 mx-auto max-w-sm rounded-2xl px-5 py-4"
+      className="md:hidden relative my-4 mx-auto max-w-sm rounded-2xl px-5 py-4 overflow-hidden"
       style={{
         background:
           "linear-gradient(135deg, rgba(184, 150, 63, 0.09), rgba(184, 150, 63, 0.02))",
@@ -75,25 +76,27 @@ function TypewriterCard() {
         boxShadow: "0 2px 12px rgba(184, 150, 63, 0.06)",
       }}
     >
-      <div className="flex items-start gap-3">
+      {/* Fffuel-style grain texture (inline SVG, ~0.3KB) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-40"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.72 0 0 0 0 0.59 0 0 0 0 0.25 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+          backgroundSize: "140px",
+        }}
+      />
+      <div className="relative flex items-start gap-3">
         <div
           className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-full flex items-center justify-center"
           style={{ background: "rgba(184, 150, 63, 0.14)" }}
           aria-hidden="true"
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="var(--primary)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
+          <MagnifyingGlass
+            size={20}
+            weight="duotone"
+            color="var(--primary)"
+          />
         </div>
         <p
           className="flex-1 text-[0.9rem] leading-snug text-left min-h-[4.5rem]"
@@ -124,6 +127,20 @@ export function HeroSection() {
       <div className="max-w-[1300px] mx-auto w-full grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-14 items-center">
         {/* Content */}
         <div className="relative text-center lg:text-left">
+          {/* Watermark decorativo Fingerprint — mobile apenas */}
+          <div
+            aria-hidden="true"
+            className="md:hidden absolute -top-2 -right-4 pointer-events-none select-none"
+            style={{
+              opacity: 0.07,
+              transform: "rotate(-12deg)",
+              color: "var(--primary)",
+              zIndex: 0,
+            }}
+          >
+            <Fingerprint size={180} weight="duotone" />
+          </div>
+
           {/* Badge */}
           <div
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-widest mb-4 md:mb-7"
