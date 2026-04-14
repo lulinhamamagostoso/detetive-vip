@@ -1,39 +1,32 @@
 "use client"
 
 import { useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import Script from "next/script"
+import { Suspense } from "react"
 
-declare global {
-  interface Window {
-    fbq: any
-  }
-}
+const PIXEL_ID = "1825486488116021"
 
-const PIXEL_ID = "826670937148646"
-const PIXEL_URL = "https://capig.detetive.vip/tr"
-
-export function trackEvent(eventName: string, params?: Record<string, any>) {
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", eventName, params || {})
-  }
-}
-
-export default function MetaPixel() {
+function MetaPixelInner() {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   // Dispara PageView em toda navegação
   useEffect(() => {
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("track", "PageView")
     }
-  }, [pathname])
+  }, [pathname, searchParams])
 
+  return null
+}
+
+export default function MetaPixel() {
   return (
     <>
-      {/* Script do Meta Pixel com CAPI Gateway */}
+      {/* Meta Pixel SDK */}
       <Script
-        id="facebook-pixel"
+        id="meta-pixel"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
@@ -44,23 +37,28 @@ export default function MetaPixel() {
             n.queue=[];t=b.createElement(e);t.async=!0;
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
-            '${PIXEL_URL}?id=${PIXEL_ID}');
+            'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '${PIXEL_ID}');
             fbq('track', 'PageView');
           `,
         }}
       />
 
-      {/* Fallback noscript para navegadores sem JavaScript */}
+      {/* Fallback noscript */}
       <noscript>
         <img
           height="1"
           width="1"
           style={{ display: "none" }}
-          src={`${PIXEL_URL}?id=${PIXEL_ID}&ev=PageView&noscript=1`}
+          src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
           alt=""
         />
       </noscript>
+
+      {/* Route change tracker */}
+      <Suspense fallback={null}>
+        <MetaPixelInner />
+      </Suspense>
     </>
   )
 }

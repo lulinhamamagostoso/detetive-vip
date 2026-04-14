@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next"
 import { DM_Sans, Playfair_Display } from "next/font/google"
-import Script from "next/script"
 import "./globals.css"
-import MetaPixel from "@/components/meta-pixel"
+import MetaPixel from "@/components/tracking/meta-pixel"
+import GoogleAnalytics from "@/components/tracking/google-analytics"
+import MicrosoftClarity from "@/components/tracking/microsoft-clarity"
+import UTMTracker from "@/components/tracking/utm-tracker"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -286,15 +288,11 @@ export default function RootLayout({
         >
           Pular para o conteúdo
         </a>
-        <MetaPixel />
         {children}
-        {/* Utmify UTM tracking — carrega após interação do usuário para não bloquear LCP */}
-        <Script
-          src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-          strategy="lazyOnload"
-          data-utmify-prevent-xcod-sck=""
-          data-utmify-prevent-subids=""
-        />
+        <MetaPixel />
+        <GoogleAnalytics />
+        <MicrosoftClarity />
+        <UTMTracker />
       </body>
     </html>
   )

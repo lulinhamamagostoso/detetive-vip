@@ -16,6 +16,11 @@ const plans: Record<string, { title: string; description: string }> = {
     description:
       "Dossiê completo com 20+ bancos de dados oficiais. Processos, veículos, parentes, score e dívidas. Resultado em 5 minutos via WhatsApp. R$197.",
   },
+  "upgrade-premium": {
+    title: "Investigação Premium — Oferta Exclusiva",
+    description:
+      "Dossiê completo com 20+ bancos de dados oficiais por R$97. Oferta exclusiva com 50% de desconto. Resultado em 5 minutos via WhatsApp.",
+  },
 }
 
 export async function generateMetadata({

@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield } from "lucide-react"
-import { trackEvent } from "@/components/meta-pixel"
+import { trackViewContent, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, sendServerEvent } from "@/lib/tracking-events"
 
 // ── Dados dos planos (sincronizados com api/pix/route.ts) ────────────
 const plansData: Record<string, {
@@ -170,7 +170,12 @@ export default function CheckoutPage() {
   // ── ViewContent quando a página carrega ───────────────────────────────
   useEffect(() => {
     if (plan) {
-      trackEvent("ViewContent", {
+      trackViewContent({
+        content_name: plan.name,
+        content_category: planSlug,
+        value: plan.price,
+      })
+      sendServerEvent("ViewContent", {
         content_name: plan.name,
         content_category: planSlug,
         value: plan.price,
@@ -214,13 +219,15 @@ export default function CheckoutPage() {
           if (pollingRef.current) clearInterval(pollingRef.current)
           if (countdownRef.current) clearInterval(countdownRef.current)
           setPaymentStatus("paid")
-          // Rastrear compra
+          // Rastrear compra (client + server)
           if (plan) {
-            trackEvent("Purchase", {
+            trackPurchase({
               value: plan.price,
-              currency: "BRL",
               content_name: plan.name,
               content_category: planSlug,
+              email,
+              phone,
+              nome,
             })
           }
           // Redirecionar para página de obrigado com upsell
@@ -334,7 +341,11 @@ export default function CheckoutPage() {
       setStep("payment")
       window.scrollTo({ top: 0, behavior: "instant" })
       // Rastrear iniciação de checkout
-      trackEvent("InitiateCheckout", {
+      trackInitiateCheckout({
+        value: totalPrice,
+        content_category: planSlug,
+      })
+      sendServerEvent("InitiateCheckout", {
         value: totalPrice,
         currency: "BRL",
         content_category: planSlug,
@@ -397,6 +408,8 @@ export default function CheckoutPage() {
         setStep("pix")
         setPaymentStatus("waiting")
         window.scrollTo({ top: 0, behavior: "instant" })
+        // Rastrear AddPaymentInfo (PIX gerado)
+        trackAddPaymentInfo({ value: totalPrice, content_category: planSlug })
 
         // Inicia polling e countdown
         startPolling(pixResult.transaction_id)
