@@ -1,33 +1,33 @@
 import Link from "next/link"
 import {
-  Zap,
-  Eye,
-  Target,
-  ShieldCheck,
-  AlertTriangle,
-  Users,
-  Scale,
+  Banknote,
+  HeartCrack,
+  MapPinned,
+  Handshake,
+  ShieldAlert,
+  Search,
+  Gavel,
   Building2,
   Car,
-  MonitorSmartphone,
-  Package,
-  FileCheck,
+  UserSearch,
+  PackageX,
+  FileWarning,
   ChevronRight,
 } from "lucide-react"
 
 const useCases = [
-  { icon: Zap, text: "Fui v\u00EDtima de golpe no PIX", slug: "fui-vitima-de-golpe-no-pix" },
-  { icon: Eye, text: "Suspeito de infidelidade do meu parceiro(a)", slug: "suspeito-de-infidelidade" },
-  { icon: Target, text: "Preciso localizar um devedor que desapareceu", slug: "localizar-devedor" },
-  { icon: ShieldCheck, text: "Quero verificar algu\u00E9m antes de fechar neg\u00F3cio", slug: "verificar-pessoa-antes-de-negocio" },
-  { icon: AlertTriangle, text: "Recebi amea\u00E7as de um n\u00FAmero desconhecido", slug: "ameacas-numero-desconhecido" },
-  { icon: Users, text: "Quero encontrar um parente ou pessoa perdida", slug: "encontrar-parente-perdido" },
-  { icon: Scale, text: "Sou advogado e preciso localizar uma parte processual", slug: "localizar-parte-processual" },
+  { icon: Banknote, text: "Fui v\u00EDtima de golpe no PIX", slug: "fui-vitima-de-golpe-no-pix" },
+  { icon: HeartCrack, text: "Suspeito de infidelidade do meu parceiro(a)", slug: "suspeito-de-infidelidade" },
+  { icon: MapPinned, text: "Preciso localizar um devedor que desapareceu", slug: "localizar-devedor" },
+  { icon: Handshake, text: "Quero verificar algu\u00E9m antes de fechar neg\u00F3cio", slug: "verificar-pessoa-antes-de-negocio" },
+  { icon: ShieldAlert, text: "Recebi amea\u00E7as de um n\u00FAmero desconhecido", slug: "ameacas-numero-desconhecido" },
+  { icon: Search, text: "Quero encontrar um parente ou pessoa perdida", slug: "encontrar-parente-perdido" },
+  { icon: Gavel, text: "Sou advogado e preciso localizar uma parte processual", slug: "localizar-parte-processual" },
   { icon: Building2, text: "Quero saber se uma empresa \u00E9 confi\u00E1vel antes de comprar", slug: "verificar-empresa" },
   { icon: Car, text: "Preciso descobrir o dono de um ve\u00EDculo", slug: "descobrir-dono-veiculo" },
-  { icon: MonitorSmartphone, text: "Conheci algu\u00E9m online e quero confirmar a identidade", slug: "confirmar-identidade-online" },
-  { icon: Package, text: "Comprei algo online e o vendedor sumiu", slug: "vendedor-sumiu" },
-  { icon: FileCheck, text: "Preciso de informa\u00E7\u00F5es para um Boletim de Ocorr\u00EAncia", slug: "informacoes-boletim-ocorrencia" },
+  { icon: UserSearch, text: "Conheci algu\u00E9m online e quero confirmar a identidade", slug: "confirmar-identidade-online" },
+  { icon: PackageX, text: "Comprei algo online e o vendedor sumiu", slug: "vendedor-sumiu" },
+  { icon: FileWarning, text: "Preciso de informa\u00E7\u00F5es para um Boletim de Ocorr\u00EAncia", slug: "informacoes-boletim-ocorrencia" },
 ]
 
 export function UseCasesSection() {
@@ -79,7 +79,7 @@ export function UseCasesSection() {
                 <div className="flex items-center gap-3">
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: "rgba(22, 163, 74, 0.08)", color: "#16a34a" }}
+                    style={{ background: "rgba(0, 0, 0, 0.05)", color: "#1a1a1f" }}
                   >
                     <Icon size={18} strokeWidth={2} aria-hidden="true" />
                   </div>
