@@ -166,6 +166,45 @@ body {
   font-weight: 400;
 }
 
+/* =====================================================
+   HERO INVESTIGATE ICON — pulse rings + digital bits + scan
+   ===================================================== */
+@keyframes hero-pulse-ring {
+  0%   { transform: scale(0.45); opacity: 0.7; }
+  70%  { opacity: 0.05; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.hero-pulse {
+  transform-origin: 100px 100px;
+  animation: hero-pulse-ring 3.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.hero-pulse-1 { animation-delay: 0s; }
+.hero-pulse-2 { animation-delay: 1.07s; }
+.hero-pulse-3 { animation-delay: 2.13s; }
+
+@keyframes hero-bit-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.35); }
+}
+
+.hero-bit {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: hero-bit-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes hero-scan-line {
+  0%   { transform: translateY(-50px); opacity: 0; }
+  15%  { opacity: 0.7; }
+  85%  { opacity: 0.7; }
+  100% { transform: translateY(50px); opacity: 0; }
+}
+
+.hero-scan {
+  animation: hero-scan-line 2.8s ease-in-out infinite;
+}
+
 /* Scan line + reveal animations — desktop only for mobile performance */
 @media (min-width: 768px) {
   @keyframes scan {
@@ -377,7 +416,10 @@ body {
   .animate-orb,
   .animate-orb-reverse,
   .animate-pulse-fade,
-  .typewriter-cursor {
+  .typewriter-cursor,
+  .hero-pulse,
+  .hero-bit,
+  .hero-scan {
     animation: none !important;
   }
 
