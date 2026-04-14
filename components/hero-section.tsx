@@ -294,7 +294,7 @@ function TypewriterCard() {
 
   return (
     <div
-      className="md:hidden relative my-4 mx-auto max-w-sm rounded-2xl px-5 py-4 overflow-hidden"
+      className="md:hidden relative my-4 mx-auto max-w-sm rounded-2xl px-6 py-6 overflow-hidden"
       style={{
         background:
           "linear-gradient(135deg, rgba(184, 150, 63, 0.09), rgba(184, 150, 63, 0.02))",
@@ -312,26 +312,79 @@ function TypewriterCard() {
           backgroundSize: "140px",
         }}
       />
-      <div className="relative flex items-start gap-3">
-        <div
-          className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(184, 150, 63, 0.14)" }}
-          aria-hidden="true"
-        >
-          <IconLens size={20} />
-        </div>
-        <p
-          className="flex-1 text-[0.9rem] leading-snug text-left min-h-[4.5rem]"
-          style={{ color: "var(--foreground)" }}
-        >
+
+      {/* Corner brackets — estética "mira / scanner de investigação" */}
+      <span
+        aria-hidden="true"
+        className="absolute top-2.5 left-2.5 w-3 h-3 border-t-[1.5px] border-l-[1.5px] rounded-tl-md"
+        style={{ borderColor: "var(--primary)", opacity: 0.55 }}
+      />
+      <span
+        aria-hidden="true"
+        className="absolute top-2.5 right-2.5 w-3 h-3 border-t-[1.5px] border-r-[1.5px] rounded-tr-md"
+        style={{ borderColor: "var(--primary)", opacity: 0.55 }}
+      />
+      <span
+        aria-hidden="true"
+        className="absolute bottom-2.5 left-2.5 w-3 h-3 border-b-[1.5px] border-l-[1.5px] rounded-bl-md"
+        style={{ borderColor: "var(--primary)", opacity: 0.55 }}
+      />
+      <span
+        aria-hidden="true"
+        className="absolute bottom-2.5 right-2.5 w-3 h-3 border-b-[1.5px] border-r-[1.5px] rounded-br-md"
+        style={{ borderColor: "var(--primary)", opacity: 0.55 }}
+      />
+
+      {/* Bits digitais flutuando — mesmo DNA do HeroInvestigate */}
+      <svg
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        viewBox="0 0 300 120"
+        preserveAspectRatio="none"
+      >
+        <rect x="25" y="20" width="3" height="3" fill="var(--primary)" className="hero-bit" style={{ animationDelay: "0.2s" }} />
+        <circle cx="275" cy="30" r="1.8" fill="var(--primary)" className="hero-bit" style={{ animationDelay: "0.9s" }} />
+        <rect x="265" y="95" width="2.5" height="2.5" fill="var(--primary)" className="hero-bit" style={{ animationDelay: "1.6s" }} />
+        <circle cx="35" cy="100" r="1.5" fill="var(--primary)" className="hero-bit" style={{ animationDelay: "2.3s" }} />
+      </svg>
+
+      {/* Conteúdo — centralizado */}
+      <div className="relative text-center">
+        {/* Label com divisor dourado */}
+        <div className="flex items-center justify-center gap-2 mb-2.5">
           <span
-            className="block text-[0.65rem] font-bold uppercase tracking-widest mb-1"
+            className="h-px flex-1 max-w-[28px]"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, var(--primary))",
+              opacity: 0.5,
+            }}
+            aria-hidden="true"
+          />
+          <span
+            className="text-[0.62rem] font-bold uppercase tracking-[0.18em]"
             style={{ color: "var(--primary)" }}
           >
-            Busca Inteligente
+            Acabe com suas dúvidas fácil hoje
           </span>
+          <span
+            className="h-px flex-1 max-w-[28px]"
+            style={{
+              background:
+                "linear-gradient(90deg, var(--primary), transparent)",
+              opacity: 0.5,
+            }}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Texto principal */}
+        <p
+          className="text-[0.98rem] leading-snug min-h-[3.4rem]"
+          style={{ color: "var(--foreground)" }}
+        >
           Saiba tudo sobre qualquer pessoa apenas{" "}
-          <span style={{ color: "var(--primary)", fontWeight: 600 }}>
+          <span style={{ color: "var(--primary)", fontWeight: 700 }}>
             {text}
             <span className="typewriter-cursor" aria-hidden="true">
               |
