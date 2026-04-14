@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield } from "lucide-react"
-import { trackViewContent, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, sendServerEvent } from "@/lib/tracking-events"
+import { trackViewContent, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase } from "@/lib/tracking-events"
 
 // ── Dados dos planos (sincronizados com api/pix/route.ts) ────────────
 const plansData: Record<string, {
@@ -170,16 +170,11 @@ export default function CheckoutPage() {
   // ── ViewContent quando a página carrega ───────────────────────────────
   useEffect(() => {
     if (plan) {
+      // trackViewContent já envia client + server (CAPI) com deduplicação
       trackViewContent({
         content_name: plan.name,
         content_category: planSlug,
         value: plan.price,
-      })
-      sendServerEvent("ViewContent", {
-        content_name: plan.name,
-        content_category: planSlug,
-        value: plan.price,
-        currency: "BRL",
       })
     }
   }, [planSlug, plan])
@@ -245,7 +240,7 @@ export default function CheckoutPage() {
     // Primeira verificação após 3s, depois a cada 5s
     setTimeout(checkStatus, 3000)
     pollingRef.current = setInterval(checkStatus, 5000)
-  }, [])
+  }, [plan, planSlug, email, phone, nome, router])
 
   // ── Countdown de expiração ──────────────────────────────────────────
   const startCountdown = useCallback((expiresAt: string | null, createdAt: number) => {
@@ -340,14 +335,9 @@ export default function CheckoutPage() {
       setIsSubmitting(false)
       setStep("payment")
       window.scrollTo({ top: 0, behavior: "instant" })
-      // Rastrear iniciação de checkout
+      // trackInitiateCheckout já envia client + server (CAPI) com deduplicação
       trackInitiateCheckout({
         value: totalPrice,
-        content_category: planSlug,
-      })
-      sendServerEvent("InitiateCheckout", {
-        value: totalPrice,
-        currency: "BRL",
         content_category: planSlug,
       })
     }, 400)

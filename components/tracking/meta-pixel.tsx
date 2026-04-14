@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import Script from "next/script"
 import { Suspense } from "react"
@@ -10,9 +10,14 @@ const PIXEL_ID = "1825486488116021"
 function MetaPixelInner() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const isFirstRender = useRef(true)
 
-  // Dispara PageView em toda navegação
+  // Dispara PageView em navegação SPA (pula o primeiro render pois o SDK já dispara)
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("track", "PageView")
     }

@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
       phone,
       nome,
       fbclid,
+      event_id: clientEventId,
       utm_source,
       utm_medium,
       utm_campaign,
@@ -84,7 +85,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Event ID para deduplicação com o Pixel client-side
-    eventData.event_id = `capi_${event_name}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`
+    // Usa o mesmo event_id enviado pelo client para o Meta deduplicar corretamente
+    eventData.event_id = clientEventId || `capi_${event_name}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`
 
     // Enviar para Meta
     const url = `https://graph.facebook.com/${API_VERSION}/${PIXEL_ID}/events`

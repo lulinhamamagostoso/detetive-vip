@@ -11,11 +11,21 @@ declare global {
   }
 }
 
+// ── Event ID — usado para deduplicação Pixel ↔ CAPI ─────────────────
+
+export function generateEventId(eventName: string): string {
+  return `${eventName}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`
+}
+
 // ── Meta Pixel Events ─────────────────────────────────────────────────
 
-export function fbqTrack(eventName: string, params?: Record<string, any>) {
+export function fbqTrack(eventName: string, params?: Record<string, any>, eventId?: string) {
   if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", eventName, params || {})
+    if (eventId) {
+      window.fbq("track", eventName, params || {}, { eventID: eventId })
+    } else {
+      window.fbq("track", eventName, params || {})
+    }
   }
 }
 
@@ -111,6 +121,7 @@ export async function sendServerEvent(eventName: string, eventData: {
   email?: string
   phone?: string
   nome?: string
+  event_id?: string
 }) {
   try {
     const utm = getStoredUTM()
@@ -136,11 +147,6 @@ export async function sendServerEvent(eventName: string, eventData: {
 
 // ── Funções de conveniência para eventos do funil ─────────────────────
 
-export function trackPageView() {
-  fbqTrack("PageView")
-  gtagEvent("page_view")
-}
-
 export function trackViewContent(params: {
   content_name: string
   content_category: string
@@ -148,11 +154,20 @@ export function trackViewContent(params: {
   currency?: string
 }) {
   const p = { ...params, currency: params.currency || "BRL" }
-  fbqTrack("ViewContent", p)
+  const eventId = generateEventId("ViewContent")
+  fbqTrack("ViewContent", p, eventId)
   gtagEvent("view_item", {
     items: [{ item_name: p.content_name, item_category: p.content_category, price: p.value }],
     currency: p.currency,
     value: p.value,
+  })
+  // CAPI server-side com mesmo event_id para deduplicação
+  sendServerEvent("ViewContent", {
+    value: p.value,
+    currency: p.currency,
+    content_name: p.content_name,
+    content_category: p.content_category,
+    event_id: eventId,
   })
 }
 
@@ -162,11 +177,19 @@ export function trackInitiateCheckout(params: {
   currency?: string
 }) {
   const p = { ...params, currency: params.currency || "BRL" }
-  fbqTrack("InitiateCheckout", p)
+  const eventId = generateEventId("InitiateCheckout")
+  fbqTrack("InitiateCheckout", p, eventId)
   gtagEvent("begin_checkout", {
     currency: p.currency,
     value: p.value,
     items: [{ item_category: p.content_category, price: p.value }],
+  })
+  // CAPI server-side com mesmo event_id
+  sendServerEvent("InitiateCheckout", {
+    value: p.value,
+    currency: p.currency,
+    content_category: p.content_category,
+    event_id: eventId,
   })
 }
 
@@ -176,11 +199,19 @@ export function trackAddPaymentInfo(params: {
   currency?: string
 }) {
   const p = { ...params, currency: params.currency || "BRL" }
-  fbqTrack("AddPaymentInfo", p)
+  const eventId = generateEventId("AddPaymentInfo")
+  fbqTrack("AddPaymentInfo", p, eventId)
   gtagEvent("add_payment_info", {
     currency: p.currency,
     value: p.value,
     payment_type: "PIX",
+  })
+  // CAPI server-side com mesmo event_id
+  sendServerEvent("AddPaymentInfo", {
+    value: p.value,
+    currency: p.currency,
+    content_category: p.content_category,
+    event_id: eventId,
   })
 }
 
@@ -194,14 +225,15 @@ export function trackPurchase(params: {
   nome?: string
 }) {
   const p = { ...params, currency: params.currency || "BRL" }
+  const eventId = generateEventId("Purchase")
 
-  // Client-side
+  // Client-side com eventID para deduplicação
   fbqTrack("Purchase", {
     value: p.value,
     currency: p.currency,
     content_name: p.content_name,
     content_category: p.content_category,
-  })
+  }, eventId)
   gtagEvent("purchase", {
     transaction_id: `dtv_${Date.now()}`,
     value: p.value,
@@ -209,7 +241,7 @@ export function trackPurchase(params: {
     items: [{ item_name: p.content_name, item_category: p.content_category, price: p.value }],
   })
 
-  // Server-side (CAPI) — redundância para melhor match rate
+  // Server-side (CAPI) — mesmo event_id para deduplicação Meta
   sendServerEvent("Purchase", {
     value: p.value,
     currency: p.currency,
@@ -218,16 +250,18 @@ export function trackPurchase(params: {
     email: p.email,
     phone: p.phone,
     nome: p.nome,
+    event_id: eventId,
   })
 }
 
 export function trackLead(params?: { content_name?: string; value?: number }) {
-  fbqTrack("Lead", params)
+  const eventId = generateEventId("Lead")
+  fbqTrack("Lead", params, eventId)
   gtagEvent("generate_lead", {
     value: params?.value,
     currency: "BRL",
   })
-  sendServerEvent("Lead", { value: params?.value, content_name: params?.content_name })
+  sendServerEvent("Lead", { value: params?.value, content_name: params?.content_name, event_id: eventId })
 }
 
 export function trackClickCTA(label: string) {
