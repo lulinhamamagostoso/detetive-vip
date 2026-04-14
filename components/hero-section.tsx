@@ -15,6 +15,93 @@ const trustItems = [
 
 const tags = ["CPF", "Nome", "Telefone", "CNPJ", "Placa", "Chave PIX", "E-mail"]
 
+const TYPED_PHRASES = [
+  "pelo telefone",
+  "pelo nome",
+  "pela placa",
+  "pela chave PIX",
+  "pelo CPF",
+  "pelo e-mail",
+]
+
+// Typewriter minimalista no mobile — entre Lottie e CTA.
+// Zero deps externas, ~1KB. Container com min-height fixo → CLS = 0.
+function HeroTypewriter() {
+  const [phraseIndex, setPhraseIndex] = useState(0)
+  const [text, setText] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      if (text !== TYPED_PHRASES[0]) setText(TYPED_PHRASES[0])
+      return
+    }
+
+    const current = TYPED_PHRASES[phraseIndex]
+
+    if (!isDeleting && text === current) {
+      const pause = setTimeout(() => setIsDeleting(true), 1800)
+      return () => clearTimeout(pause)
+    }
+
+    if (isDeleting && text === "") {
+      setIsDeleting(false)
+      setPhraseIndex((i) => (i + 1) % TYPED_PHRASES.length)
+      return
+    }
+
+    const delay = isDeleting ? 35 : 75
+    const t = setTimeout(() => {
+      setText(
+        isDeleting
+          ? current.slice(0, text.length - 1)
+          : current.slice(0, text.length + 1)
+      )
+    }, delay)
+
+    return () => clearTimeout(t)
+  }, [text, isDeleting, phraseIndex])
+
+  return (
+    <div className="md:hidden flex items-center gap-3 mb-4 mx-auto max-w-md text-left">
+      <div
+        className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+        style={{ background: "rgba(184, 150, 63, 0.14)" }}
+        aria-hidden="true"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--primary)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+      </div>
+      <p
+        className="flex-1 text-[0.875rem] leading-snug min-h-[5rem]"
+        style={{ color: "var(--foreground)" }}
+      >
+        Dê fim hoje as suas dúvidas sobre qualquer pessoa investigando apenas{" "}
+        <span style={{ color: "var(--primary)", fontWeight: 600 }}>
+          {text}
+          <span className="typewriter-cursor" aria-hidden="true">
+            |
+          </span>
+        </span>
+      </p>
+    </div>
+  )
+}
+
 // Lottie detetive no mobile. Container tem altura fixa (h-64 = 256px) para
 // reservar espaço → CLS = 0. Fetch do JSON via requestIdleCallback → não
 // bloqueia LCP (que agora é o subtitle do hero).
@@ -112,6 +199,9 @@ export function HeroSection() {
 
           {/* Lottie Detetive — apenas mobile */}
           <DetectiveLottie />
+
+          {/* Typewriter minimalista — apenas mobile */}
+          <HeroTypewriter />
 
           {/* CTA */}
           <div className="flex flex-col items-center lg:items-start mb-4 md:mb-5">
