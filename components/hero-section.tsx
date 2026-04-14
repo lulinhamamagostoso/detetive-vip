@@ -2,10 +2,6 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import dynamic from "next/dynamic"
-
-// lottie-react carregado lazy no client (~50KB gzipped)
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
 const trustItems = [
   { label: "100% Sigiloso" },
@@ -15,55 +11,108 @@ const trustItems = [
 
 const tags = ["CPF", "Nome", "Telefone", "CNPJ", "Placa", "Chave PIX", "E-mail"]
 
-// Lottie detetive no mobile. Container tem altura fixa (h-64 = 256px) para
-// reservar espaço → CLS = 0. Fetch do JSON via requestIdleCallback → não
-// bloqueia LCP (que agora é o subtitle do hero).
-function DetectiveLottie() {
-  const [animationData, setAnimationData] = useState<object | null>(null)
+// Preposição incluída para preservar concordância de gênero em PT-BR.
+const TYPED_PHRASES = [
+  "pelo telefone",
+  "pelo nome",
+  "pela placa",
+  "pela chave PIX",
+  "pelo CPF",
+  "pelo e-mail",
+]
+
+// Card decorativo mobile-only com efeito máquina de escrever. Zero fetches,
+// zero dependências externas. Container com min-height reservado → CLS = 0.
+function TypewriterCard() {
+  const [phraseIndex, setPhraseIndex] = useState(0)
+  const [text, setText] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
-    const loadLottie = () => {
-      fetch("/Mr Detective.json")
-        .then((res) => res.json())
-        .then(setAnimationData)
-        .catch(() => {})
+    // Respeita preferência de movimento reduzido: mostra estático.
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      if (text !== TYPED_PHRASES[0]) setText(TYPED_PHRASES[0])
+      return
     }
 
-    if ("requestIdleCallback" in window) {
-      const id = requestIdleCallback(loadLottie, { timeout: 5000 })
-      return () => cancelIdleCallback(id)
-    } else {
-      const timer = setTimeout(loadLottie, 4500)
-      return () => clearTimeout(timer)
+    const current = TYPED_PHRASES[phraseIndex]
+
+    // Terminou de digitar → pausa → começa a apagar.
+    if (!isDeleting && text === current) {
+      const pause = setTimeout(() => setIsDeleting(true), 1800)
+      return () => clearTimeout(pause)
     }
-  }, [])
+
+    // Terminou de apagar → avança para próxima frase.
+    if (isDeleting && text === "") {
+      setIsDeleting(false)
+      setPhraseIndex((i) => (i + 1) % TYPED_PHRASES.length)
+      return
+    }
+
+    const delay = isDeleting ? 35 : 75
+    const t = setTimeout(() => {
+      setText(
+        isDeleting
+          ? current.slice(0, text.length - 1)
+          : current.slice(0, text.length + 1)
+      )
+    }, delay)
+
+    return () => clearTimeout(t)
+  }, [text, isDeleting, phraseIndex])
 
   return (
-    <div className="relative flex justify-center my-2 md:hidden h-64">
-      {/* Glow dourado sutil */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        aria-hidden="true"
-      >
+    <div
+      className="md:hidden my-4 mx-auto max-w-sm rounded-2xl px-5 py-4"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(184, 150, 63, 0.09), rgba(184, 150, 63, 0.02))",
+        border: "1px solid rgba(184, 150, 63, 0.18)",
+        boxShadow: "0 2px 12px rgba(184, 150, 63, 0.06)",
+      }}
+    >
+      <div className="flex items-start gap-3">
         <div
-          className="w-52 h-52 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(184, 150, 63, 0.12) 0%, transparent 70%)",
-            filter: "blur(24px)",
-          }}
-        />
-      </div>
-
-      <div className="relative w-64 h-64 -ml-3">
-        {animationData && (
-          <Lottie
-            animationData={animationData}
-            loop
-            autoplay
-            style={{ width: "100%", height: "100%" }}
-          />
-        )}
+          className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(184, 150, 63, 0.14)" }}
+          aria-hidden="true"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--primary)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </div>
+        <p
+          className="flex-1 text-[0.9rem] leading-snug text-left min-h-[4.5rem]"
+          style={{ color: "var(--foreground)" }}
+        >
+          <span
+            className="block text-[0.65rem] font-bold uppercase tracking-widest mb-1"
+            style={{ color: "var(--primary)" }}
+          >
+            Busca Inteligente
+          </span>
+          Saiba tudo sobre qualquer pessoa apenas{" "}
+          <span style={{ color: "var(--primary)", fontWeight: 600 }}>
+            {text}
+            <span className="typewriter-cursor" aria-hidden="true">
+              |
+            </span>
+          </span>
+        </p>
       </div>
     </div>
   )
@@ -110,8 +159,8 @@ export function HeroSection() {
             <strong style={{ color: "var(--foreground)" }}>5 minutos</strong>.
           </p>
 
-          {/* Lottie Detetive — apenas mobile */}
-          <DetectiveLottie />
+          {/* Card decorativo typewriter — apenas mobile */}
+          <TypewriterCard />
 
           {/* CTA */}
           <div className="flex flex-col items-center lg:items-start mb-4 md:mb-5">
