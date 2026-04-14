@@ -472,7 +472,7 @@ export default function CheckoutPage() {
 
             <div className="flex justify-center mb-6">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Detetive VIP"
                 width={400}
                 height={105}
@@ -685,7 +685,7 @@ export default function CheckoutPage() {
 
             <div className="flex justify-center mb-6">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Detetive VIP"
                 width={400}
                 height={105}
@@ -834,7 +834,7 @@ export default function CheckoutPage() {
           <div className="mb-6">
             <div className="flex justify-center mb-6">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Detetive VIP"
                 width={400}
                 height={105}
@@ -909,7 +909,7 @@ export default function CheckoutPage() {
 
           <div className="flex justify-center mb-6">
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="Detetive VIP"
               width={160}
               height={40}

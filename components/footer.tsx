@@ -33,7 +33,7 @@ export function Footer() {
         {/* Mobile: Simple footer */}
         <div className="md:hidden text-center">
           <Image
-            src="/logo.png"
+            src="/logo.webp"
             alt="Detetive VIP"
             width={400}
             height={105}
@@ -61,7 +61,7 @@ export function Footer() {
             {/* Brand */}
             <div>
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Detetive VIP"
                 width={400}
                 height={105}

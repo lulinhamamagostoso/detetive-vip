@@ -1,12 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Image from "next/image"
-import dynamic from "next/dynamic"
-
-
-// Carrega lottie-react apenas no client para evitar SSR issues
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
 const trustItems = [
   { label: "100% Sigiloso" },
@@ -15,58 +9,6 @@ const trustItems = [
 ]
 
 const tags = ["CPF", "Nome", "Telefone", "CNPJ", "Placa", "Chave PIX", "E-mail"]
-
-function DetectiveLottie() {
-  const [animationData, setAnimationData] = useState<object | null>(null)
-
-  useEffect(() => {
-    // Carrega Lottie somente quando browser está idle para não impactar TBT/LCP
-    const loadLottie = () => {
-      fetch("/Mr Detective.json")
-        .then((res) => res.json())
-        .then(setAnimationData)
-        .catch(() => {})
-    }
-
-    if ("requestIdleCallback" in window) {
-      const id = requestIdleCallback(loadLottie, { timeout: 5000 })
-      return () => cancelIdleCallback(id)
-    } else {
-      const timer = setTimeout(loadLottie, 4500)
-      return () => clearTimeout(timer)
-    }
-  }, [])
-
-  if (!animationData) return null
-
-  return (
-    <div className="relative flex justify-center my-2 md:hidden">
-      {/* Glow dourado sutil */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        aria-hidden="true"
-      >
-        <div
-          className="w-52 h-52 rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(184, 150, 63, 0.12) 0%, transparent 70%)",
-            filter: "blur(24px)",
-          }}
-        />
-      </div>
-
-      {/* Animacao sem circulo — diretamente visivel */}
-      <div className="relative w-64 h-64 -ml-3">
-        <Lottie
-          animationData={animationData}
-          loop
-          autoplay
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
-    </div>
-  )
-}
 
 export function HeroSection() {
   return (
@@ -108,9 +50,6 @@ export function HeroSection() {
             Você fornece um único nome, cpf, número de telefone, placa ou chave PIX e nós investigamos a fundo tudo sobre. Você recebe a ficha completa no seu WhatsApp em até{" "}
             <strong style={{ color: "var(--foreground)" }}>5 minutos</strong>.
           </p>
-
-          {/* Lottie Detetive — apenas mobile, entre subtitle e trust items */}
-          <DetectiveLottie />
 
           {/* CTA */}
           <div className="flex flex-col items-center lg:items-start mb-4 md:mb-5">

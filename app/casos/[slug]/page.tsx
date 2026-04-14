@@ -381,7 +381,7 @@ export default async function CasoPage({ params }: { params: Promise<{ slug: str
             Voltar
           </Link>
           <Link href="/">
-            <Image src="/logo.png" alt="Detetive VIP" width={110} height={28} className="h-6 md:h-7 w-auto" />
+            <Image src="/logo.webp" alt="Detetive VIP" width={110} height={28} className="h-6 md:h-7 w-auto" />
           </Link>
           <div className="w-[60px]" />
         </div>

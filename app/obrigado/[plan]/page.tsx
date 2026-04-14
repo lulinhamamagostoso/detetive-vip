@@ -147,7 +147,7 @@ function ObrigadoContent() {
       <div className="min-h-screen py-8 px-4" style={{ background: "var(--background)" }}>
         <div className="max-w-md mx-auto text-center">
           <div className="flex justify-center mb-8">
-            <Link href="/"><Image src="/logo.png" alt="Detetive VIP" width={140} height={36} style={{ height: "36px", width: "auto" }} /></Link>
+            <Link href="/"><Image src="/logo.webp" alt="Detetive VIP" width={140} height={36} style={{ height: "36px", width: "auto" }} /></Link>
           </div>
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "rgba(37,211,102,0.15)" }}>
             <CheckCircle2 size={40} style={{ color: "var(--success)" }} />
@@ -192,7 +192,7 @@ function ObrigadoContent() {
 
       {/* ── Header ── */}
       <div className="flex justify-center py-5 px-4" style={{ borderBottom: "1px solid var(--border)" }}>
-        <Link href="/"><Image src="/logo.png" alt="Detetive VIP" width={130} height={34} style={{ height: "34px", width: "auto" }} /></Link>
+        <Link href="/"><Image src="/logo.webp" alt="Detetive VIP" width={130} height={34} style={{ height: "34px", width: "auto" }} /></Link>
       </div>
 
       <div className="max-w-lg mx-auto px-4 py-8">
