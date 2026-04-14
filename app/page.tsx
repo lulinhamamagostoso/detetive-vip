@@ -25,7 +25,6 @@ export default function HomePage() {
         <HeroSection />
         <StatsBar />
         <HowItWorksSection />
-        <ComparisonSection />
         <ServicesSection />
         <ReportPreviewSection />
         <UseCasesSection />
@@ -33,6 +32,7 @@ export default function HomePage() {
         <GuaranteeSection />
         <PricingSection />
         <FAQSection />
+        <ComparisonSection />
         <CTASection />
       </main>
 
