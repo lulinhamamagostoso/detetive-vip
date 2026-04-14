@@ -1,21 +1,17 @@
 import type { Metadata, Viewport } from "next"
-import { DM_Sans, Playfair_Display } from "next/font/google"
+import { Playfair_Display } from "next/font/google"
 import "./globals.css"
 import MetaPixel from "@/components/tracking/meta-pixel"
 import GoogleAnalytics from "@/components/tracking/google-analytics"
 import MicrosoftClarity from "@/components/tracking/microsoft-clarity"
 import UTMTracker from "@/components/tracking/utm-tracker"
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  display: "swap",
-})
-
+// Playfair Display apenas para títulos (H1/H2). display: optional = se não carregar
+// rápido, usa fallback serif e não re-renderiza (não impacta LCP).
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
-  display: "swap",
+  display: "optional",
 })
 
 const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.detetive.vip"
@@ -259,7 +255,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html lang="pt-BR" className={playfair.variable}>
       <head>
         <script
           type="application/ld+json"
