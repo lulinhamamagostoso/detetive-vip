@@ -1,3 +1,4 @@
+import Link from "next/link"
 import {
   Zap,
   Eye,
@@ -11,21 +12,22 @@ import {
   MonitorSmartphone,
   Package,
   FileCheck,
+  ChevronRight,
 } from "lucide-react"
 
 const useCases = [
-  { icon: Zap, text: "Fui v\u00EDtima de golpe no PIX" },
-  { icon: Eye, text: "Suspeito de infidelidade do meu parceiro(a)" },
-  { icon: Target, text: "Preciso localizar um devedor que desapareceu" },
-  { icon: ShieldCheck, text: "Quero verificar algu\u00E9m antes de fechar neg\u00F3cio" },
-  { icon: AlertTriangle, text: "Recebi amea\u00E7as de um n\u00FAmero desconhecido" },
-  { icon: Users, text: "Quero encontrar um parente ou pessoa perdida" },
-  { icon: Scale, text: "Sou advogado e preciso localizar uma parte processual" },
-  { icon: Building2, text: "Quero saber se uma empresa \u00E9 confi\u00E1vel antes de comprar" },
-  { icon: Car, text: "Preciso descobrir o dono de um ve\u00EDculo" },
-  { icon: MonitorSmartphone, text: "Conheci algu\u00E9m online e quero confirmar a identidade" },
-  { icon: Package, text: "Comprei algo online e o vendedor sumiu" },
-  { icon: FileCheck, text: "Preciso de informa\u00E7\u00F5es para um Boletim de Ocorr\u00EAncia" },
+  { icon: Zap, text: "Fui v\u00EDtima de golpe no PIX", slug: "fui-vitima-de-golpe-no-pix" },
+  { icon: Eye, text: "Suspeito de infidelidade do meu parceiro(a)", slug: "suspeito-de-infidelidade" },
+  { icon: Target, text: "Preciso localizar um devedor que desapareceu", slug: "localizar-devedor" },
+  { icon: ShieldCheck, text: "Quero verificar algu\u00E9m antes de fechar neg\u00F3cio", slug: "verificar-pessoa-antes-de-negocio" },
+  { icon: AlertTriangle, text: "Recebi amea\u00E7as de um n\u00FAmero desconhecido", slug: "ameacas-numero-desconhecido" },
+  { icon: Users, text: "Quero encontrar um parente ou pessoa perdida", slug: "encontrar-parente-perdido" },
+  { icon: Scale, text: "Sou advogado e preciso localizar uma parte processual", slug: "localizar-parte-processual" },
+  { icon: Building2, text: "Quero saber se uma empresa \u00E9 confi\u00E1vel antes de comprar", slug: "verificar-empresa" },
+  { icon: Car, text: "Preciso descobrir o dono de um ve\u00EDculo", slug: "descobrir-dono-veiculo" },
+  { icon: MonitorSmartphone, text: "Conheci algu\u00E9m online e quero confirmar a identidade", slug: "confirmar-identidade-online" },
+  { icon: Package, text: "Comprei algo online e o vendedor sumiu", slug: "vendedor-sumiu" },
+  { icon: FileCheck, text: "Preciso de informa\u00E7\u00F5es para um Boletim de Ocorr\u00EAncia", slug: "informacoes-boletim-ocorrencia" },
 ]
 
 export function UseCasesSection() {
@@ -67,25 +69,35 @@ export function UseCasesSection() {
             const Icon = item.icon
             return (
               <div
-                key={item.text}
-                className="flex items-center gap-3 p-3.5 md:p-4 rounded-lg md:rounded-xl transition-colors"
+                key={item.slug}
+                className="flex flex-col p-3.5 md:p-4 rounded-lg md:rounded-xl transition-colors"
                 style={{
                   background: "var(--background-card)",
                   border: "1px solid var(--border)",
                 }}
               >
-                <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ background: "rgba(22, 163, 74, 0.08)", color: "#16a34a" }}
-                >
-                  <Icon size={18} strokeWidth={2} aria-hidden="true" />
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(22, 163, 74, 0.08)", color: "#16a34a" }}
+                  >
+                    <Icon size={18} strokeWidth={2} aria-hidden="true" />
+                  </div>
+                  <span
+                    className="text-[0.8rem] md:text-[0.85rem] leading-snug font-medium"
+                    style={{ color: "var(--foreground)" }}
+                  >
+                    {item.text}
+                  </span>
                 </div>
-                <span
-                  className="text-[0.8rem] md:text-[0.85rem] leading-snug font-medium"
-                  style={{ color: "var(--foreground)" }}
+                <Link
+                  href={`/casos/${item.slug}`}
+                  className="flex items-center gap-1 mt-2.5 ml-12 text-[0.72rem] font-semibold transition-opacity hover:opacity-70"
+                  style={{ color: "var(--primary)" }}
                 >
-                  {item.text}
-                </span>
+                  Saber mais
+                  <ChevronRight size={13} />
+                </Link>
               </div>
             )
           })}
