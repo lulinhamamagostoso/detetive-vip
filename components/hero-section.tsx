@@ -16,12 +16,12 @@ const trustItems = [
 const tags = ["CPF", "Nome", "Telefone", "CNPJ", "Placa", "Chave PIX", "E-mail"]
 
 const TYPED_PHRASES = [
-  "pelo telefone",
-  "pelo nome",
-  "pela placa",
-  "pela chave PIX",
-  "pelo CPF",
-  "pelo e-mail",
+  "telefone",
+  "nome",
+  "placa",
+  "chave PIX",
+  "CPF",
+  "e-mail",
 ]
 
 // Typewriter minimalista no mobile — entre Lottie e CTA.
@@ -90,7 +90,7 @@ function HeroTypewriter() {
         className="flex-1 text-[0.875rem] leading-snug min-h-[5rem]"
         style={{ color: "var(--foreground)" }}
       >
-        Dê fim hoje as suas dúvidas sobre qualquer pessoa investigando apenas{" "}
+        Acabe hoje com suas dúvidas sobre qualquer pessoa, investigando apenas pelo{" "}
         <span style={{ color: "var(--primary)", fontWeight: 600 }}>
           {text}
           <span className="typewriter-cursor" aria-hidden="true">
