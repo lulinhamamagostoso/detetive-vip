@@ -50,9 +50,9 @@ export function Navbar() {
           <Image
             src="/logo.png"
             alt="Detetive VIP"
-            width={140}
-            height={35}
-            className="h-8 md:h-11 w-auto object-contain"
+            width={400}
+            height={105}
+            className="h-8 md:h-11 w-auto"
             priority
           />
         </Link>

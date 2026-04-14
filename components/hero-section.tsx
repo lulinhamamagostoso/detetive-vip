@@ -20,10 +20,14 @@ function DetectiveLottie() {
   const [animationData, setAnimationData] = useState<object | null>(null)
 
   useEffect(() => {
-    fetch("/Mr Detective.json")
-      .then((res) => res.json())
-      .then(setAnimationData)
-      .catch(() => {})
+    // Atrasa carregamento do Lottie para não bloquear LCP/FCP
+    const timer = setTimeout(() => {
+      fetch("/Mr Detective.json")
+        .then((res) => res.json())
+        .then(setAnimationData)
+        .catch(() => {})
+    }, 3000)
+    return () => clearTimeout(timer)
   }, [])
 
   if (!animationData) return null
@@ -152,10 +156,10 @@ export function HeroSection() {
         <div className="relative hidden md:flex justify-center">
           {/* Mockup */}
           <Image
-            src="/mockup.png"
+            src="/mockup.webp"
             alt="Detetive VIP - Investigação entregue via WhatsApp"
-            width={320}
-            height={600}
+            width={728}
+            height={1350}
             className="w-[320px] max-w-full rounded-2xl"
             style={{
               filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))"

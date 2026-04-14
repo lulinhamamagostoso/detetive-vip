@@ -28,7 +28,7 @@
   /* Text - Dark on light */
   --foreground: #1a1a1f;
   --muted-foreground: #4a4a56;
-  --muted: #6e6e7a;
+  --muted: #5c5c68;
   
   /* Borders - Soft gray */
   --border: rgba(0, 0, 0, 0.06);
@@ -98,14 +98,16 @@ body {
   }
 }
 
-/* Animations - Disabled on mobile for performance */
-@keyframes pulse-fade {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
+/* Animations - Pulse fade only on desktop for mobile performance */
+@media (min-width: 768px) {
+  @keyframes pulse-fade {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
 
-.animate-pulse-fade {
-  animation: pulse-fade 2s ease-in-out infinite;
+  .animate-pulse-fade {
+    animation: pulse-fade 2s ease-in-out infinite;
+  }
 }
 
 /* Desktop-only animations */
@@ -150,22 +152,24 @@ body {
   100% { transform: translateX(-50%); }
 }
 
-/* Scan line animation */
-@keyframes scan {
-  0% { transform: translateY(0); opacity: 0; }
-  50% { opacity: 0.05; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
+/* Scan line + reveal animations — desktop only for mobile performance */
+@media (min-width: 768px) {
+  @keyframes scan {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { opacity: 0.05; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
 
-.animate-scan {
-  animation: scan 8s linear infinite;
+  .animate-scan {
+    animation: scan 8s linear infinite;
+  }
 }
 
 /* Reveal animation classes */
 .reveal {
   opacity: 0;
   transform: translateY(35px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

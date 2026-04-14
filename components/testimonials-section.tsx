@@ -77,7 +77,7 @@ export function TestimonialsSection() {
               }}
             >
               {/* Stars */}
-              <div className="flex gap-0.5 mb-2" style={{ color: "var(--primary)" }} aria-label={`${testimonial.rating} de 5 estrelas`}>
+              <div className="flex gap-0.5 mb-2" style={{ color: "var(--primary)" }} role="img" aria-label={`${testimonial.rating} de 5 estrelas`}>
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star key={i} size={12} fill="currentColor" aria-hidden="true" />
                 ))}

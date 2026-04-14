@@ -14,7 +14,7 @@ const footerLinks = {
     { label: "Como Funciona", href: "#como-funciona" },
     { label: "Depoimentos", href: "#depoimentos" },
     { label: "FAQ", href: "#faq" },
-    { label: "Blog", href: "https://conteudo.detetive.vip" },
+    { label: "Blog", href: "/blog" },
   ],
   legal: [
     { label: "Termos de Uso", href: "/termos" },
@@ -35,8 +35,8 @@ export function Footer() {
           <Image
             src="/logo.png"
             alt="Detetive VIP"
-            width={120}
-            height={30}
+            width={400}
+            height={105}
             className="h-8 w-auto mx-auto mb-3"
           />
           <p
@@ -63,8 +63,8 @@ export function Footer() {
               <Image
                 src="/logo.png"
                 alt="Detetive VIP"
-                width={140}
-                height={35}
+                width={400}
+                height={105}
                 className="h-9 w-auto mb-3"
               />
               <p

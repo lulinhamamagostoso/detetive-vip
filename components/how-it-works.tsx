@@ -74,7 +74,7 @@ export function HowItWorksSection() {
                 width={260}
                 height={530}
                 className="w-full h-auto drop-shadow-2xl"
-                priority
+                loading="lazy"
                 quality={75}
               />
             </div>
