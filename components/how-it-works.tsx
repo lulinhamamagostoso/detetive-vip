@@ -71,8 +71,8 @@ export function HowItWorksSection() {
               <Image
                 src="/mockup-whatsapp.webp"
                 alt="Exemplo de entrega da investigação via WhatsApp no celular"
-                width={260}
-                height={530}
+                width={752}
+                height={1395}
                 className="w-full h-auto drop-shadow-2xl"
                 loading="lazy"
                 quality={75}

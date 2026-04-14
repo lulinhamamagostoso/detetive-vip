@@ -474,8 +474,8 @@ export default function CheckoutPage() {
               <Image
                 src="/logo.png"
                 alt="Detetive VIP"
-                width={160}
-                height={40}
+                width={400}
+                height={105}
                 style={{ height: "40px", width: "auto" }}
               />
             </div>
@@ -687,8 +687,8 @@ export default function CheckoutPage() {
               <Image
                 src="/logo.png"
                 alt="Detetive VIP"
-                width={160}
-                height={40}
+                width={400}
+                height={105}
                 style={{ height: "40px", width: "auto" }}
               />
             </div>
@@ -836,8 +836,8 @@ export default function CheckoutPage() {
               <Image
                 src="/logo.png"
                 alt="Detetive VIP"
-                width={160}
-                height={40}
+                width={400}
+                height={105}
                 style={{ height: "40px", width: "auto" }}
               />
             </div>

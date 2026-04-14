@@ -82,8 +82,8 @@ export function LogoCarousel() {
                 <Image
                   src={logo.src}
                   alt={`Integração com ${logo.name}`}
-                  width={120}
-                  height={48}
+                  width={427}
+                  height={100}
                   className="h-10 md:h-12 w-auto object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
                   loading="lazy"
                 />
@@ -98,8 +98,8 @@ export function LogoCarousel() {
                 <Image
                   src={logo.src}
                   alt={`Integração com ${logo.name}`}
-                  width={120}
-                  height={48}
+                  width={427}
+                  height={100}
                   className="h-10 md:h-12 w-auto object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
                   loading="lazy"
                 />

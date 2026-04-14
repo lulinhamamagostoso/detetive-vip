@@ -20,14 +20,21 @@ function DetectiveLottie() {
   const [animationData, setAnimationData] = useState<object | null>(null)
 
   useEffect(() => {
-    // Atrasa carregamento do Lottie para não bloquear LCP/FCP
-    const timer = setTimeout(() => {
+    // Carrega Lottie somente quando browser está idle para não impactar TBT/LCP
+    const loadLottie = () => {
       fetch("/Mr Detective.json")
         .then((res) => res.json())
         .then(setAnimationData)
         .catch(() => {})
-    }, 3000)
-    return () => clearTimeout(timer)
+    }
+
+    if ("requestIdleCallback" in window) {
+      const id = requestIdleCallback(loadLottie, { timeout: 5000 })
+      return () => cancelIdleCallback(id)
+    } else {
+      const timer = setTimeout(loadLottie, 4500)
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   if (!animationData) return null
