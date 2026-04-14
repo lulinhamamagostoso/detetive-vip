@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield } from "lucide-react"
@@ -49,6 +49,26 @@ const plansData: Record<string, {
     price: 197,
     originalPrice: 307,
     description: "Investiga\u00E7\u00E3o completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
+    inputPlaceholder: "Nome, CPF, telefone, e-mail, chave PIX ou outras informa\u00E7\u00F5es dispon\u00EDveis",
+    features: [
+      "Nome Completo, CPF, RG e Data de Nascimento",
+      "Todos os Telefones (Celular e Fixo)",
+      "Todos os Endere\u00E7os Vinculados",
+      "E-mails e Redes Sociais",
+      "Ve\u00EDculos, Placa e Modelo",
+      "Parentes Pr\u00F3ximos (Nome e CPF)",
+      "Score, D\u00EDvidas e Processos Judiciais",
+      "Faixa de Renda e Profiss\u00E3o",
+      "Participa\u00E7\u00E3o em Empresas (CNPJ)",
+      "Resumo investigativo + Parecer do analista",
+      "Pontos de aten\u00E7\u00E3o e an\u00E1lise de risco",
+    ],
+  },
+  "upgrade-premium": {
+    name: "Investiga\u00E7\u00E3o Premium",
+    price: 97,
+    originalPrice: 197,
+    description: "Investiga\u00E7\u00E3o completa com 20+ bancos de dados \u2014 Oferta exclusiva",
     inputPlaceholder: "Nome, CPF, telefone, e-mail, chave PIX ou outras informa\u00E7\u00F5es dispon\u00EDveis",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
@@ -120,6 +140,7 @@ interface PixPaymentData {
 
 export default function CheckoutPage() {
   const params = useParams()
+  const router = useRouter()
   const planSlug = typeof params.plan === "string" ? params.plan : ""
   const plan = plansData[planSlug]
 
@@ -193,8 +214,6 @@ export default function CheckoutPage() {
           if (pollingRef.current) clearInterval(pollingRef.current)
           if (countdownRef.current) clearInterval(countdownRef.current)
           setPaymentStatus("paid")
-          setStep("success")
-          window.scrollTo({ top: 0, behavior: "instant" })
           // Rastrear compra
           if (plan) {
             trackEvent("Purchase", {
@@ -204,6 +223,8 @@ export default function CheckoutPage() {
               content_category: planSlug,
             })
           }
+          // Redirecionar para página de obrigado com upsell
+          router.push(`/obrigado/${planSlug}?nome=${encodeURIComponent(nome)}`)
         } else if (data.status === "refused" || data.status === "chargedback") {
           if (pollingRef.current) clearInterval(pollingRef.current)
           setPaymentStatus("refused")
