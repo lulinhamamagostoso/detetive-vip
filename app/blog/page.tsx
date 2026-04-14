@@ -24,7 +24,7 @@ export default function BlogHomePage() {
             <span className="gradient-gold-text">VIP</span>
           </h1>
           <p className="text-base sm:text-lg text-[var(--muted-foreground)] max-w-xl mx-auto leading-relaxed">
-            Artigos, guias e tutoriais sobre investigacao digital, seguranca e
+            Artigos, guias e tutoriais sobre investigação digital, segurança e
             como se proteger de fraudes no Brasil
           </p>
         </div>

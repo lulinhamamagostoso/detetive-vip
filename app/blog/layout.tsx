@@ -5,14 +5,14 @@ import { BlogFooter } from "@/components/blog/footer"
 export const metadata: Metadata = {
   title: {
     template: "%s | Blog Detetive VIP",
-    default: "Blog Detetive VIP — Artigos sobre Investigacao Digital",
+    default: "Blog Detetive VIP — Artigos sobre Investigação Digital",
   },
   description:
-    "Artigos, guias e tutoriais sobre investigacao digital, seguranca e como se proteger de fraudes no Brasil. Conteudo especializado do Detetive VIP.",
+    "Artigos, guias e tutoriais sobre investigação digital, segurança e como se proteger de fraudes no Brasil. Conteúdo especializado do Detetive VIP.",
   openGraph: {
-    title: "Blog Detetive VIP — Artigos sobre Investigacao Digital",
+    title: "Blog Detetive VIP — Artigos sobre Investigação Digital",
     description:
-      "Artigos, guias e tutoriais sobre investigacao digital, seguranca e como se proteger de fraudes no Brasil.",
+      "Artigos, guias e tutoriais sobre investigação digital, segurança e como se proteger de fraudes no Brasil.",
     type: "website",
     locale: "pt_BR",
     url: "https://www.detetive.vip/blog",
@@ -33,7 +33,7 @@ export default function BlogLayout({
     "@type": "Blog",
     name: "Blog Detetive VIP",
     description:
-      "Artigos, guias e tutoriais sobre investigacao digital, seguranca e como se proteger de fraudes no Brasil.",
+      "Artigos, guias e tutoriais sobre investigação digital, segurança e como se proteger de fraudes no Brasil.",
     url: "https://www.detetive.vip/blog",
     publisher: {
       "@type": "Organization",

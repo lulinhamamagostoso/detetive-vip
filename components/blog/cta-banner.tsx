@@ -6,8 +6,8 @@ interface CtaBannerProps {
 }
 
 export function CtaBanner({
-  heading = "Precisa de uma investigacao?",
-  description = "O Detetive VIP oferece investigacao digital profissional com entrega em ate 5 minutos via WhatsApp. 100% legal, sigiloso e regulamentado pela Lei 13.432/17.",
+  heading = "Precisa de uma investigação?",
+  description = "O Detetive VIP oferece investigação digital profissional com entrega em até 5 minutos via WhatsApp. 100% legal, sigiloso e regulamentado pela Lei 13.432/17.",
 }: CtaBannerProps) {
   return (
     <aside className="my-10 rounded-xl border border-[var(--border)] bg-[var(--background-secondary)] p-6 sm:p-8 text-center">
@@ -23,7 +23,7 @@ export function CtaBanner({
         style={{ background: "var(--whatsapp)" }}
       >
         <MessageCircle className="h-4 w-4" />
-        Contratar investigacao
+        Contratar investigação
       </a>
     </aside>
   )

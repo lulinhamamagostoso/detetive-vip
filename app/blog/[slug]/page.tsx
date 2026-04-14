@@ -19,7 +19,7 @@ export async function generateMetadata({
   const article = await getArticleBySlug(slug)
 
   if (!article) {
-    return { title: "Artigo nao encontrado" }
+    return { title: "Artigo não encontrado" }
   }
 
   const siteUrl = "https://www.detetive.vip"

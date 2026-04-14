@@ -137,7 +137,7 @@ export function BlogGrid({
       {totalPages > 1 && (
         <nav
           className="mt-10 flex items-center justify-center gap-2"
-          aria-label="Paginacao"
+          aria-label="Paginação"
         >
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -166,7 +166,7 @@ export function BlogGrid({
             disabled={currentPage === totalPages}
             className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--muted-foreground)] transition-colors hover:border-[var(--border-hover)] disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Proximo
+            Próximo
           </button>
         </nav>
       )}

@@ -10,7 +10,7 @@ export function BlogFooter() {
       <div className="border-b border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 text-center">
           <p className="text-sm text-[var(--muted-foreground)] mb-3">
-            Precisa de uma investigacao?
+            Precisa de uma investigação?
           </p>
           <a
             href="https://www.detetive.vip/#planos"
@@ -32,7 +32,7 @@ export function BlogFooter() {
               Detetive <span className="gradient-gold-text">VIP</span>
             </span>
             <p className="text-xs text-[var(--muted)] mt-1">
-              Investigacao Digital Profissional
+              Investigação Digital Profissional
             </p>
           </div>
 

@@ -4,7 +4,7 @@ import { getAllArticles } from "@/lib/articles"
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.detetive.vip"
 
-  // Paginas estaticas
+  // Páginas estáticas
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
