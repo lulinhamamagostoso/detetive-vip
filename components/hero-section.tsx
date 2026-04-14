@@ -118,9 +118,6 @@ export function HeroSection() {
             >
               <span>&#128269;</span> Iniciar Investigação
             </button>
-            <p className="text-[0.7rem] md:text-xs mt-2" style={{ color: "var(--muted)" }}>
-              A partir de <strong style={{ color: "var(--foreground)" }}>R$40</strong> · Resultado em 5 minutos
-            </p>
           </div>
 
           {/* Trust Items */}
