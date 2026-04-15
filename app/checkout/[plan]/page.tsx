@@ -14,74 +14,79 @@ const plansData: Record<string, {
   originalPrice: number
   description: string
   inputPlaceholder: string
+  inputInstruction: string
   features: string[]
 }> = {
   "nome-cpf": {
     name: "Pelo NOME OU CPF",
     price: 40,
     originalPrice: 70,
-    description: "Investigação completa a partir de nome ou CPF",
-    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nQualquer info extra ajuda (cidade, idade, etc).",
+    description: "Investigacao completa a partir de nome ou CPF",
+    inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nInfo extra ajuda: cidade, idade, etc.",
+    inputInstruction: "Informe o nome completo ou CPF da pessoa que deseja investigar.",
     features: [
       "Nome Completo e Data de Nascimento",
       "Telefone(s) Celular e Fixo",
-      "Endereço(s) Atualizados",
+      "Endereco(s) Atualizados",
       "E-mail(s) e Redes Sociais",
-      "Faixa de Renda e Profissão",
+      "Faixa de Renda e Profissao",
     ],
   },
   "celular-placa": {
-    name: "Pelo N° Celular ou Placa",
+    name: "Pelo N Celular ou Placa",
     price: 79,
     originalPrice: 115,
-    description: "Descubra tudo sobre o titular do número ou veículo",
-    inputPlaceholder: "Ex: (11) 98765-4321\nOu placa: ABC-1234 / ABC1D23\nInformação extra ajuda (cidade, modelo do carro, etc).",
+    description: "Descubra tudo sobre o titular do numero ou veiculo",
+    inputPlaceholder: "Ex: (11) 98765-4321\nOu placa: ABC-1234 / ABC1D23\nInfo extra: cidade, modelo do carro, etc.",
+    inputInstruction: "Informe o numero de celular ou a placa do veiculo que deseja investigar.",
     features: [
       "Nome Completo e CPF do Titular",
-      "Telefone(s) e Endereço(s)",
-      "Nome da Mãe e Vínculos",
+      "Telefone(s) e Endereco(s)",
+      "Nome da Mae e Vinculos",
       "E-mail(s) e Redes Sociais",
-      "Faixa de Renda e Profissão",
+      "Faixa de Renda e Profissao",
     ],
   },
   "premium": {
-    name: "Investiga\u00E7\u00E3o Premium",
+    name: "Investigacao Premium",
     price: 197,
     originalPrice: 307,
-    description: "Investiga\u00E7\u00E3o completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
-    inputPlaceholder: "Ex: Jo\u00E3o da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa. Qualquer dado extra ajuda.",
+    description: "Investigacao completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
+    inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
+    inputInstruction: "Coloque qualquer dado que voce tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
-      "Todos os Endere\u00E7os Vinculados",
+      "Todos os Enderecos Vinculados",
       "E-mails e Redes Sociais",
-      "Ve\u00EDculos, Placa e Modelo",
-      "Parentes Pr\u00F3ximos (Nome e CPF)",
-      "Score, D\u00EDvidas e Processos Judiciais",
-      "Faixa de Renda e Profiss\u00E3o",
-      "Participa\u00E7\u00E3o em Empresas (CNPJ)",
+      "Veiculos, Placa e Modelo",
+      "Parentes Proximos (Nome e CPF)",
+      "Score, Dividas e Processos Judiciais",
+      "Faixa de Renda e Profissao",
+      "Participacao em Empresas (CNPJ)",
       "Resumo investigativo + Parecer do analista",
-      "Pontos de aten\u00E7\u00E3o e an\u00E1lise de risco",
+      "Pontos de atencao e analise de risco",
     ],
   },
   "upgrade-premium": {
-    name: "Investiga\u00E7\u00E3o Premium",
+    name: "Investigacao Premium",
     price: 97,
     originalPrice: 197,
-    description: "Investiga\u00E7\u00E3o completa com 20+ bancos de dados \u2014 Oferta exclusiva",
-    inputPlaceholder: "Ex: Jo\u00E3o da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa. Qualquer dado extra ajuda.",
+    description: "Investigacao completa com 20+ bancos de dados — Oferta exclusiva",
+    inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
+    inputInstruction: "Coloque qualquer dado que voce tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
-      "Todos os Endere\u00E7os Vinculados",
+      "Todos os Enderecos Vinculados",
       "E-mails e Redes Sociais",
-      "Ve\u00EDculos, Placa e Modelo",
-      "Parentes Pr\u00F3ximos (Nome e CPF)",
-      "Score, D\u00EDvidas e Processos Judiciais",
-      "Faixa de Renda e Profiss\u00E3o",
-      "Participa\u00E7\u00E3o em Empresas (CNPJ)",
+      "Veiculos, Placa e Modelo",
+      "Parentes Proximos (Nome e CPF)",
+      "Score, Dividas e Processos Judiciais",
+      "Faixa de Renda e Profissao",
+      "Participacao em Empresas (CNPJ)",
       "Resumo investigativo + Parecer do analista",
-      "Pontos de aten\u00E7\u00E3o e an\u00E1lise de risco",
+      "Pontos de atencao e analise de risco",
     ],
   },
 }
@@ -1208,17 +1213,13 @@ export default function CheckoutPage() {
               </h3>
             </div>
             
-            {/* Instrucao ultra clara */}
-            <div
-              className="mb-3 p-2.5 rounded-lg text-[0.72rem] leading-relaxed"
-              style={{
-                background: "rgba(184, 150, 63, 0.06)",
-                border: "1px dashed rgba(184, 150, 63, 0.3)",
-                color: "var(--muted-foreground)",
-              }}
+            {/* Instrucao especifica do plano */}
+            <p
+              className="mb-3 text-[0.8rem] leading-relaxed"
+              style={{ color: "var(--muted-foreground)" }}
             >
-              <strong style={{ color: "var(--foreground)" }}>Coloque qualquer dado que voce tenha:</strong> nome, telefone, CPF, placa, chave PIX, e-mail... Quanto mais info, melhor o resultado.
-            </div>
+              {plan.inputInstruction}
+            </p>
             
             <textarea
               id="dados"
