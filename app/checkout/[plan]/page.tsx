@@ -23,7 +23,7 @@ const plansData: Record<string, {
     originalPrice: 70,
     description: "Investigacao completa a partir de nome ou CPF",
     inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nInfo extra ajuda: cidade, idade, etc.",
-    inputInstruction: "Informe o nome completo ou CPF da pessoa que deseja investigar.",
+    inputInstruction: "Informe nome parcial, abreviado ou completo, ou CPF da pessoa que deseja investigar.",
     features: [
       "Nome Completo e Data de Nascimento",
       "Telefone(s) Celular e Fixo",
