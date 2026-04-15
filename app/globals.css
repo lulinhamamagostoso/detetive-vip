@@ -96,25 +96,7 @@ body {
   color: var(--foreground);
 }
 
-/* Noise overlay - subtle texture */
-@media (min-width: 768px) {
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    opacity: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 200px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: noise-fade-in 0.5s ease-out 1s forwards;
-    contain: strict;
-  }
-}
-
-@keyframes noise-fade-in {
-  to { opacity: 0.012; }
-}
+/* Noise overlay removed - impacts performance on mobile */
 
 /* Glass effect */
 .glass {
@@ -483,6 +465,75 @@ details[open] {
 /* Tabular nums for numbers */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================
+   MOBILE OPTIMIZATIONS - Core Web Vitals
+   ===================================================== */
+
+/* Prevent layout shift on images */
+img {
+  content-visibility: auto;
+}
+
+/* Smooth scrolling only on desktop (saves battery on mobile) */
+@media (min-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Mobile: Use 100svh for full viewport height */
+@supports (height: 100svh) {
+  .min-h-screen-mobile {
+    min-height: 100svh;
+  }
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 767px) {
+  /* Larger touch targets */
+  button, a, [role="button"], input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Prevent text size adjustment */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Improve tap responsiveness */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Optimize font rendering */
+  body {
+    text-rendering: optimizeSpeed;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Disable hover effects on touch */
+  @media (hover: none) {
+    .btn-primary:hover {
+      transform: none;
+    }
+    .card-lift:hover {
+      transform: none;
+    }
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 /* =====================================================

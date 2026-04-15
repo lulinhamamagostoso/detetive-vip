@@ -11,6 +11,7 @@ import { FAQSection } from "@/components/faq-section"
 import { CTASection } from "@/components/cta-section"
 import { Footer } from "@/components/footer"
 import { FloatingElements } from "@/components/floating-elements"
+import { StickyCTAMobile } from "@/components/sticky-cta-mobile"
 
 export default function HomePage() {
   return (
@@ -39,6 +40,7 @@ export default function HomePage() {
 
       <Footer />
       <FloatingElements />
+      <StickyCTAMobile />
     </>
   )
 }

@@ -53,33 +53,33 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="relative z-[1] py-12 md:py-20 px-4 md:px-8 faq-section"
+      className="relative z-[1] py-10 md:py-20 px-4 md:px-8 faq-section"
       style={{ background: "var(--background)" }}
       aria-label="Perguntas Frequentes"
     >
       <div className="max-w-[800px] mx-auto">
-        {/* Header */}
-        <div className="text-center mb-6 md:mb-10">
+        {/* Header - Mobile optimized */}
+        <div className="text-center mb-5 md:mb-10">
           <div
-            className="inline-flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.15em] mb-2"
+            className="inline-flex items-center gap-2 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.12em] mb-1.5 md:mb-2"
             style={{ color: "var(--primary)" }}
           >
-            <span className="w-4 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
+            <span className="w-3 md:w-4 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
             FAQ
-            <span className="w-4 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
+            <span className="w-3 md:w-4 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
           </div>
-          <h2 className="font-serif text-2xl md:text-4xl font-bold leading-tight tracking-tight text-balance">
+          <h2 className="font-serif text-[22px] md:text-4xl font-bold leading-tight tracking-tight text-balance">
             Duvidas{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Frequentes</em>
           </h2>
         </div>
 
-        {/* FAQ List — primeiro item aberto por padrão (open attribute) */}
-        <div className="space-y-2 md:space-y-3">
+        {/* FAQ List - Mobile: larger touch targets */}
+        <div className="space-y-2">
           {faqs.map((faq, index) => (
             <details
               key={faq.question}
-              className="faq-item rounded-lg md:rounded-xl overflow-hidden"
+              className="faq-item rounded-xl overflow-hidden"
               style={{
                 background: "var(--background-card)",
                 border: "1px solid var(--border)",
@@ -87,10 +87,10 @@ export function FAQSection() {
               open={index === 0}
             >
               <summary
-                className="faq-summary w-full flex items-center justify-between p-4 md:p-5 text-left min-h-[48px] cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--primary)]"
+                className="faq-summary w-full flex items-center justify-between p-3.5 md:p-5 text-left min-h-[56px] cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--primary)]"
                 style={{ color: "var(--foreground)" }}
               >
-                <span className="text-[0.8rem] md:text-[0.9rem] font-semibold pr-3">{faq.question}</span>
+                <span className="text-[13px] md:text-[15px] font-semibold pr-3 leading-snug">{faq.question}</span>
                 <ChevronDown
                   size={16}
                   className="faq-chevron shrink-0 transition-transform duration-300"
@@ -99,7 +99,7 @@ export function FAQSection() {
                 />
               </summary>
               <div
-                className="px-4 pb-4 md:px-5 md:pb-5 text-[0.75rem] md:text-[0.85rem] leading-relaxed"
+                className="px-3.5 pb-3.5 md:px-5 md:pb-5 text-[12px] md:text-[14px] leading-relaxed"
                 style={{ color: "var(--muted-foreground)" }}
               >
                 {faq.answer}

@@ -85,7 +85,7 @@ function Countdown() {
   return (
     <div
       ref={containerRef}
-      className="inline-flex flex-wrap items-center justify-center gap-2.5 md:gap-4 px-4 md:px-6 py-2.5 rounded-xl text-xs md:text-sm font-semibold"
+      className="inline-flex flex-wrap items-center justify-center gap-2 md:gap-4 px-3 md:px-6 py-2 rounded-xl text-[11px] md:text-sm font-semibold"
       style={{
         background: "linear-gradient(135deg, rgba(220, 38, 38, 0.06) 0%, rgba(220, 38, 38, 0.02) 100%)",
         border: "1px solid rgba(220, 38, 38, 0.12)",
@@ -94,10 +94,10 @@ function Countdown() {
       aria-live="polite"
     >
       <div className="flex items-center gap-1.5" style={{ color: "var(--destructive)" }}>
-        <Clock size={14} aria-hidden="true" />
-        <span className="font-medium">{!mounted ? "Oferta expira em:" : expired ? "Oferta encerrada!" : "Oferta expira em:"}</span>
+        <Clock size={12} aria-hidden="true" />
+        <span className="font-medium">{!mounted ? "Oferta expira em:" : expired ? "Oferta encerrada!" : "Expira em:"}</span>
       </div>
-      <div className="flex gap-1.5" aria-hidden="true">
+      <div className="flex gap-1" aria-hidden="true">
         {[
           { value: time.hours, label: "h" },
           { value: time.minutes, label: "m" },
@@ -105,7 +105,7 @@ function Countdown() {
         ].map((unit, idx) => (
           <span key={unit.label} className="flex items-center gap-0.5">
             <span
-              className="px-2 py-1 rounded-lg font-bold text-sm md:text-base min-w-[32px] md:min-w-[36px] text-center"
+              className="px-1.5 md:px-2 py-0.5 md:py-1 rounded-md md:rounded-lg font-bold text-[13px] md:text-base min-w-[28px] md:min-w-[36px] text-center"
               style={{ 
                 background: "rgba(220, 38, 38, 0.08)", 
                 color: "var(--destructive)",
@@ -114,7 +114,7 @@ function Countdown() {
             >
               {pad(unit.value)}
             </span>
-            {idx < 2 && <span className="text-[0.65rem] font-normal" style={{ color: "rgba(220, 38, 38, 0.4)" }}>:</span>}
+            {idx < 2 && <span className="text-[10px] font-normal" style={{ color: "rgba(220, 38, 38, 0.4)" }}>:</span>}
           </span>
         ))}
       </div>
@@ -123,72 +123,70 @@ function Countdown() {
 }
 
 const features = [
-  "Nome Completo, CPF, RG e Data de Nascimento",
-  "Todos os Telefones (Celular e Fixo)",
-  "Todos os Enderecos Vinculados",
+  "Nome, CPF, RG e Data de Nascimento",
+  "Todos os Telefones",
+  "Todos os Enderecos",
   "E-mails e Redes Sociais",
-  "Veiculos, Placa e Modelo",
-  "Parentes Proximos (Nome e CPF)",
-  "Score, Dividas e Processos Judiciais",
-  "Faixa de Renda e Profissao",
-  "Participacao em Empresas (CNPJ)",
-  "Resumo investigativo completo",
+  "Veiculos e Placas",
+  "Parentes Proximos",
+  "Score, Dividas e Processos",
+  "Faixa de Renda",
+  "Empresas (CNPJ)",
   "Parecer do analista",
-  "Pontos de atencao e analise de risco",
 ]
 
 const guarantees = [
-  { icon: Shield, text: "100% Sigiloso" },
-  { icon: Zap, text: "Resultado em 1h" },
-  { icon: MessageCircle, text: "Via WhatsApp" },
+  { icon: Shield, text: "Sigiloso" },
+  { icon: Zap, text: "Em 1h" },
+  { icon: MessageCircle, text: "WhatsApp" },
 ]
 
 export function PricingSection() {
   return (
     <section
       id="planos"
-      className="relative z-[1] py-16 md:py-24 px-4 md:px-8"
+      className="relative z-[1] py-12 md:py-24 px-4 md:px-8"
       style={{ background: "var(--background-secondary)" }}
       aria-label="Investigacao Completa"
     >
       <div className="max-w-[680px] mx-auto">
-        {/* Header */}
-        <div className="text-center mb-10 md:mb-12">
+        {/* Header - Mobile optimized */}
+        <div className="text-center mb-6 md:mb-12">
           <div
-            className="inline-flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.2em] mb-3"
+            className="inline-flex items-center gap-1.5 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] mb-2 md:mb-3"
             style={{ color: "var(--primary)" }}
           >
-            <Sparkles size={12} aria-hidden="true" />
+            <Sparkles size={10} aria-hidden="true" />
             Oferta Especial
           </div>
           
-          <h2 className="font-serif text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-4 text-balance">
+          <h2 className="font-serif text-[26px] md:text-5xl font-bold leading-[1.1] tracking-tight mb-3 md:mb-4 text-balance">
             Investigacao{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Completa</em>
           </h2>
           
           <p 
-            className="text-sm md:text-base leading-relaxed max-w-md mx-auto mb-6" 
+            className="text-[13px] md:text-base leading-relaxed max-w-md mx-auto mb-4 md:mb-6 text-pretty" 
             style={{ color: "var(--muted-foreground)" }}
           >
-            Tudo sobre qualquer pessoa a partir de um unico dado: nome, CPF, telefone, placa, PIX ou e-mail.
+            Tudo sobre qualquer pessoa a partir de um dado: nome, CPF, telefone, placa ou PIX.
           </p>
           
           <Countdown />
         </div>
 
-        {/* Pricing Card */}
+        {/* Pricing Card - Mobile optimized */}
         <article
-          className="relative rounded-2xl md:rounded-3xl overflow-hidden card-lift"
+          className="relative rounded-2xl overflow-hidden"
           style={{
             background: "var(--background-card)",
-            boxShadow: "0 0 0 1px rgba(201, 162, 39, 0.2), 0 12px 48px rgba(201, 162, 39, 0.12)",
+            boxShadow: "0 0 0 1px rgba(201, 162, 39, 0.2), 0 8px 32px rgba(201, 162, 39, 0.1)",
           }}
         >
           {/* Ribbon */}
-          <div className="absolute top-0 right-0 overflow-hidden w-28 h-28 z-10" aria-hidden="true">
+          <div className="absolute top-0 right-0 overflow-hidden w-24 h-24 md:w-28 md:h-28 z-10" aria-hidden="true">
             <div
-              className="absolute top-[22px] right-[-38px] w-[150px] text-center py-2 text-[0.6rem] font-bold uppercase tracking-wider text-white transform rotate-45"
+              className="absolute top-[18px] md:top-[22px] right-[-32px] md:right-[-38px] w-[130px] md:w-[150px] text-center py-1.5 md:py-2 text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-white transform rotate-45"
               style={{
                 background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
                 boxShadow: "0 2px 8px rgba(201, 162, 39, 0.3)"
@@ -198,110 +196,110 @@ export function PricingSection() {
             </div>
           </div>
 
-          {/* Card Content */}
-          <div className="p-6 md:p-10">
+          {/* Card Content - Mobile optimized padding */}
+          <div className="p-5 md:p-10">
             {/* Headline */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-5 md:mb-8">
               <h3
-                className="text-xl md:text-2xl font-bold mb-2"
+                className="text-[17px] md:text-2xl font-bold mb-1.5 md:mb-2 text-balance"
                 style={{ color: "var(--foreground)" }}
               >
                 Ficha Completa de Qualquer Pessoa
               </h3>
-              <p className="text-sm" style={{ color: "var(--muted)" }}>
-                A partir de qualquer informacao que voce tenha
+              <p className="text-[12px] md:text-sm" style={{ color: "var(--muted)" }}>
+                A partir de qualquer informacao
               </p>
             </div>
 
-            {/* Price */}
-            <div className="text-center mb-8">
-              <div className="text-sm mb-2" style={{ color: "var(--muted)" }}>
+            {/* Price - Mobile: larger and more prominent */}
+            <div className="text-center mb-5 md:mb-8">
+              <div className="text-[12px] md:text-sm mb-1" style={{ color: "var(--muted)" }}>
                 de{" "}
-                <span className="line-through">R$ 197,00</span>
+                <span className="line-through">R$ 197</span>
               </div>
               <div className="flex items-start justify-center">
-                <span className="text-lg font-semibold mt-3 mr-0.5" style={{ color: "var(--primary)" }}>
+                <span className="text-base md:text-lg font-semibold mt-2 md:mt-3 mr-0.5" style={{ color: "var(--primary)" }}>
                   R$
                 </span>
                 <span 
-                  className="text-7xl md:text-8xl font-extrabold leading-none tracking-tight" 
+                  className="text-6xl md:text-8xl font-extrabold leading-none tracking-tight" 
                   style={{ color: "var(--foreground)" }}
                 >
                   97
                 </span>
               </div>
               <div 
-                className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full text-xs font-semibold"
+                className="inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full text-[11px] md:text-xs font-semibold"
                 style={{ 
                   background: "rgba(5, 150, 105, 0.08)", 
                   color: "var(--success)" 
                 }}
               >
-                <Check size={12} strokeWidth={3} />
-                Economize R$ 100,00
+                <Check size={10} strokeWidth={3} />
+                Economize R$ 100
               </div>
             </div>
 
-            {/* Guarantees */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {/* Guarantees - Mobile: compact */}
+            <div className="flex justify-center gap-2 mb-5 md:mb-8">
               {guarantees.map((item) => (
                 <div
                   key={item.text}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.7rem] font-medium"
+                  className="flex items-center gap-1 px-2.5 md:px-3 py-1.5 md:py-2 rounded-full text-[11px] md:text-[12px] font-medium"
                   style={{
                     background: "rgba(37, 211, 102, 0.06)",
                     border: "1px solid rgba(37, 211, 102, 0.12)",
                     color: "var(--foreground)",
                   }}
                 >
-                  <item.icon size={14} style={{ color: "var(--whatsapp)" }} />
+                  <item.icon size={12} style={{ color: "var(--whatsapp)" }} />
                   {item.text}
                 </div>
               ))}
             </div>
 
-            {/* Features Grid */}
+            {/* Features Grid - Mobile: single column, compact */}
             <div
-              className="p-5 md:p-6 rounded-xl mb-8"
+              className="p-4 md:p-6 rounded-xl mb-5 md:mb-8"
               style={{
                 background: "var(--background-secondary)",
                 border: "1px solid var(--border)",
               }}
             >
               <p 
-                className="text-[0.65rem] font-bold uppercase tracking-[0.15em] mb-4 text-center" 
+                className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.12em] mb-3 md:mb-4 text-center" 
                 style={{ color: "var(--primary)" }}
               >
                 O que voce vai receber
               </p>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              <ul className="grid grid-cols-2 gap-x-3 gap-y-2 md:gap-2.5">
                 {features.map((feature) => (
                   <li
                     key={feature}
-                    className="flex items-start gap-2.5 text-[0.8rem]"
+                    className="flex items-start gap-2 text-[12px] md:text-[13px]"
                     style={{ color: "var(--muted-foreground)" }}
                   >
                     <div 
-                      className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                      className="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5"
                       style={{ background: "rgba(5, 150, 105, 0.1)" }}
                     >
                       <Check
-                        size={10}
+                        size={8}
                         style={{ color: "var(--success)" }}
                         strokeWidth={3}
                         aria-hidden="true"
                       />
                     </div>
-                    <span>{feature}</span>
+                    <span className="leading-tight">{feature}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - Mobile: FULL WIDTH, THUMB ZONE optimized */}
             <a
               href="/checkout/investigacao"
-              className="btn-primary flex items-center justify-center gap-2.5 w-full py-4 md:py-5 rounded-full font-bold text-white text-base md:text-lg uppercase tracking-wide touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2"
+              className="btn-primary flex items-center justify-center gap-2 w-full py-4 md:py-5 rounded-2xl md:rounded-full font-bold text-white text-[15px] md:text-lg uppercase tracking-wide touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 min-h-[56px]"
               style={{
                 background: "var(--whatsapp)",
                 boxShadow: "0 6px 28px rgba(37, 211, 102, 0.4)",
@@ -311,20 +309,20 @@ export function PricingSection() {
             </a>
 
             <p 
-              className="text-center text-[0.7rem] mt-4 leading-relaxed" 
+              className="text-center text-[11px] md:text-[12px] mt-3 md:mt-4 leading-relaxed" 
               style={{ color: "var(--muted)" }}
             >
-              Pagamento unico via PIX &middot; Sem assinatura &middot; Resultado em 1 hora
+              PIX &middot; Sem assinatura &middot; Resultado em 1h
             </p>
 
-            {/* Demo link */}
-            <div className="text-center mt-5 pt-5" style={{ borderTop: "1px solid var(--border)" }}>
+            {/* Demo link - Mobile: larger touch target */}
+            <div className="text-center mt-4 md:mt-5 pt-4 md:pt-5" style={{ borderTop: "1px solid var(--border)" }}>
               <a
                 href="#relatorio-heading"
-                className="inline-flex items-center gap-1.5 text-[0.75rem] font-semibold transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm"
+                className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-semibold py-2 px-3 -mx-3 rounded-lg transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 min-h-[44px]"
                 style={{ color: "var(--primary)" }}
               >
-                <span>Ver exemplo de investigacao completa</span>
+                <span>Ver exemplo de investigacao</span>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                   <path d="M7 3V11M7 11L4 8M7 11L10 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -333,32 +331,25 @@ export function PricingSection() {
           </div>
         </article>
 
-        {/* Trust Strip */}
-        <div className="flex flex-wrap justify-center gap-8 mt-10">
+        {/* Trust Strip - Mobile: simplified */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-6 md:mt-10">
           {[
             { icon: "shield", label: "Pagamento Seguro" },
-            { icon: "phone", label: "Via WhatsApp" },
             { icon: "lock", label: "100% Sigiloso" },
           ].map((item) => (
             <div
               key={item.label}
-              className="flex items-center gap-2 text-[0.75rem] font-medium"
+              className="flex items-center gap-1.5 text-[11px] md:text-[13px] font-medium"
               style={{ color: "var(--muted)" }}
             >
               {item.icon === "shield" && (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M8 1.5L2.5 3.5V7.5C2.5 11 5 13.5 8 14.5C11 13.5 13.5 11 13.5 7.5V3.5L8 1.5Z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M5.5 8L7 9.5L10.5 6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               )}
-              {item.icon === "phone" && (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <rect x="4" y="1.5" width="8" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.25"/>
-                  <line x1="6.5" y1="12" x2="9.5" y2="12" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round"/>
-                </svg>
-              )}
               {item.icon === "lock" && (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.25"/>
                   <path d="M5 7V5C5 3.34315 6.34315 2 8 2C9.65685 2 11 3.34315 11 5V7" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round"/>
                   <circle cx="8" cy="10.5" r="1" fill="currentColor"/>

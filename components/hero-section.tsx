@@ -6,7 +6,7 @@ import Link from "next/link"
 
 const trustItems = [
   { label: "100% Sigiloso" },
-  { label: "Resultado em ate 1h" },
+  { label: "Resultado em 1h" },
   { label: "Dados Verificados" },
 ]
 
@@ -60,8 +60,8 @@ function HeroTypewriter() {
   }, [text, isDeleting, phraseIndex])
 
   return (
-    <div className="md:hidden mb-6 mx-auto max-w-md text-center">
-      <p className="text-base leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+    <div className="md:hidden mb-5">
+      <p className="text-[15px] leading-relaxed text-center" style={{ color: "var(--muted-foreground)" }}>
         Descubra tudo sobre qualquer pessoa{" "}
         <span className="font-semibold" style={{ color: "var(--primary)" }}>
           {text}
@@ -72,31 +72,32 @@ function HeroTypewriter() {
   )
 }
 
-// Detective Visual - Mobile only
+// Detective Visual - Mobile only - Optimized for LCP
 function DetectiveVisual() {
   return (
-    <div className="relative flex justify-center my-6 md:hidden">
-      <div className="relative w-44 h-44">
-        {/* Glow */}
+    <div className="relative flex justify-center my-5 md:hidden">
+      <div className="relative w-40 h-40">
+        {/* Glow - simplified for performance */}
         <div
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
           aria-hidden="true"
         >
           <div
-            className="w-36 h-36 rounded-full animate-pulse-slow"
+            className="w-32 h-32 rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(201, 162, 39, 0.2) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(201, 162, 39, 0.15) 0%, transparent 70%)",
             }}
           />
         </div>
         <Image
           src="/detective-hero.png"
-          alt="Detetive"
-          width={176}
-          height={176}
-          className="w-full h-full object-contain detective-float"
+          alt=""
+          width={160}
+          height={160}
+          className="w-full h-full object-contain"
           priority
-          sizes="176px"
+          sizes="160px"
+          quality={75}
         />
       </div>
     </div>
@@ -105,22 +106,22 @@ function DetectiveVisual() {
 
 export function HeroSection() {
   return (
-    <section className="relative z-[1] flex items-center pt-8 pb-12 md:pt-16 md:pb-24 px-4 md:px-8 overflow-hidden">
+    <section className="relative z-[1] flex flex-col min-h-[calc(100svh-60px)] md:min-h-0 md:block pt-6 pb-4 md:pt-16 md:pb-24 px-4 md:px-8 overflow-hidden">
       {/* Subtle background gradient */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 162, 39, 0.08) 0%, transparent 70%)"
+          background: "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 162, 39, 0.06) 0%, transparent 70%)"
         }}
         aria-hidden="true"
       />
       
-      <div className="max-w-[1200px] mx-auto w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-center relative">
+      <div className="max-w-[1200px] mx-auto w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-16 items-center relative flex-1">
         {/* Content */}
-        <div className="relative text-center lg:text-left">
-          {/* Badge */}
+        <div className="relative text-center lg:text-left flex flex-col">
+          {/* Badge - Mobile optimized */}
           <div
-            className="animate-fade-up stagger-1 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[0.6rem] font-bold uppercase tracking-[0.2em] mb-5 md:mb-8"
+            className="animate-fade-up stagger-1 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] mb-4 md:mb-8 self-center lg:self-start"
             style={{
               background: "rgba(201, 162, 39, 0.1)",
               border: "1px solid rgba(201, 162, 39, 0.2)",
@@ -131,45 +132,29 @@ export function HeroSection() {
               className="relative w-1.5 h-1.5 rounded-full" 
               style={{ background: "var(--primary)" }} 
             />
-            Descubra o que estao escondendo
+            Descubra o que escondem
           </div>
 
-          {/* Headline - Large, bold, memorable */}
-          <h1 className="animate-fade-up stagger-2 font-serif text-[2rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] tracking-tight mb-4 md:mb-6 text-balance">
+          {/* Headline - Mobile: larger, more impactful */}
+          <h1 className="animate-fade-up stagger-2 font-serif text-[28px] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.1] tracking-tight mb-3 md:mb-6 text-balance">
             <span className="block">Descubra a Verdade</span>
-            <span className="block mt-1">
+            <span className="block mt-0.5">
               Sobre{" "}
-              <em className="not-italic relative" style={{ color: "var(--primary)" }}>
+              <em className="not-italic" style={{ color: "var(--primary)" }}>
                 Qualquer Pessoa
-                <svg 
-                  className="absolute -bottom-1 left-0 w-full" 
-                  height="8" 
-                  viewBox="0 0 200 8" 
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path 
-                    d="M1 5.5C40 2 80 2 100 4C120 6 160 6 199 3" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round"
-                    style={{ color: "var(--primary)" }}
-                    opacity="0.4"
-                  />
-                </svg>
               </em>
             </span>
           </h1>
 
-          {/* Subtitle - Clear value proposition */}
+          {/* Subtitle - Mobile optimized font size */}
           <p
-            className="animate-fade-up stagger-3 text-base md:text-lg lg:text-xl leading-relaxed max-w-lg mb-5 md:mb-8 mx-auto lg:mx-0"
+            className="animate-fade-up stagger-3 text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-lg mb-4 md:mb-8 mx-auto lg:mx-0 text-pretty"
             style={{ color: "var(--muted-foreground)" }}
           >
-            Voce fornece{" "}
+            Forneca{" "}
             <span className="font-medium" style={{ color: "var(--foreground)" }}>nome, CPF, telefone, placa ou PIX</span>
-            {" "}e nos entregamos a{" "}
-            <strong style={{ color: "var(--foreground)" }}>ficha completa no seu WhatsApp</strong>.
+            {" "}e receba a{" "}
+            <strong style={{ color: "var(--foreground)" }}>ficha completa no WhatsApp</strong>.
           </p>
 
           {/* Detective Visual - Mobile only */}
@@ -178,11 +163,32 @@ export function HeroSection() {
           {/* Typewriter - Mobile only */}
           <HeroTypewriter />
 
-          {/* CTA Button */}
-          <div className="animate-fade-up stagger-4 flex flex-col items-center lg:items-start mb-6 md:mb-8">
+          {/* Trust Items - Mobile: above CTA for social proof */}
+          <div 
+            className="animate-fade-up stagger-4 flex flex-wrap items-center gap-2 justify-center lg:justify-start mb-5 md:mb-0 md:order-last md:mt-6" 
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            {trustItems.map((item, index) => (
+              <span key={item.label} className="flex items-center gap-2 text-[12px] md:text-[13px]">
+                <span className="flex items-center gap-1.5">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--success)" }} />
+                    <path d="M4.5 7L6.5 9L9.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--success)" }} />
+                  </svg>
+                  <span className="font-medium">{item.label}</span>
+                </span>
+                {index < trustItems.length - 1 && (
+                  <span className="w-1 h-1 rounded-full hidden sm:block" style={{ background: "var(--border)" }} />
+                )}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA Button - Mobile: THUMB ZONE - fixed at bottom on mobile */}
+          <div className="animate-fade-up stagger-5 flex flex-col items-center lg:items-start mt-auto md:mt-0 md:mb-8">
             <Link
               href="#planos"
-              className="btn-primary group inline-flex items-center justify-center gap-3 px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-sm md:text-base uppercase tracking-wider text-white touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              className="btn-primary group inline-flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 md:px-10 md:py-5 rounded-2xl md:rounded-full font-bold text-[15px] md:text-base uppercase tracking-wider text-white touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent min-h-[56px]"
               style={{
                 background: "var(--whatsapp)",
                 boxShadow: "0 4px 24px rgba(37, 211, 102, 0.35)"
@@ -193,30 +199,9 @@ export function HeroSection() {
             </Link>
             
             {/* Sub-CTA text */}
-            <p className="mt-3 text-[0.7rem] md:text-xs tracking-wide" style={{ color: "var(--muted)" }}>
+            <p className="mt-3 text-[11px] md:text-xs tracking-wide text-center" style={{ color: "var(--muted)" }}>
               Pagamento unico via PIX &middot; Sem assinatura
             </p>
-          </div>
-
-          {/* Trust Items */}
-          <div 
-            className="animate-fade-up stagger-5 flex items-center gap-3 justify-center lg:justify-start text-[0.65rem] md:text-[0.75rem]" 
-            style={{ color: "var(--muted-foreground)" }}
-          >
-            {trustItems.map((item, index) => (
-              <span key={item.label} className="flex items-center gap-3 whitespace-nowrap">
-                <span className="flex items-center gap-1.5">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--success)" }} />
-                    <path d="M4.5 7L6.5 9L9.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--success)" }} />
-                  </svg>
-                  <span className="font-medium">{item.label}</span>
-                </span>
-                {index < trustItems.length - 1 && (
-                  <span className="w-1 h-1 rounded-full" style={{ background: "var(--border)" }} />
-                )}
-              </span>
-            ))}
           </div>
         </div>
 
