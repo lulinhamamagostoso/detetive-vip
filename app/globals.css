@@ -196,35 +196,25 @@ details[open] {
    ===================================================== */
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
+  50% { opacity: 0.7; transform: scale(1.08); }
 }
 
-@keyframes badge-float {
+@keyframes detective-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes orbit-subtle {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(3deg); }
+  50% { transform: translateY(-5px); }
 }
 
 .animate-pulse-slow {
   animation: pulse-slow 3s ease-in-out infinite;
 }
 
-.detective-badge {
-  animation: badge-float 3s ease-in-out infinite;
-}
-
-.detective-orbit {
-  animation: orbit-subtle 4s ease-in-out infinite;
+.detective-float {
+  animation: detective-float 2.5s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-pulse-slow,
-  .detective-badge,
-  .detective-orbit {
+  .detective-float {
     animation: none !important;
   }
 }
