@@ -21,72 +21,72 @@ const plansData: Record<string, {
     name: "Pelo NOME OU CPF",
     price: 40,
     originalPrice: 70,
-    description: "Investigacao completa a partir de nome ou CPF",
-    inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nInfo extra ajuda: cidade, idade, etc.",
+    description: "Investigação completa a partir de nome ou CPF",
+    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nInfo extra ajuda: cidade, idade, etc.",
     inputInstruction: "Informe nome parcial, abreviado ou completo, ou CPF da pessoa que deseja investigar.",
     features: [
       "Nome Completo e Data de Nascimento",
       "Telefone(s) Celular e Fixo",
-      "Endereco(s) Atualizados",
+      "Endereço(s) Atualizados",
       "E-mail(s) e Redes Sociais",
-      "Faixa de Renda e Profissao",
+      "Faixa de Renda e Profissão",
     ],
   },
   "celular-placa": {
-    name: "Pelo N Celular ou Placa",
+    name: "Pelo N° Celular ou Placa",
     price: 79,
     originalPrice: 115,
-    description: "Descubra tudo sobre o titular do numero ou veiculo",
+    description: "Descubra tudo sobre o titular do número ou veículo",
     inputPlaceholder: "Ex: (11) 98765-4321\nOu placa: ABC-1234 / ABC1D23\nInfo extra: cidade, modelo do carro, etc.",
-    inputInstruction: "Informe o numero de celular ou a placa do veiculo que deseja investigar.",
+    inputInstruction: "Informe o número de celular ou a placa do veículo que deseja investigar.",
     features: [
       "Nome Completo e CPF do Titular",
-      "Telefone(s) e Endereco(s)",
-      "Nome da Mae e Vinculos",
+      "Telefone(s) e Endereço(s)",
+      "Nome da Mãe e Vínculos",
       "E-mail(s) e Redes Sociais",
-      "Faixa de Renda e Profissao",
+      "Faixa de Renda e Profissão",
     ],
   },
   "premium": {
-    name: "Investigacao Premium",
+    name: "Investigação Premium",
     price: 197,
     originalPrice: 307,
-    description: "Investigacao completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
-    inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
-    inputInstruction: "Coloque qualquer dado que voce tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
+    description: "Investigação completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
+    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
+    inputInstruction: "Coloque qualquer dado que você tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
-      "Todos os Enderecos Vinculados",
+      "Todos os Endereços Vinculados",
       "E-mails e Redes Sociais",
-      "Veiculos, Placa e Modelo",
-      "Parentes Proximos (Nome e CPF)",
-      "Score, Dividas e Processos Judiciais",
-      "Faixa de Renda e Profissao",
-      "Participacao em Empresas (CNPJ)",
+      "Veículos, Placa e Modelo",
+      "Parentes Próximos (Nome e CPF)",
+      "Score, Dívidas e Processos Judiciais",
+      "Faixa de Renda e Profissão",
+      "Participação em Empresas (CNPJ)",
       "Resumo investigativo + Parecer do analista",
-      "Pontos de atencao e analise de risco",
+      "Pontos de atenção e análise de risco",
     ],
   },
   "upgrade-premium": {
-    name: "Investigacao Premium",
+    name: "Investigação Premium",
     price: 97,
     originalPrice: 197,
-    description: "Investigacao completa com 20+ bancos de dados — Oferta exclusiva",
-    inputPlaceholder: "Ex: Joao da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
-    inputInstruction: "Coloque qualquer dado que voce tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
+    description: "Investigação completa com 20+ bancos de dados — Oferta exclusiva",
+    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
+    inputInstruction: "Coloque qualquer dado que você tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
-      "Todos os Enderecos Vinculados",
+      "Todos os Endereços Vinculados",
       "E-mails e Redes Sociais",
-      "Veiculos, Placa e Modelo",
-      "Parentes Proximos (Nome e CPF)",
-      "Score, Dividas e Processos Judiciais",
-      "Faixa de Renda e Profissao",
-      "Participacao em Empresas (CNPJ)",
+      "Veículos, Placa e Modelo",
+      "Parentes Próximos (Nome e CPF)",
+      "Score, Dívidas e Processos Judiciais",
+      "Faixa de Renda e Profissão",
+      "Participação em Empresas (CNPJ)",
       "Resumo investigativo + Parecer do analista",
-      "Pontos de atencao e analise de risco",
+      "Pontos de atenção e análise de risco",
     ],
   },
 }
@@ -643,7 +643,7 @@ export default function CheckoutPage() {
                 <>
                   <div className="flex items-center gap-2">
                     <Check size={18} />
-                    <span className="text-base uppercase tracking-wide">Codigo Copiado!</span>
+                    <span className="text-base uppercase tracking-wide">Código Copiado!</span>
                   </div>
                   <span className="text-[0.65rem] font-normal opacity-90">
                     Agora cole no app do seu banco
@@ -653,7 +653,7 @@ export default function CheckoutPage() {
                 <>
                   <div className="flex items-center gap-2">
                     <Copy size={18} />
-                    <span className="text-base uppercase tracking-wide">Copiar Codigo Pix</span>
+                    <span className="text-base uppercase tracking-wide">Copiar Código Pix</span>
                   </div>
                   <span className="text-[0.65rem] font-normal opacity-90">
                     Toque aqui e depois cole no app do banco
@@ -696,10 +696,10 @@ export default function CheckoutPage() {
               </div>
               <div>
                 <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>
-                  Escaneie o QR ou cole o codigo
+                  Escaneie o QR ou cole o código
                 </p>
                 <p className="text-xs" style={{ color: "var(--muted)" }}>
-                  Va em Pix {">"} Pagar {">"} QR Code ou Copia e Cola
+                  Vá em Pix {">"} Pagar {">"} QR Code ou Copia e Cola
                 </p>
               </div>
             </div>
@@ -708,7 +708,7 @@ export default function CheckoutPage() {
               style={{ background: "rgba(37, 211, 102, 0.1)" }}
             >
               <p className="text-xs font-semibold" style={{ color: "var(--whatsapp)" }}>
-                Apos pagar, voce recebe o resultado no WhatsApp em ate 5 minutos
+                Após pagar, você recebe o resultado no WhatsApp em até 5 minutos
               </p>
             </div>
           </div>
@@ -772,7 +772,7 @@ export default function CheckoutPage() {
               Confirme e pague para iniciar
             </h1>
             <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-              Investigacao comeca imediatamente apos o pagamento
+              Investigação começa imediatamente após o pagamento
             </p>
           </div>
 
@@ -810,7 +810,7 @@ export default function CheckoutPage() {
                 style={{ color: "var(--muted-foreground)" }}
               >
                 <MessageCircle size={12} className="shrink-0" style={{ color: "var(--whatsapp)" }} />
-                <span>Entrega discreta, sem identificar investigacao</span>
+                <span>Entrega discreta, sem identificar investigação</span>
               </div>
             </div>
             
@@ -920,13 +920,13 @@ export default function CheckoutPage() {
                   <div className="flex items-center gap-2">
                     <span>GERAR MEU PIX DE R$ {totalPrice}</span>
                   </div>
-                  <span className="text-[0.65rem] font-normal opacity-80">Clique aqui para pagar e comecar</span>
+                  <span className="text-[0.65rem] font-normal opacity-80">Clique aqui para pagar e começar</span>
                 </>
               )}
             </button>
 
             <p className="text-center text-[0.68rem] mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
-              Garantia total: se nao encontrarmos a pessoa, devolvemos 100% do valor em ate 24h
+              Garantia total: se não encontrarmos a pessoa, devolvemos 100% do valor em até 24h
             </p>
           </div>
         </div>
@@ -1043,7 +1043,7 @@ export default function CheckoutPage() {
             Preencha seus dados para iniciar
           </h1>
           <p className="text-sm mb-4" style={{ color: "var(--muted-foreground)" }}>
-            Resultado enviado no seu WhatsApp em ate 5 minutos
+            Resultado enviado no seu WhatsApp em até 5 minutos
           </p>
           <div
             className="inline-flex items-center gap-3 px-4 py-2 rounded-full"
@@ -1100,7 +1100,7 @@ export default function CheckoutPage() {
               ))}
             </div>
             <span className="text-xs" style={{ color: "var(--muted)" }}>
-              <strong style={{ color: "var(--foreground)" }}>127 investigacoes</strong> esta semana
+              <strong style={{ color: "var(--foreground)" }}>127 investigações</strong> esta semana
             </span>
           </div>
         </div>
@@ -1187,7 +1187,7 @@ export default function CheckoutPage() {
                 </p>
               )}
               <p className="mt-1.5 text-[0.68rem]" style={{ color: "var(--muted)" }}>
-                Resultado chega em ate 5 min nesse numero
+                Resultado chega em até 5 min nesse número
               </p>
             </div>
 
@@ -1209,7 +1209,7 @@ export default function CheckoutPage() {
                 2
               </div>
               <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
-                Quem voce quer investigar?
+                Quem você quer investigar?
               </h3>
             </div>
             
@@ -1248,7 +1248,7 @@ export default function CheckoutPage() {
           >
             <Shield size={16} className="shrink-0" style={{ color: "var(--whatsapp)" }} />
             <span className="text-[0.72rem]" style={{ color: "var(--muted-foreground)" }}>
-              Seus dados estao protegidos. A investigacao e 100% sigilosa.
+              Seus dados estão protegidos. A investigação é 100% sigilosa.
             </span>
           </div>
 
@@ -1276,14 +1276,14 @@ export default function CheckoutPage() {
                   <ArrowRight size={18} />
                 </div>
                 <span className="text-[0.65rem] font-normal opacity-90">
-                  Proximo passo: pagamento via PIX
+                  Próximo passo: pagamento via PIX
                 </span>
               </>
             )}
           </button>
           
           <p className="text-center text-[0.68rem]" style={{ color: "var(--muted)" }}>
-            Pagamento rapido via PIX — resultado em ate 5 minutos
+            Pagamento rápido via PIX — resultado em até 5 minutos
           </p>
         </form>
 
