@@ -625,49 +625,87 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Copy Button */}
+            {/* Copy Button — CTA principal */}
             <button
               onClick={copyPixCode}
-              className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide transition-all active:scale-[0.98]"
+              className="w-full flex flex-col items-center justify-center gap-1 py-4 rounded-xl font-bold text-white transition-all active:scale-[0.98]"
               style={{
                 background: copied ? "var(--success)" : "var(--whatsapp)",
-                boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
+                boxShadow: copied ? "0 4px 20px rgba(34, 197, 94, 0.3)" : "0 4px 20px rgba(37, 211, 102, 0.3)",
               }}
             >
               {copied ? (
                 <>
-                  <Check size={18} />
-                  Código Copiado!
+                  <div className="flex items-center gap-2">
+                    <Check size={18} />
+                    <span className="text-base uppercase tracking-wide">Codigo Copiado!</span>
+                  </div>
+                  <span className="text-[0.65rem] font-normal opacity-90">
+                    Agora cole no app do seu banco
+                  </span>
                 </>
               ) : (
                 <>
-                  <Copy size={18} />
-                  Copiar Código Pix
+                  <div className="flex items-center gap-2">
+                    <Copy size={18} />
+                    <span className="text-base uppercase tracking-wide">Copiar Codigo Pix</span>
+                  </div>
+                  <span className="text-[0.65rem] font-normal opacity-90">
+                    Toque aqui e depois cole no app do banco
+                  </span>
                 </>
               )}
             </button>
           </div>
 
-          {/* Instructions */}
+          {/* Instrucao simplificada */}
           <div
-            className="p-4 rounded-xl text-sm"
+            className="p-4 rounded-xl"
             style={{
               background: "rgba(37, 211, 102, 0.05)",
               border: "1px solid rgba(37, 211, 102, 0.2)",
             }}
           >
-            <h4 className="font-semibold mb-2" style={{ color: "var(--foreground)" }}>
-              Como pagar:
-            </h4>
-            <ol className="space-y-1 text-xs" style={{ color: "var(--muted-foreground)" }}>
-              <li>1. Abra o app do seu banco</li>
-              <li>2. Escolha pagar com Pix</li>
-              <li>3. Escaneie o QR Code ou cole o código</li>
-              <li>4. Confirme o pagamento</li>
-            </ol>
-            <p className="mt-3 text-xs font-medium" style={{ color: "var(--whatsapp)" }}>
-              Assim que o pagamento for confirmado, você receberá o resultado no WhatsApp em até 5 minutos.
-            </p>
+            <div className="flex items-start gap-3">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm font-bold"
+                style={{ background: "var(--whatsapp)", color: "white" }}
+              >
+                1
+              </div>
+              <div>
+                <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>
+                  Abra o app do seu banco
+                </p>
+                <p className="text-xs" style={{ color: "var(--muted)" }}>
+                  Nubank, Inter, Itau, Bradesco, etc.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 mt-3">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm font-bold"
+                style={{ background: "var(--whatsapp)", color: "white" }}
+              >
+                2
+              </div>
+              <div>
+                <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>
+                  Escaneie o QR ou cole o codigo
+                </p>
+                <p className="text-xs" style={{ color: "var(--muted)" }}>
+                  Va em Pix {">"} Pagar {">"} QR Code ou Copia e Cola
+                </p>
+              </div>
+            </div>
+            <div
+              className="mt-4 p-3 rounded-lg text-center"
+              style={{ background: "rgba(37, 211, 102, 0.1)" }}
+            >
+              <p className="text-xs font-semibold" style={{ color: "var(--whatsapp)" }}>
+                Apos pagar, voce recebe o resultado no WhatsApp em ate 5 minutos
+              </p>
+            </div>
           </div>
 
           {/* Error */}
@@ -723,17 +761,17 @@ export default function CheckoutPage() {
 
           <div className="text-center mb-6">
             <h1
-              className="text-2xl md:text-3xl font-bold mb-2"
-              style={{ color: "var(--primary-dark)" }}
+              className="text-xl md:text-2xl font-bold mb-2"
+              style={{ color: "var(--foreground)" }}
             >
-              {plan.name}
+              Confirme e pague para iniciar
             </h1>
             <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-              Falta pouco para descobrir a verdade
+              Investigacao comeca imediatamente apos o pagamento
             </p>
           </div>
 
-          {/* Order Summary */}
+          {/* Resumo compacto */}
           <div
             className="p-4 rounded-xl mb-4"
             style={{
@@ -741,39 +779,43 @@ export default function CheckoutPage() {
               border: "1px solid var(--border)",
             }}
           >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
-                  {plan.name}
-                </h3>
-                <p className="text-xs flex items-center gap-1.5 mt-1" style={{ color: "var(--muted)" }}>
-                  <MessageCircle size={12} className="shrink-0" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
-                  <span>Resultado será enviado discretamente para: {phone}</span>
-                </p>
-                <p className="text-[0.68rem] mt-1 pl-[18px]" style={{ color: "var(--muted)" }}>
-                  Nosso número fica salvo como contato comum, sem identificação de investigação.
-                </p>
+            {/* Dados resumidos */}
+            <div className="space-y-2 mb-3 pb-3" style={{ borderBottom: "1px solid var(--border)" }}>
+              <div className="flex justify-between text-sm">
+                <span style={{ color: "var(--muted)" }}>Plano:</span>
+                <span className="font-medium" style={{ color: "var(--foreground)" }}>{plan.name}</span>
               </div>
-              <ExternalLink size={16} style={{ color: "var(--muted)" }} aria-hidden="true" />
+              <div className="flex justify-between text-sm">
+                <span style={{ color: "var(--muted)" }}>Enviar para:</span>
+                <span className="font-medium" style={{ color: "var(--whatsapp)" }}>{phone}</span>
+              </div>
             </div>
-            {/* Badge: sigilo no extrato bancário */}
+            
+            {/* Badges de seguranca */}
+            <div className="space-y-2 mb-3">
+              <div
+                className="flex items-center gap-2 text-[0.7rem]"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                <Shield size={12} className="shrink-0" style={{ color: "var(--whatsapp)" }} />
+                <span>No extrato aparece como <strong style={{ color: "var(--foreground)" }}>SERV DIGITAIS</strong></span>
+              </div>
+              <div
+                className="flex items-center gap-2 text-[0.7rem]"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                <MessageCircle size={12} className="shrink-0" style={{ color: "var(--whatsapp)" }} />
+                <span>Entrega discreta, sem identificar investigacao</span>
+              </div>
+            </div>
+            
+            {/* Total destacado */}
             <div
-              className="flex items-center gap-2 px-3 py-2 rounded-lg mb-3 text-[0.7rem]"
-              style={{
-                background: "rgba(37, 211, 102, 0.06)",
-                border: "1px solid rgba(37, 211, 102, 0.15)",
-                color: "var(--muted-foreground)",
-              }}
+              className="flex items-center justify-between p-3 rounded-lg"
+              style={{ background: "rgba(184, 150, 63, 0.08)" }}
             >
-              <Shield size={13} className="shrink-0" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
-              <span>
-                No extrato do seu banco aparece como{" "}
-                <strong style={{ color: "var(--foreground)" }}>SERV DIGITAIS</strong> — sem menção a investigação.
-              </span>
-            </div>
-            <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid var(--border)" }}>
-              <span className="text-sm" style={{ color: "var(--muted-foreground)" }}>Total</span>
-              <span className="font-bold text-lg" style={{ color: "var(--primary)" }}>
+              <span className="text-sm font-medium" style={{ color: "var(--foreground)" }}>Total a pagar:</span>
+              <span className="font-bold text-xl" style={{ color: "var(--primary)" }}>
                 R$ {totalPrice},00
               </span>
             </div>
@@ -1041,22 +1083,42 @@ export default function CheckoutPage() {
           </ul>
         </div>
 
-        {/* Social proof micro */}
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <div className="flex -space-x-2" aria-hidden="true">
-            {["CM", "AR", "RS"].map((initials) => (
-              <div
-                key={initials}
-                className="w-6 h-6 rounded-full flex items-center justify-center text-[0.5rem] font-bold border-2 border-white"
-                style={{ background: "var(--background-elevated)", color: "var(--primary)" }}
-              >
-                {initials}
-              </div>
-            ))}
+        {/* Urgencia + Social proof */}
+        <div className="space-y-3 mb-6">
+          {/* Indicador de atividade em tempo real */}
+          <div
+            className="flex items-center justify-center gap-2 py-2 px-4 rounded-full mx-auto w-fit"
+            style={{
+              background: "rgba(37, 211, 102, 0.08)",
+              border: "1px solid rgba(37, 211, 102, 0.2)",
+            }}
+          >
+            <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: "var(--whatsapp)" }} />
+              <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "var(--whatsapp)" }} />
+            </span>
+            <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
+              <strong style={{ color: "var(--foreground)" }}>3 pessoas</strong> fazendo checkout agora
+            </span>
           </div>
-          <span className="text-xs" style={{ color: "var(--muted)" }}>
-            <strong style={{ color: "var(--foreground)" }}>127 investigações</strong> realizadas esta semana
-          </span>
+          
+          {/* Social proof */}
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex -space-x-2" aria-hidden="true">
+              {["CM", "AR", "RS"].map((initials) => (
+                <div
+                  key={initials}
+                  className="w-6 h-6 rounded-full flex items-center justify-center text-[0.5rem] font-bold border-2 border-white"
+                  style={{ background: "var(--background-elevated)", color: "var(--primary)" }}
+                >
+                  {initials}
+                </div>
+              ))}
+            </div>
+            <span className="text-xs" style={{ color: "var(--muted)" }}>
+              <strong style={{ color: "var(--foreground)" }}>127 investigacoes</strong> esta semana
+            </span>
+          </div>
         </div>
 
         {/* Form com instrucoes claras */}
@@ -1145,29 +1207,6 @@ export default function CheckoutPage() {
               </p>
             </div>
 
-            {/* Email */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--muted-foreground)" }}
-              >
-                E-mail (opcional, backup)
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
-                className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
-                style={{
-                  background: "var(--background)",
-                  border: "1px solid var(--border)",
-                  color: "var(--foreground)",
-                }}
-              />
-            </div>
           </div>
 
           {/* Secao 2: Dados da pessoa investigada */}
@@ -1178,7 +1217,7 @@ export default function CheckoutPage() {
               border: "1px solid var(--border)",
             }}
           >
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
                 style={{ background: "var(--primary)", color: "white" }}
@@ -1186,13 +1225,21 @@ export default function CheckoutPage() {
                 2
               </div>
               <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
-                Dados da pessoa que voce quer investigar
+                Quem voce quer investigar?
               </h3>
             </div>
             
-            <p className="text-[0.75rem] mb-3 leading-relaxed" style={{ color: "var(--muted)" }}>
-              Escreva abaixo o que voce sabe sobre a pessoa. Quanto mais informacao, melhor o resultado.
-            </p>
+            {/* Instrucao ultra clara */}
+            <div
+              className="mb-3 p-2.5 rounded-lg text-[0.72rem] leading-relaxed"
+              style={{
+                background: "rgba(184, 150, 63, 0.06)",
+                border: "1px dashed rgba(184, 150, 63, 0.3)",
+                color: "var(--muted-foreground)",
+              }}
+            >
+              <strong style={{ color: "var(--foreground)" }}>Coloque qualquer dado que voce tenha:</strong> nome, telefone, CPF, placa, chave PIX, e-mail... Quanto mais info, melhor o resultado.
+            </div>
             
             <textarea
               id="dados"
@@ -1200,7 +1247,7 @@ export default function CheckoutPage() {
               onChange={(e) => setDados(e.target.value)}
               placeholder={plan.inputPlaceholder}
               required
-              rows={5}
+              rows={4}
               maxLength={2000}
               className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors resize-none focus:ring-2"
               style={{
@@ -1210,19 +1257,35 @@ export default function CheckoutPage() {
               }}
             />
             
-            {/* Exemplos visuais do que pode colocar */}
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {["Nome", "CPF", "Telefone", "Placa", "Chave PIX", "E-mail"].map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[0.65rem] px-2 py-1 rounded-full"
+            {/* Tags clicaveis que ajudam a preencher */}
+            <p className="mt-2 text-[0.65rem]" style={{ color: "var(--muted)" }}>
+              Exemplos do que pode colocar:
+            </p>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {[
+                { label: "Nome completo", example: "Joao da Silva" },
+                { label: "Telefone", example: "(11) 99999-9999" },
+                { label: "CPF", example: "123.456.789-00" },
+                { label: "Placa", example: "ABC1D23" },
+                { label: "Chave PIX", example: "email ou telefone" },
+              ].map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => {
+                    if (!dados.includes(item.label)) {
+                      setDados(prev => prev ? `${prev}\n${item.label}: ` : `${item.label}: `)
+                    }
+                  }}
+                  className="text-[0.65rem] px-2.5 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
                   style={{
                     background: "rgba(184, 150, 63, 0.1)",
                     color: "var(--primary)",
+                    border: "1px solid rgba(184, 150, 63, 0.2)",
                   }}
                 >
-                  {tag}
-                </span>
+                  + {item.label}
+                </button>
               ))}
             </div>
           </div>
@@ -1241,11 +1304,11 @@ export default function CheckoutPage() {
             </span>
           </div>
 
-          {/* Submit Button — CTA claro e direto */}
+          {/* Submit Button — CTA com urgencia */}
           <button
             type="submit"
             disabled={isSubmitting || !nome.trim() || !phone.trim() || !dados.trim()}
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-base uppercase tracking-wide transition-all active:scale-[0.98] disabled:opacity-70"
+            className="w-full flex flex-col items-center justify-center gap-1 py-4 rounded-xl font-bold text-white transition-all active:scale-[0.98] disabled:opacity-70"
             style={{
               background: "var(--whatsapp)",
               boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
@@ -1253,19 +1316,26 @@ export default function CheckoutPage() {
           >
             {isSubmitting ? (
               <>
-                <Loader2 size={18} className="animate-spin" />
-                Processando...
+                <div className="flex items-center gap-2">
+                  <Loader2 size={18} className="animate-spin" />
+                  <span className="text-base uppercase tracking-wide">Processando...</span>
+                </div>
               </>
             ) : (
               <>
-                Continuar para Pagamento
-                <ArrowRight size={18} />
+                <div className="flex items-center gap-2">
+                  <span className="text-base uppercase tracking-wide">Quero Descobrir a Verdade</span>
+                  <ArrowRight size={18} />
+                </div>
+                <span className="text-[0.65rem] font-normal opacity-90">
+                  Proximo passo: pagamento via PIX
+                </span>
               </>
             )}
           </button>
           
           <p className="text-center text-[0.68rem]" style={{ color: "var(--muted)" }}>
-            Voce ainda vai revisar tudo antes de pagar
+            Pagamento rapido via PIX — resultado em ate 5 minutos
           </p>
         </form>
 
