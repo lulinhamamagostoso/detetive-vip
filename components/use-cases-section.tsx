@@ -124,7 +124,7 @@ export function UseCasesSection() {
             {"Iniciar Minha Investiga\u00E7\u00E3o"}
           </a>
           <p className="text-[11px] md:text-[12px] mt-2" style={{ color: "var(--muted)" }}>
-            {"Resultado em ate 1 hora no seu WhatsApp"}
+            {"Resultado em até 1 hora no seu WhatsApp"}
           </p>
         </div>
       </div>

@@ -3,32 +3,32 @@ import { ChevronDown, MousePointerClick, MessageSquare, Target, CreditCard, Send
 const steps = [
   {
     number: 1,
-    title: "Escolha a Investigacao",
-    description: "Escolha a modalidade da investigacao que melhor atende sua necessidade.",
+    title: "Escolha a Investigação",
+    description: "Escolha a modalidade da investigação que melhor atende sua necessidade.",
     icon: MousePointerClick,
   },
   {
     number: 2,
     title: "Informe seu WhatsApp",
-    description: "Digite seu nome e o numero do WhatsApp onde voce quer receber o resultado.",
+    description: "Digite seu nome e o número do WhatsApp onde você quer receber o resultado.",
     icon: MessageSquare,
   },
   {
     number: 3,
     title: "Informe o Alvo",
-    description: "Forneca qualquer dado que tenha: Nome, CPF, Telefone, Placa, E-mail ou Chave PIX.",
+    description: "Forneça qualquer dado que tenha: Nome, CPF, Telefone, Placa, E-mail ou Chave PIX.",
     icon: Target,
   },
   {
     number: 4,
     title: "Pagamento via PIX",
-    description: "Realize o pagamento de forma segura e instantanea via PIX.",
+    description: "Realize o pagamento de forma segura e instantânea via PIX.",
     icon: CreditCard,
   },
   {
     number: 5,
     title: "Receba no WhatsApp",
-    description: "Em ate 1 hora apos a confirmacao, voce recebe a ficha completa no seu WhatsApp.",
+    description: "Em até 1 hora após a confirmação, você recebe a ficha completa no seu WhatsApp.",
     icon: Send,
   },
 ]
@@ -49,14 +49,14 @@ export function HowItWorksSection() {
             style={{ color: "var(--primary)" }}
           >
             <span className="w-4 md:w-6 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
-            Metodo
+            Método
             <span className="w-4 md:w-6 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
           </div>
           <h2 
             id="como-funciona-heading" 
             className="font-serif text-[24px] md:text-5xl font-bold leading-[1.1] tracking-tight mb-2 md:mb-3 text-balance"
           >
-            Simples, Rapido e{" "}
+            Simples, Rápido e{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Sigiloso</em>
           </h2>
           <p 
@@ -140,7 +140,7 @@ export function HowItWorksSection() {
             className="inline-flex items-center gap-2 text-[13px] md:text-sm font-semibold py-2 px-4 -mx-4 rounded-lg transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 min-h-[44px]"
             style={{ color: "var(--primary)" }}
           >
-            <span>Iniciar minha investigacao</span>
+            <span>Iniciar minha investigação</span>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

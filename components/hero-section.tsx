@@ -151,7 +151,7 @@ export function HeroSection() {
             className="animate-fade-up stagger-3 text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-lg mb-4 md:mb-8 mx-auto lg:mx-0 text-pretty"
             style={{ color: "var(--muted-foreground)" }}
           >
-            Forneca{" "}
+            Forneça{" "}
             <span className="font-medium" style={{ color: "var(--foreground)" }}>nome, CPF, telefone, placa ou PIX</span>
             {" "}e receba a{" "}
             <strong style={{ color: "var(--foreground)" }}>ficha completa no WhatsApp</strong>.
@@ -195,12 +195,12 @@ export function HeroSection() {
               }}
             >
               <span className="text-lg" aria-hidden="true">&#128269;</span>
-              <span>Iniciar Investigacao</span>
+              <span>Iniciar Investigação</span>
             </Link>
             
             {/* Sub-CTA text */}
             <p className="mt-3 text-[11px] md:text-xs tracking-wide text-center" style={{ color: "var(--muted)" }}>
-              Pagamento unico via PIX &middot; Sem assinatura
+              Pagamento único via PIX &middot; Sem assinatura
             </p>
           </div>
         </div>
@@ -220,7 +220,7 @@ export function HeroSection() {
           {/* Mockup Image */}
           <Image
             src="/mockup.webp"
-            alt="Detetive VIP - Investigacao entregue via WhatsApp"
+            alt="Detetive VIP - Investigação entregue via WhatsApp"
             width={728}
             height={1350}
             className="relative z-10 w-[300px] max-w-full rounded-2xl"
@@ -249,7 +249,7 @@ export function HeroSection() {
               12k+
             </div>
             <div className="text-left">
-              <p className="text-[0.65rem] font-semibold" style={{ color: "var(--foreground)" }}>Investigacoes</p>
+              <p className="text-[0.65rem] font-semibold" style={{ color: "var(--foreground)" }}>Investigações</p>
               <p className="text-[0.55rem]" style={{ color: "var(--muted)" }}>realizadas com sucesso</p>
             </div>
           </div>

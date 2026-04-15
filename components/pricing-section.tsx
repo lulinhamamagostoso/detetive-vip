@@ -125,11 +125,11 @@ function Countdown() {
 const features = [
   "Nome, CPF, RG e Data de Nascimento",
   "Todos os Telefones",
-  "Todos os Enderecos",
+  "Todos os Endereços",
   "E-mails e Redes Sociais",
-  "Veiculos e Placas",
-  "Parentes Proximos",
-  "Score, Dividas e Processos",
+  "Veículos e Placas",
+  "Parentes Próximos",
+  "Score, Dívidas e Processos",
   "Faixa de Renda",
   "Empresas (CNPJ)",
   "Parecer do analista",
@@ -147,7 +147,7 @@ export function PricingSection() {
       id="planos"
       className="relative z-[1] py-12 md:py-24 px-4 md:px-8"
       style={{ background: "var(--background-secondary)" }}
-      aria-label="Investigacao Completa"
+      aria-label="Investigação Completa"
     >
       <div className="max-w-[680px] mx-auto">
         {/* Header - Mobile optimized */}
@@ -161,7 +161,7 @@ export function PricingSection() {
           </div>
           
           <h2 className="font-serif text-[26px] md:text-5xl font-bold leading-[1.1] tracking-tight mb-3 md:mb-4 text-balance">
-            Investigacao{" "}
+            Investigação{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Completa</em>
           </h2>
           
@@ -207,7 +207,7 @@ export function PricingSection() {
                 Ficha Completa de Qualquer Pessoa
               </h3>
               <p className="text-[12px] md:text-sm" style={{ color: "var(--muted)" }}>
-                A partir de qualquer informacao
+                A partir de qualquer informação
               </p>
             </div>
 
@@ -270,7 +270,7 @@ export function PricingSection() {
                 className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.12em] mb-3 md:mb-4 text-center" 
                 style={{ color: "var(--primary)" }}
               >
-                O que voce vai receber
+                O que você vai receber
               </p>
               <ul className="grid grid-cols-2 gap-x-3 gap-y-2 md:gap-2.5">
                 {features.map((feature) => (
@@ -322,7 +322,7 @@ export function PricingSection() {
                 className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] font-semibold py-2 px-3 -mx-3 rounded-lg transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 min-h-[44px]"
                 style={{ color: "var(--primary)" }}
               >
-                <span>Ver exemplo de investigacao</span>
+                <span>Ver exemplo de investigação</span>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                   <path d="M7 3V11M7 11L4 8M7 11L10 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>

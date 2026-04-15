@@ -69,7 +69,7 @@ export function FAQSection() {
             <span className="w-3 md:w-4 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
           </div>
           <h2 className="font-serif text-[22px] md:text-4xl font-bold leading-tight tracking-tight text-balance">
-            Duvidas{" "}
+            Dúvidas{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Frequentes</em>
           </h2>
         </div>
