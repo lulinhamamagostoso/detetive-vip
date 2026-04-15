@@ -26,6 +26,13 @@ const nextConfig = {
       ],
     },
     {
+      // Cache static assets for 1 year (immutable)
+      source: "/:path*.(png|jpg|jpeg|webp|avif|svg|ico|woff|woff2)",
+      headers: [
+        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+      ],
+    },
+    {
       source: "/api/:path*",
       headers: [
         { key: "Cache-Control", value: "no-store, max-age=0" },

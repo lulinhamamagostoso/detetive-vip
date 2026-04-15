@@ -257,6 +257,21 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={playfair.variable}>
       <head>
+        {/* Preload LCP images - inicia download em paralelo com HTML parsing */}
+        <link
+          rel="preload"
+          as="image"
+          href="/detective-hero.png"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/mockup.webp"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

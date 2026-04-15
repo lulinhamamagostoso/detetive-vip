@@ -108,8 +108,8 @@ function DetectiveVisual() {
           width={192}
           height={192}
           className="w-full h-full object-contain detective-float"
-          loading="eager"
-          fetchPriority="high"
+          priority
+          sizes="192px"
         />
       </div>
     </div>

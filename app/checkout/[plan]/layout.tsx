@@ -57,5 +57,11 @@ export default function CheckoutLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      {/* Preload logo for faster LCP on checkout */}
+      <link rel="preload" as="image" href="/logo.webp" fetchPriority="high" />
+      {children}
+    </>
+  )
 }

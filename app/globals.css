@@ -83,19 +83,24 @@ body {
   color: var(--foreground);
 }
 
-/* Noise overlay - only on desktop (muito pesado para mobile) */
+/* Noise overlay - only on desktop, delayed to not compete with LCP */
 @media (min-width: 768px) {
   body::after {
     content: '';
     position: fixed;
     inset: 0;
-    opacity: 0.015;
+    opacity: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 200px;
     pointer-events: none;
     z-index: 9999;
-    will-change: auto;
+    animation: noise-fade-in 0.5s ease-out 1s forwards;
+    contain: strict;
   }
+}
+
+@keyframes noise-fade-in {
+  to { opacity: 0.015; }
 }
 
 /* Animations - Pulse fade only on desktop for mobile performance */

@@ -477,6 +477,7 @@ export default function CheckoutPage() {
                 width={400}
                 height={105}
                 style={{ height: "40px", width: "auto" }}
+                priority
               />
             </div>
           </div>
