@@ -93,7 +93,7 @@ function RedFlag({ children, severity = "high" }: { children: React.ReactNode; s
 
 export function ReportPreviewSection() {
   return (
-    <section className="relative z-[1] py-12 md:py-20 px-4 md:px-8" style={{ background: "var(--background)" }} aria-labelledby="relatorio-heading">
+    <section className="relative z-[1] py-12 md:py-20 px-4 md:px-8" style={{ background: "var(--background-secondary)" }} aria-labelledby="relatorio-heading">
       <div className="max-w-[680px] mx-auto">
 
         {/* Section Header */}
