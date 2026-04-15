@@ -192,6 +192,23 @@ details[open] {
 }
 
 /* =====================================================
+   SCROLL HINT (hero mobile) — CSS puro, zero JS.
+   ===================================================== */
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+
+.scroll-hint {
+  animation: scroll-hint-bounce 1.6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint { animation: none; opacity: 0.7; }
+}
+
+/* =====================================================
    ARTICLE PROSE STYLING (Blog)
    ===================================================== */
 .prose {

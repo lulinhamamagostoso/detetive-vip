@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import dynamic from "next/dynamic"
+import { ChevronDown } from "lucide-react"
 
 // lottie-react carregado lazy no client (~50KB gzipped)
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
@@ -189,8 +190,8 @@ export function HeroSection() {
           {/* Typewriter minimalista — apenas mobile */}
           <HeroTypewriter />
 
-          {/* CTA */}
-          <div className="flex flex-col items-center lg:items-start mb-4 md:mb-5">
+          {/* CTA Desktop — botão tradicional */}
+          <div className="hidden md:flex flex-col items-center lg:items-start mb-4 md:mb-5">
             <button
               onClick={() => {
                 const planosSection = document.getElementById("planos")
@@ -208,14 +209,47 @@ export function HeroSection() {
             </button>
           </div>
 
+          {/* CTA Mobile — seta para baixo no mesmo espaço do botão */}
+          <div className="md:hidden flex justify-center mb-4">
+            <button
+              onClick={() => {
+                const planosSection = document.getElementById("planos")
+                if (planosSection) {
+                  planosSection.scrollIntoView({ behavior: "smooth" })
+                }
+              }}
+              aria-label="Ver planos de investigação"
+              className="inline-flex items-center justify-center w-12 h-12 rounded-full transition-all active:scale-[0.92] text-white"
+              style={{
+                background: "var(--whatsapp)",
+                boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)"
+              }}
+            >
+              <ChevronDown size={24} strokeWidth={2.5} />
+            </button>
+          </div>
+
           {/* Trust Items */}
-          <div className="flex items-center gap-2 mb-4 md:mb-6 justify-center lg:justify-start text-[0.65rem] md:text-[0.78rem]" style={{ color: "var(--muted-foreground)" }}>
+          <div className="flex items-center gap-2 mb-3 md:mb-6 justify-center lg:justify-start text-[0.65rem] md:text-[0.78rem]" style={{ color: "var(--muted-foreground)" }}>
             {trustItems.map((item, index) => (
               <span key={item.label} className="flex items-center gap-2 whitespace-nowrap">
                 <span className="font-semibold">{item.label}</span>
                 {index < trustItems.length - 1 && <span style={{ color: "var(--muted)" }}>|</span>}
               </span>
             ))}
+          </div>
+
+          {/* Scroll Hint — apenas mobile, CSS puro, zero JS */}
+          <div className="md:hidden flex flex-col items-center gap-1 pt-2" aria-hidden="true">
+            <span className="text-[0.6rem] uppercase tracking-[0.15em] font-semibold" style={{ color: "var(--muted)" }}>
+              Role para continuar
+            </span>
+            <ChevronDown
+              size={16}
+              strokeWidth={2.5}
+              className="scroll-hint"
+              style={{ color: "var(--primary)" }}
+            />
           </div>
 
           {/* Tags */}

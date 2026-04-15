@@ -1,4 +1,4 @@
-import { Lock, Eye, ChevronRight, MapPin, Phone, CreditCard, Car, User, AlertCircle, Mail, Globe, Users, Building2, Briefcase, Shield, Wifi, FileText } from "lucide-react"
+import { Lock, Eye, ChevronRight, ChevronDown, MapPin, Phone, CreditCard, Car, User, AlertCircle, Mail, Globe, Users, Building2, Briefcase, Shield, Wifi, FileText } from "lucide-react"
 
 /* ── Helpers ── */
 
@@ -138,6 +138,43 @@ export function ReportPreviewSection() {
               <span className="text-[0.55rem] text-white/40">Investiga&#231;&#227;o Premium</span>
             </div>
           </div>
+
+          {/* ── Collapsible Body — <details> nativo, zero JS ── */}
+          <details className="group">
+            <summary
+              className="faq-summary list-none cursor-pointer flex items-center justify-between gap-3 px-5 md:px-7 py-4 md:py-5 transition-colors"
+              style={{
+                background: "linear-gradient(180deg, rgba(184,150,63,0.03) 0%, rgba(184,150,63,0.06) 100%)",
+                borderBottom: "1px solid rgba(184,150,63,0.12)",
+              }}
+            >
+              <div className="flex-1 min-w-0">
+                <div className="text-[0.65rem] font-bold uppercase tracking-[0.14em] mb-0.5" style={{ color: "var(--primary)" }}>
+                  Relatório Completo
+                </div>
+                <div className="text-sm md:text-base font-semibold" style={{ color: "var(--foreground)" }}>
+                  Ver modelo completo do relatório
+                </div>
+                <div className="text-[0.7rem] md:text-[0.75rem] mt-0.5" style={{ color: "var(--muted-foreground)" }}>
+                  Clique para expandir — exemplo real com dados fictícios
+                </div>
+              </div>
+              <div
+                className="w-9 h-9 shrink-0 rounded-full flex items-center justify-center"
+                style={{
+                  background: "rgba(184,150,63,0.1)",
+                  border: "1px solid rgba(184,150,63,0.2)",
+                }}
+              >
+                <ChevronDown
+                  size={18}
+                  strokeWidth={2.5}
+                  className="faq-chevron transition-transform duration-300"
+                  style={{ color: "var(--primary)" }}
+                  aria-hidden="true"
+                />
+              </div>
+            </summary>
 
           {/* ── Report Body ── */}
           <div className="px-5 md:px-7 py-5 md:py-6">
@@ -512,6 +549,7 @@ export function ReportPreviewSection() {
               </div>
             </div>
           </div>
+          </details>
 
           {/* Watermark */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
