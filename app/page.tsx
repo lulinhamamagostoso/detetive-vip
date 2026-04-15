@@ -3,8 +3,6 @@ import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { StatsBar } from "@/components/stats-bar"
 import { HowItWorksSection } from "@/components/how-it-works"
-import { ComparisonSection } from "@/components/comparison-section"
-import { ServicesSection } from "@/components/services-section"
 import { ReportPreviewSection } from "@/components/report-preview-section"
 import { UseCasesSection } from "@/components/use-cases-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
@@ -22,16 +20,21 @@ export default function HomePage() {
       <Navbar />
 
       <main id="main-content">
+        {/* Dobra inicial — renderização prioritária */}
         <HeroSection />
         <StatsBar />
-        <HowItWorksSection />
-        <UseCasesSection />
-        <ReportPreviewSection />
-        <TestimonialsSection />
-        <GuaranteeSection />
-        <PricingSection />
-        <FAQSection />
-        <CTASection />
+
+        {/* Below-the-fold — content-visibility:auto pula render/layout
+            até próximo da viewport. contain-intrinsic-size reserva espaço
+            para evitar CLS durante scroll. */}
+        <div className="cv-auto"><HowItWorksSection /></div>
+        <div className="cv-auto"><UseCasesSection /></div>
+        <div className="cv-auto"><ReportPreviewSection /></div>
+        <div className="cv-auto"><TestimonialsSection /></div>
+        <div className="cv-auto"><GuaranteeSection /></div>
+        <div className="cv-auto"><PricingSection /></div>
+        <div className="cv-auto"><FAQSection /></div>
+        <div className="cv-auto"><CTASection /></div>
       </main>
 
       <Footer />

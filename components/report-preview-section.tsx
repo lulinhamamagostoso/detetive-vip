@@ -1,5 +1,3 @@
-{"use client"}
-
 import { Lock, Eye, ChevronRight, MapPin, Phone, CreditCard, Car, User, AlertCircle, Mail, Globe, Users, Building2, Briefcase, Shield, Wifi, FileText } from "lucide-react"
 
 /* ── Helpers ── */

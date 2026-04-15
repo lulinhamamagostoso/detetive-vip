@@ -1,6 +1,3 @@
-"use client"
-
-import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import Image from "next/image"
 
@@ -32,17 +29,12 @@ const steps = [
   },
 ]
 
+// Server Component — zero JS. <details>/<summary> nativo controla abertura.
 export function HowItWorksSection() {
-  const [openStep, setOpenStep] = useState<number>(1)
-
-  const toggleStep = (stepNumber: number) => {
-    setOpenStep(openStep === stepNumber ? 0 : stepNumber)
-  }
-
   return (
     <section
       id="como-funciona"
-      className="relative z-[1] py-12 md:py-20 px-4 md:px-8"
+      className="relative z-[1] py-12 md:py-20 px-4 md:px-8 faq-section"
       style={{ background: "var(--background-secondary)" }}
       aria-labelledby="como-funciona-heading"
     >
@@ -81,77 +73,49 @@ export function HowItWorksSection() {
           </div>
         </div>
 
-        {/* Steps Accordion */}
+        {/* Steps Accordion — primeiro item aberto por padrão */}
         <div className="flex flex-col gap-2">
-          {steps.map((step) => {
-            const isOpen = openStep === step.number
-            return (
-              <div
-                key={step.number}
-                className="rounded-xl overflow-hidden transition-all duration-300"
-                style={{ 
-                  background: "var(--background-card)",
-                  border: `1px solid ${isOpen ? "var(--primary)" : "var(--border)"}`,
-                }}
+          {steps.map((step, index) => (
+            <details
+              key={step.number}
+              className="faq-item rounded-xl overflow-hidden"
+              style={{
+                background: "var(--background-card)",
+                border: "1px solid var(--border)",
+              }}
+              open={index === 0}
+            >
+              <summary
+                className="faq-summary w-full flex items-center gap-4 p-4 text-left min-h-[48px] cursor-pointer list-none"
               >
-                {/* Header - Clickable */}
-                <button
-                  onClick={() => toggleStep(step.number)}
-                  className="w-full flex items-center gap-4 p-4 text-left transition-colors duration-200 hover:bg-black/5 min-h-[48px]"
-                  aria-expanded={isOpen}
-                  aria-controls={`step-panel-${step.number}`}
-                  id={`step-header-${step.number}`}
-                >
-                  {/* Number */}
-                  <div
-                    className="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg font-bold text-sm gradient-gold"
-                    style={{ color: "var(--background)" }}
-                    aria-hidden="true"
-                  >
-                    {step.number}
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    className="flex-1 text-base font-bold"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {step.title}
-                  </h3>
-
-                  {/* Toggle Icon */}
-                  <ChevronDown
-                    size={20}
-                    className="shrink-0 transition-transform duration-300"
-                    style={{
-                      color: "var(--primary)",
-                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)"
-                    }}
-                    aria-hidden="true"
-                  />
-                </button>
-
-                {/* Description - Collapsible */}
                 <div
-                  id={`step-panel-${step.number}`}
-                  role="region"
-                  aria-labelledby={`step-header-${step.number}`}
-                  className="overflow-hidden transition-all duration-300"
-                  style={{
-                    maxHeight: isOpen ? "200px" : "0px",
-                    opacity: isOpen ? 1 : 0
-                  }}
+                  className="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg font-bold text-sm gradient-gold"
+                  style={{ color: "var(--background)" }}
+                  aria-hidden="true"
                 >
-                  <p
-                    className="px-4 pb-4 pl-[68px] text-[0.85rem] leading-relaxed"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    {step.description}
-                  </p>
+                  {step.number}
                 </div>
-              </div>
-            )
-          })}
+                <h3
+                  className="flex-1 text-base font-bold"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  {step.title}
+                </h3>
+                <ChevronDown
+                  size={20}
+                  className="faq-chevron shrink-0 transition-transform duration-300"
+                  style={{ color: "var(--primary)" }}
+                  aria-hidden="true"
+                />
+              </summary>
+              <p
+                className="px-4 pb-4 pl-[68px] text-[0.85rem] leading-relaxed"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                {step.description}
+              </p>
+            </details>
+          ))}
         </div>
       </div>
     </section>

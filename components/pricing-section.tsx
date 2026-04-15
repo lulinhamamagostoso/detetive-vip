@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Check, Clock } from "lucide-react"
 
 const plans = [
@@ -114,6 +114,26 @@ function Countdown() {
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
   const [expired, setExpired] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Observa viewport — só liga o setInterval quando a section estiver visível.
+  // Economiza re-renders contínuos enquanto o usuário está no topo da página.
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setIsVisible(true)
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setIsVisible(entry.isIntersecting))
+      },
+      { rootMargin: "200px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const target = getTargetTimestamp()
@@ -129,19 +149,24 @@ function Countdown() {
       return true
     }
 
+    // Primeira atualização síncrona para não mostrar 00:00:00
     update()
     setMounted(true)
+
+    // Só roda o tick de 1s quando visível na viewport
+    if (!isVisible) return
 
     const timer = setInterval(() => {
       if (!update()) clearInterval(timer)
     }, 1000)
     return () => clearInterval(timer)
-  }, [])
+  }, [isVisible])
 
   const pad = (n: number) => n.toString().padStart(2, "0")
 
   return (
     <div
+      ref={containerRef}
       className="inline-flex flex-wrap items-center justify-center gap-2 md:gap-3 px-3 md:px-5 py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-semibold mt-4 md:mt-6"
       style={{
         background: "rgba(220, 38, 38, 0.06)",

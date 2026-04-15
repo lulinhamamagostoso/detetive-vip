@@ -1,6 +1,3 @@
-"use client"
-
-import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 
 const faqs = [
@@ -46,13 +43,13 @@ const faqs = [
   },
 ]
 
+// Server Component — zero JS no bundle. Usa <details>/<summary> nativo.
+// Abertura/fechamento é feita pelo browser; ícone rotaciona via CSS [open].
 export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
-
   return (
     <section
       id="faq"
-      className="relative z-[1] py-12 md:py-20 px-4 md:px-8"
+      className="relative z-[1] py-12 md:py-20 px-4 md:px-8 faq-section"
       style={{ background: "var(--background)" }}
       aria-label="Perguntas Frequentes"
     >
@@ -73,57 +70,38 @@ export function FAQSection() {
           </h2>
         </div>
 
-        {/* FAQ List */}
-        <div className="space-y-2 md:space-y-3" role="list">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index
-            const panelId = `faq-panel-${index}`
-            const buttonId = `faq-button-${index}`
-
-            return (
-              <div
-                key={faq.question}
-                className="rounded-lg md:rounded-xl overflow-hidden"
-                style={{
-                  background: "var(--background-card)",
-                  border: `1px solid ${isOpen ? "var(--border-hover)" : "var(--border)"}`,
-                }}
-                role="listitem"
+        {/* FAQ List — primeiro item aberto por padrão (open attribute) */}
+        <div className="space-y-2 md:space-y-3">
+          {faqs.map((faq, index) => (
+            <details
+              key={faq.question}
+              className="faq-item rounded-lg md:rounded-xl overflow-hidden"
+              style={{
+                background: "var(--background-card)",
+                border: "1px solid var(--border)",
+              }}
+              open={index === 0}
+            >
+              <summary
+                className="faq-summary w-full flex items-center justify-between p-4 md:p-5 text-left min-h-[48px] cursor-pointer list-none"
+                style={{ color: "var(--foreground)" }}
               >
-                <button
-                  id={buttonId}
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between p-4 md:p-5 text-left min-h-[48px]"
-                  style={{ color: "var(--foreground)" }}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                >
-                  <span className="text-[0.8rem] md:text-[0.9rem] font-semibold pr-3">{faq.question}</span>
-                  <ChevronDown
-                    size={16}
-                    className={`shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                    style={{ color: isOpen ? "var(--primary)" : "var(--muted)" }}
-                    aria-hidden="true"
-                  />
-                </button>
-
-                <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  className="overflow-hidden transition-all duration-300"
-                  style={{ maxHeight: isOpen ? "300px" : "0" }}
-                >
-                  <div
-                    className="px-4 pb-4 md:px-5 md:pb-5 text-[0.75rem] md:text-[0.85rem] leading-relaxed"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    {faq.answer}
-                  </div>
-                </div>
+                <span className="text-[0.8rem] md:text-[0.9rem] font-semibold pr-3">{faq.question}</span>
+                <ChevronDown
+                  size={16}
+                  className="faq-chevron shrink-0 transition-transform duration-300"
+                  style={{ color: "var(--muted)" }}
+                  aria-hidden="true"
+                />
+              </summary>
+              <div
+                className="px-4 pb-4 md:px-5 md:pb-5 text-[0.75rem] md:text-[0.85rem] leading-relaxed"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                {faq.answer}
               </div>
-            )
-          })}
+            </details>
+          ))}
         </div>
       </div>
     </section>

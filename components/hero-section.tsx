@@ -96,11 +96,9 @@ function DetectiveLottie() {
 
     let cancelled = false
 
-    // Warm-up do módulo lottie-react em paralelo com o fetch do JSON
-    // (fire-and-forget — quando <Lottie> renderizar, o módulo já está em cache)
-    import("lottie-react").catch(() => {})
-
-    // Fetch imediato — o preload hint já iniciou o download no <head>
+    // Fetch do JSON — o preload hint em layout.tsx já iniciou o download.
+    // O import dinâmico do Lottie (dynamic() no topo) só dispara quando
+    // <Lottie> renderiza, que só acontece se animationData existir.
     fetch("/Mr Detective.json")
       .then((r) => r.json())
       .then((data) => {
@@ -251,7 +249,9 @@ export function HeroSection() {
               filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))"
             }}
             loading="eager"
+            fetchPriority="high"
             quality={75}
+            sizes="320px"
           />
         </div>
       </div>
