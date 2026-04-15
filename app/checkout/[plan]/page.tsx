@@ -1062,27 +1062,6 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        {/* O que você vai receber */}
-        <div
-          className="p-4 rounded-xl mb-6"
-          style={{
-            background: "rgba(184, 150, 63, 0.04)",
-            border: "1px solid rgba(184, 150, 63, 0.12)",
-          }}
-        >
-          <h3 className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "var(--primary)" }}>
-            O que você vai receber:
-          </h3>
-          <ul className="space-y-1.5">
-            {plan.features.map((feature) => (
-              <li key={feature} className="flex items-center gap-2 text-[0.8rem]" style={{ color: "var(--muted-foreground)" }}>
-                <Check size={14} className="shrink-0" style={{ color: "var(--success)" }} aria-hidden="true" />
-                {feature}
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* Urgencia + Social proof */}
         <div className="space-y-3 mb-6">
           {/* Indicador de atividade em tempo real */}
@@ -1256,38 +1235,6 @@ export default function CheckoutPage() {
                 color: "var(--foreground)",
               }}
             />
-            
-            {/* Tags clicaveis que ajudam a preencher */}
-            <p className="mt-2 text-[0.65rem]" style={{ color: "var(--muted)" }}>
-              Exemplos do que pode colocar:
-            </p>
-            <div className="mt-1.5 flex flex-wrap gap-1.5">
-              {[
-                { label: "Nome completo", example: "Joao da Silva" },
-                { label: "Telefone", example: "(11) 99999-9999" },
-                { label: "CPF", example: "123.456.789-00" },
-                { label: "Placa", example: "ABC1D23" },
-                { label: "Chave PIX", example: "email ou telefone" },
-              ].map((item) => (
-                <button
-                  key={item.label}
-                  type="button"
-                  onClick={() => {
-                    if (!dados.includes(item.label)) {
-                      setDados(prev => prev ? `${prev}\n${item.label}: ` : `${item.label}: `)
-                    }
-                  }}
-                  className="text-[0.65rem] px-2.5 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
-                  style={{
-                    background: "rgba(184, 150, 63, 0.1)",
-                    color: "var(--primary)",
-                    border: "1px solid rgba(184, 150, 63, 0.2)",
-                  }}
-                >
-                  + {item.label}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Aviso de seguranca */}
