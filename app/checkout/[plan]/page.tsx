@@ -21,7 +21,7 @@ const plansData: Record<string, {
     price: 40,
     originalPrice: 70,
     description: "Investigação completa a partir de nome ou CPF",
-    inputPlaceholder: "Nome parcial, nome abreviado ou nome completo. CPF ou outras informações disponíveis.",
+    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nQualquer info extra ajuda (cidade, idade, etc).",
     features: [
       "Nome Completo e Data de Nascimento",
       "Telefone(s) Celular e Fixo",
@@ -35,7 +35,7 @@ const plansData: Record<string, {
     price: 79,
     originalPrice: 115,
     description: "Descubra tudo sobre o titular do número ou veículo",
-    inputPlaceholder: "Número do celular, placa do veículo ou outras informações disponíveis",
+    inputPlaceholder: "Ex: (11) 98765-4321\nOu placa: ABC-1234 / ABC1D23\nInformação extra ajuda (cidade, modelo do carro, etc).",
     features: [
       "Nome Completo e CPF do Titular",
       "Telefone(s) e Endereço(s)",
@@ -49,7 +49,7 @@ const plansData: Record<string, {
     price: 197,
     originalPrice: 307,
     description: "Investiga\u00E7\u00E3o completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
-    inputPlaceholder: "Nome, CPF, telefone, e-mail, chave PIX ou outras informa\u00E7\u00F5es dispon\u00EDveis",
+    inputPlaceholder: "Ex: Jo\u00E3o da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa. Qualquer dado extra ajuda.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
@@ -69,7 +69,7 @@ const plansData: Record<string, {
     price: 97,
     originalPrice: 197,
     description: "Investiga\u00E7\u00E3o completa com 20+ bancos de dados \u2014 Oferta exclusiva",
-    inputPlaceholder: "Nome, CPF, telefone, e-mail, chave PIX ou outras informa\u00E7\u00F5es dispon\u00EDveis",
+    inputPlaceholder: "Ex: Jo\u00E3o da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa. Qualquer dado extra ajuda.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
@@ -515,10 +515,13 @@ export default function CheckoutPage() {
           {paymentStatus === "expired" && (
             <div
               className="mb-4 p-4 rounded-xl text-center"
-              style={{ background: "rgba(220, 38, 38, 0.1)", border: "1px solid rgba(220, 38, 38, 0.3)" }}
+              style={{ background: "rgba(220, 38, 38, 0.06)", border: "1px solid rgba(220, 38, 38, 0.2)" }}
             >
-              <p className="text-sm font-semibold" style={{ color: "#dc2626" }}>
+              <p className="text-sm font-semibold mb-1" style={{ color: "#dc2626" }}>
                 QR Code expirado
+              </p>
+              <p className="text-[0.72rem] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                Tranquilo — seus dados foram salvos e você <strong>não precisa preencher de novo</strong>. Basta gerar um novo código.
               </p>
               <button
                 onClick={() => {
@@ -528,7 +531,7 @@ export default function CheckoutPage() {
                   setTimeLeft(null)
                   window.scrollTo({ top: 0, behavior: "instant" })
                 }}
-                className="mt-2 text-sm font-semibold underline"
+                className="mt-3 text-sm font-semibold underline"
                 style={{ color: "var(--primary)" }}
               >
                 Gerar novo QR Code
@@ -538,11 +541,16 @@ export default function CheckoutPage() {
 
           {/* Indicador de verificação ativa */}
           {paymentStatus === "waiting" && (
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Loader2 size={14} className="animate-spin" style={{ color: "var(--whatsapp)" }} />
-              <span className="text-xs" style={{ color: "var(--muted)" }}>
-                Aguardando confirmação do pagamento...
-              </span>
+            <div className="flex flex-col items-center justify-center gap-1 mb-4 text-center">
+              <div className="flex items-center gap-2">
+                <Loader2 size={14} className="animate-spin" style={{ color: "var(--whatsapp)" }} />
+                <span className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>
+                  Confirmação automática ativa
+                </span>
+              </div>
+              <p className="text-[0.7rem] px-4" style={{ color: "var(--muted)" }}>
+                Pode fechar essa página. A confirmação chega automaticamente no seu WhatsApp.
+              </p>
             </div>
           )}
 
@@ -558,11 +566,27 @@ export default function CheckoutPage() {
             }}
           >
             {/* Amount */}
-            <div className="mb-4">
+            <div className="mb-3">
               <span className="text-sm" style={{ color: "var(--muted)" }}>Valor a pagar</span>
               <p className="font-bold text-2xl" style={{ color: "var(--whatsapp)" }}>
                 R$ {totalPrice},00
               </p>
+            </div>
+
+            {/* Sigilo no extrato */}
+            <div
+              className="flex items-center gap-2 px-3 py-2 rounded-lg mb-4 text-[0.7rem] text-left"
+              style={{
+                background: "rgba(37, 211, 102, 0.06)",
+                border: "1px solid rgba(37, 211, 102, 0.15)",
+                color: "var(--muted-foreground)",
+              }}
+            >
+              <Shield size={13} className="shrink-0" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
+              <span>
+                No extrato aparece como{" "}
+                <strong style={{ color: "var(--foreground)" }}>SERV DIGITAIS</strong>
+              </span>
             </div>
 
             {/* QR Code */}
@@ -717,7 +741,7 @@ export default function CheckoutPage() {
             }}
           >
             <div className="flex items-start justify-between mb-3">
-              <div>
+              <div className="flex-1">
                 <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
                   {plan.name}
                 </h3>
@@ -725,8 +749,26 @@ export default function CheckoutPage() {
                   <MessageCircle size={12} className="shrink-0" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
                   <span>Resultado será enviado discretamente para: {phone}</span>
                 </p>
+                <p className="text-[0.68rem] mt-1 pl-[18px]" style={{ color: "var(--muted)" }}>
+                  Nosso número fica salvo como contato comum, sem identificação de investigação.
+                </p>
               </div>
               <ExternalLink size={16} style={{ color: "var(--muted)" }} aria-hidden="true" />
+            </div>
+            {/* Badge: sigilo no extrato bancário */}
+            <div
+              className="flex items-center gap-2 px-3 py-2 rounded-lg mb-3 text-[0.7rem]"
+              style={{
+                background: "rgba(37, 211, 102, 0.06)",
+                border: "1px solid rgba(37, 211, 102, 0.15)",
+                color: "var(--muted-foreground)",
+              }}
+            >
+              <Shield size={13} className="shrink-0" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
+              <span>
+                No extrato do seu banco aparece como{" "}
+                <strong style={{ color: "var(--foreground)" }}>SERV DIGITAIS</strong> — sem menção a investigação.
+              </span>
             </div>
             <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid var(--border)" }}>
               <span className="text-sm" style={{ color: "var(--muted-foreground)" }}>Total</span>
@@ -779,7 +821,22 @@ export default function CheckoutPage() {
                     Receba a verdade em minutos
                   </span>
                 </div>
+                <p className="text-[0.65rem] mt-1 flex items-center gap-1" style={{ color: "var(--muted)" }}>
+                  <Shield size={10} className="shrink-0" aria-hidden="true" />
+                  100% sigiloso — o investigado não é notificado
+                </p>
               </div>
+            </div>
+
+            {/* Social proof em tempo real */}
+            <div className="flex items-center justify-center gap-2 mt-4 mb-1">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: "var(--whatsapp)" }} />
+                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "var(--whatsapp)" }} />
+              </span>
+              <span className="text-[0.7rem]" style={{ color: "var(--muted)" }}>
+                <strong style={{ color: "var(--foreground)" }}>127 investigações</strong> realizadas esta semana
+              </span>
             </div>
 
             {/* Error Message */}
@@ -816,7 +873,7 @@ export default function CheckoutPage() {
             </button>
 
             <p className="text-center text-[0.65rem] mt-3" style={{ color: "var(--muted)" }}>
-              Garantia: se não encontrarmos, devolvemos 100% do valor
+              Garantia: se não encontrarmos, devolvemos 100% do valor em até 24h via PIX
             </p>
           </div>
         </div>
@@ -858,8 +915,11 @@ export default function CheckoutPage() {
           <p className="mb-1 text-sm font-medium" style={{ color: "var(--whatsapp)" }}>
             R$ {totalPrice},00 — {plan.name}
           </p>
+          <p className="mb-2 text-sm font-medium" style={{ color: "var(--foreground)" }}>
+            Um de nossos investigadores já recebeu seu pedido.
+          </p>
           <p className="mb-6 text-sm" style={{ color: "var(--muted-foreground)" }}>
-            Você receberá o resultado da investigação no WhatsApp em até 5 minutos. Para agilizar, envie uma mensagem confirmando seu pedido:
+            Você receberá o resultado no WhatsApp em até 5 minutos — não precisa fazer mais nada. Se quiser, pode acompanhar por lá:
           </p>
 
           <a
@@ -1062,7 +1122,10 @@ export default function CheckoutPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: "var(--foreground)" }}
             >
-              Seu E-mail <span style={{ color: "var(--muted)" }}>(opcional)</span>
+              Seu E-mail{" "}
+              <span style={{ color: "var(--muted)" }}>
+                (opcional — usamos só como backup caso o WhatsApp falhe)
+              </span>
             </label>
             <input
               type="email"
@@ -1105,6 +1168,11 @@ export default function CheckoutPage() {
             />
           </div>
 
+          {/* Microline de reasseguro */}
+          <p className="text-center text-[0.7rem] -mb-2" style={{ color: "var(--muted)" }}>
+            Você ainda vai confirmar os dados antes de começar a investigação.
+          </p>
+
           {/* Submit Button */}
           <button
             type="submit"
@@ -1134,7 +1202,7 @@ export default function CheckoutPage() {
               Garantia de Resultado
             </p>
             <p className="text-[0.7rem] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
-              Se não encontrarmos as informações solicitadas, devolvemos 100% do seu dinheiro. Sem burocracia.
+              Se não encontrarmos as informações solicitadas, devolvemos 100% do seu dinheiro em até 24h via PIX. Sem burocracia.
             </p>
           </div>
         </div>
