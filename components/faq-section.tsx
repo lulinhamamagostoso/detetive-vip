@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react"
 const faqs = [
   {
     question: "Quanto tempo demora pra receber o resultado?",
-    answer: "Rápido: em até 5 minutos após o pagamento você recebe tudo no seu WhatsApp. Em casos mais complexos, pode levar até 1 hora — mas isso é raro. A maioria recebe em minutos.",
+    answer: "Rápido: você recebe o resultado no seu WhatsApp em até 1 hora após o pagamento. A maioria dos casos é resolvida em menos tempo.",
   },
   {
     question: "A pessoa investigada fica sabendo?",

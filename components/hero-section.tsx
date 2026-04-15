@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react"
 
 const trustItems = [
   { label: "100% Sigiloso" },
-  { label: "Resultado em até 24h" },
+  { label: "Resultado em até 1h" },
   { label: "Dados Verificados" },
 ]
 
@@ -154,7 +154,7 @@ export function HeroSection() {
             style={{ color: "var(--muted-foreground)" }}
           >
             Você fornece qualquer dado que tenha — nome, CPF, telefone, placa ou chave PIX — e nós investigamos a fundo tudo sobre. Você recebe a ficha completa no seu WhatsApp em até{" "}
-            <strong style={{ color: "var(--foreground)" }}>24 horas</strong>.
+            <strong style={{ color: "var(--foreground)" }}>1 hora</strong>.
           </p>
 
           {/* Visual Detetive — apenas mobile, carrega instantaneamente */}

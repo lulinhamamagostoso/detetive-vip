@@ -141,7 +141,7 @@ const features = [
 
 const guarantees = [
   { icon: Shield, text: "100% Sigiloso" },
-  { icon: Zap, text: "Resultado em até 24h" },
+  { icon: Zap, text: "Resultado em até 1h" },
   { icon: MessageCircle, text: "Entrega via WhatsApp" },
 ]
 
@@ -294,7 +294,7 @@ export function PricingSection() {
             </a>
 
             <p className="text-center text-[0.7rem] mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
-              Pagamento único via PIX · Sem assinatura · Resultado em até 24 horas
+              Pagamento único via PIX · Sem assinatura · Resultado em até 1 hora
             </p>
 
             {/* Demo link */}

@@ -657,7 +657,7 @@ export default function CheckoutPage() {
               style={{ background: "rgba(37, 211, 102, 0.1)" }}
             >
               <p className="text-xs font-semibold" style={{ color: "var(--whatsapp)" }}>
-                Após pagar, você recebe o resultado no WhatsApp em até 24 horas
+                Após pagar, você recebe o resultado no WhatsApp em até 1 hora
               </p>
             </div>
           </div>
@@ -875,7 +875,7 @@ export default function CheckoutPage() {
             </button>
 
             <p className="text-center text-[0.68rem] mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
-              Garantia total: se não encontrarmos a pessoa, devolvemos 100% do valor em até 24h
+              Garantia total: se não encontrarmos a pessoa, devolvemos 100% do valor em até 1h
             </p>
           </div>
         </div>
@@ -921,7 +921,7 @@ export default function CheckoutPage() {
             Um de nossos investigadores já recebeu seu pedido.
           </p>
           <p className="mb-6 text-sm" style={{ color: "var(--muted-foreground)" }}>
-            Você receberá o resultado no WhatsApp em até 24 horas — não precisa fazer mais nada. Se quiser, pode acompanhar por lá:
+            Você receberá o resultado no WhatsApp em até 1 hora — não precisa fazer mais nada. Se quiser, pode acompanhar por lá:
           </p>
 
           <a
@@ -992,7 +992,7 @@ export default function CheckoutPage() {
             Preencha seus dados para iniciar
           </h1>
           <p className="text-sm mb-4" style={{ color: "var(--muted-foreground)" }}>
-            Resultado enviado no seu WhatsApp em até 24 horas
+            Resultado enviado no seu WhatsApp em até 1 hora
           </p>
           <div
             className="inline-flex items-center gap-3 px-4 py-2 rounded-full"
@@ -1136,7 +1136,7 @@ export default function CheckoutPage() {
                 </p>
               )}
               <p className="mt-1.5 text-[0.68rem]" style={{ color: "var(--muted)" }}>
-                Resultado chega em até 24h nesse número
+                Resultado chega em até 1h nesse número
               </p>
             </div>
 
@@ -1232,7 +1232,7 @@ export default function CheckoutPage() {
           </button>
           
           <p className="text-center text-[0.68rem]" style={{ color: "var(--muted)" }}>
-            Pagamento rápido via PIX — resultado em até 24 horas
+            Pagamento rápido via PIX — resultado em até 1 hora
           </p>
         </form>
 
@@ -1250,7 +1250,7 @@ export default function CheckoutPage() {
               Garantia de Resultado
             </p>
             <p className="text-[0.7rem] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
-              Se não encontrarmos as informações solicitadas, devolvemos 100% do seu dinheiro em até 24h via PIX. Sem burocracia.
+              Se não encontrarmos as informações solicitadas, devolvemos 100% do seu dinheiro em até 1h via PIX. Sem burocracia.
             </p>
           </div>
         </div>

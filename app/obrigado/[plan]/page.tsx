@@ -72,7 +72,7 @@ function ObrigadoContent() {
             className="text-sm leading-relaxed"
             style={{ color: "var(--muted-foreground)" }}
           >
-            Você receberá o resultado no WhatsApp em até 24 horas — não precisa fazer mais nada.
+            Você receberá o resultado no WhatsApp em até 1 hora — não precisa fazer mais nada.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ function ObrigadoContent() {
             style={{ color: "var(--muted-foreground)" }}
           >
             <Clock size={14} style={{ color: "var(--primary)" }} />
-            Resultado em até 24h
+            Resultado em até 1h
           </div>
           <div
             className="flex items-center gap-1.5 text-[0.7rem] font-medium"
