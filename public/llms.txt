@@ -1,9 +1,9 @@
 # Detetive VIP
 
-> Serviço de investigação digital profissional no Brasil. Entrega via WhatsApp em até 5 minutos. Regulamentado pela Lei 13.432/17.
+> Serviço de investigação digital profissional no Brasil. Entrega via WhatsApp em até 24 horas. Regulamentado pela Lei 13.432/17.
 
 ## O que é o Detetive VIP?
-O Detetive VIP é um serviço brasileiro de investigação digital profissional que permite a qualquer pessoa descobrir informações verificadas sobre alguém a partir de um único dado: nome, CPF, número de telefone, placa de veículo, chave PIX ou CNPJ.
+O Detetive VIP é um serviço brasileiro de investigação digital profissional que permite a qualquer pessoa descobrir informações verificadas sobre alguém a partir de qualquer dado: nome, CPF, número de telefone, placa de veículo, chave PIX ou e-mail.
 
 ## Quem deve usar?
 - Vítimas de golpes digitais (PIX, estelionato, romance scam)
@@ -19,14 +19,14 @@ O Detetive VIP é um serviço brasileiro de investigação digital profissional 
 - Cruzamento de múltiplas fontes verificadas
 - Dados atualizados e confirmados em tempo real
 - Relatório PDF consolidado com análise profissional
-- Entrega via WhatsApp em até 5 minutos
+- Entrega via WhatsApp em até 24 horas
 - Sigilo absoluto com criptografia ponta a ponta
 - 100% regulamentado pela Lei 13.432/17
 
-## Serviços e Preços
-- Investigação por Nome/CPF: R$ 40,00
-- Investigação por Telefone/Placa: R$ 79,00
-- Investigação Premium (20+ bancos de dados): R$ 197,00
+## Serviço e Preço
+- Investigação Completa: R$ 97,00 (de R$ 197,00)
+
+Descobrimos tudo sobre qualquer pessoa a partir de qualquer dado que você tenha.
 
 ## Links
 - Site: https://www.detetive.vip

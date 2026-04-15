@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 
-// ── Planos válidos (fonte única de verdade) ──────────────────────────
+// ── Plano único (fonte única de verdade) ──────────────────────────
 export const VALID_PLANS: Record<string, { name: string; price: number }> = {
-  "nome-cpf":        { name: "Pelo NOME OU CPF",              price: 40 },
-  "celular-placa":   { name: "Pelo N° Celular ou Placa",      price: 79 },
-  "premium":         { name: "Investigação Premium",           price: 197 },
-  "upgrade-premium": { name: "Investigação Premium (Oferta)",  price: 97 },
+  "investigacao": { name: "Investigação Completa", price: 97 },
 }
 
 // ── Rate limiting simples (em memória — funciona por instância) ──────

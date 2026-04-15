@@ -7,7 +7,7 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield, MessageCircle } from "lucide-react"
 import { trackViewContent, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase } from "@/lib/tracking-events"
 
-// ── Dados dos planos (sincronizados com api/pix/route.ts) ────────────
+// ── Dados do plano único (sincronizado com api/pix/route.ts) ────────────
 const plansData: Record<string, {
   name: string
   price: number
@@ -17,64 +17,13 @@ const plansData: Record<string, {
   inputInstruction: string
   features: string[]
 }> = {
-  "nome-cpf": {
-    name: "Pelo NOME OU CPF",
-    price: 40,
-    originalPrice: 70,
-    description: "Investigação completa a partir de nome ou CPF",
-    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nInfo extra ajuda: cidade, idade, etc.",
-    inputInstruction: "Informe nome parcial, abreviado ou completo, ou CPF da pessoa que deseja investigar.",
-    features: [
-      "Nome Completo e Data de Nascimento",
-      "Telefone(s) Celular e Fixo",
-      "Endereço(s) Atualizados",
-      "E-mail(s) e Redes Sociais",
-      "Faixa de Renda e Profissão",
-    ],
-  },
-  "celular-placa": {
-    name: "Pelo N° Celular ou Placa",
-    price: 79,
-    originalPrice: 115,
-    description: "Descubra tudo sobre o titular do número ou veículo",
-    inputPlaceholder: "Ex: (11) 98765-4321\nOu placa: ABC-1234 / ABC1D23\nInfo extra: cidade, modelo do carro, etc.",
-    inputInstruction: "Informe o número de celular ou a placa do veículo que deseja investigar.",
-    features: [
-      "Nome Completo e CPF do Titular",
-      "Telefone(s) e Endereço(s)",
-      "Nome da Mãe e Vínculos",
-      "E-mail(s) e Redes Sociais",
-      "Faixa de Renda e Profissão",
-    ],
-  },
-  "premium": {
-    name: "Investigação Premium",
-    price: 197,
-    originalPrice: 307,
-    description: "Investigação completa com 20+ bancos de dados oficiais e 2.000+ fontes abertas",
-    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
-    inputInstruction: "Coloque qualquer dado que você tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
-    features: [
-      "Nome Completo, CPF, RG e Data de Nascimento",
-      "Todos os Telefones (Celular e Fixo)",
-      "Todos os Endereços Vinculados",
-      "E-mails e Redes Sociais",
-      "Veículos, Placa e Modelo",
-      "Parentes Próximos (Nome e CPF)",
-      "Score, Dívidas e Processos Judiciais",
-      "Faixa de Renda e Profissão",
-      "Participação em Empresas (CNPJ)",
-      "Resumo investigativo + Parecer do analista",
-      "Pontos de atenção e análise de risco",
-    ],
-  },
-  "upgrade-premium": {
-    name: "Investigação Premium",
+  "investigacao": {
+    name: "Investigação Completa",
     price: 97,
     originalPrice: 197,
-    description: "Investigação completa com 20+ bancos de dados — Oferta exclusiva",
-    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nOu chave PIX / placa.",
-    inputInstruction: "Coloque qualquer dado que você tenha: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais info, melhor.",
+    description: "Descobrimos tudo sobre qualquer pessoa a partir de qualquer dado que você tenha",
+    inputPlaceholder: "Ex: João da Silva Santos\nCPF: 123.456.789-00\nTelefone: (11) 98765-4321\nE-mail: joao@exemplo.com\nPlaca: ABC1D23\nChave PIX: email ou telefone",
+    inputInstruction: "Informe qualquer dado que você tenha sobre a pessoa: nome, CPF, telefone, placa, chave PIX, e-mail... Quanto mais informações, melhor o resultado.",
     features: [
       "Nome Completo, CPF, RG e Data de Nascimento",
       "Todos os Telefones (Celular e Fixo)",
@@ -708,7 +657,7 @@ export default function CheckoutPage() {
               style={{ background: "rgba(37, 211, 102, 0.1)" }}
             >
               <p className="text-xs font-semibold" style={{ color: "var(--whatsapp)" }}>
-                Após pagar, você recebe o resultado no WhatsApp em até 5 minutos
+                Após pagar, você recebe o resultado no WhatsApp em até 24 horas
               </p>
             </div>
           </div>
@@ -972,7 +921,7 @@ export default function CheckoutPage() {
             Um de nossos investigadores já recebeu seu pedido.
           </p>
           <p className="mb-6 text-sm" style={{ color: "var(--muted-foreground)" }}>
-            Você receberá o resultado no WhatsApp em até 5 minutos — não precisa fazer mais nada. Se quiser, pode acompanhar por lá:
+            Você receberá o resultado no WhatsApp em até 24 horas — não precisa fazer mais nada. Se quiser, pode acompanhar por lá:
           </p>
 
           <a
@@ -1043,7 +992,7 @@ export default function CheckoutPage() {
             Preencha seus dados para iniciar
           </h1>
           <p className="text-sm mb-4" style={{ color: "var(--muted-foreground)" }}>
-            Resultado enviado no seu WhatsApp em até 5 minutos
+            Resultado enviado no seu WhatsApp em até 24 horas
           </p>
           <div
             className="inline-flex items-center gap-3 px-4 py-2 rounded-full"
@@ -1187,7 +1136,7 @@ export default function CheckoutPage() {
                 </p>
               )}
               <p className="mt-1.5 text-[0.68rem]" style={{ color: "var(--muted)" }}>
-                Resultado chega em até 5 min nesse número
+                Resultado chega em até 24h nesse número
               </p>
             </div>
 
@@ -1283,7 +1232,7 @@ export default function CheckoutPage() {
           </button>
           
           <p className="text-center text-[0.68rem]" style={{ color: "var(--muted)" }}>
-            Pagamento rápido via PIX — resultado em até 5 minutos
+            Pagamento rápido via PIX — resultado em até 24 horas
           </p>
         </form>
 
