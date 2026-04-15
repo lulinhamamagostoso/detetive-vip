@@ -25,8 +25,8 @@ export default function HomePage() {
         <HeroSection />
         <StatsBar />
         <HowItWorksSection />
-        <ReportPreviewSection />
         <UseCasesSection />
+        <ReportPreviewSection />
         <TestimonialsSection />
         <GuaranteeSection />
         <PricingSection />
