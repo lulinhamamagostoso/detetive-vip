@@ -66,28 +66,9 @@ function HeroTypewriter() {
   }, [text, isDeleting, phraseIndex])
 
   return (
-    <div className="md:hidden flex items-center gap-3 mb-4 mx-auto max-w-md text-left">
-      <div
-        className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
-        style={{ background: "rgba(184, 150, 63, 0.14)" }}
-        aria-hidden="true"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="var(--primary)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-      </div>
+    <div className="md:hidden mb-4 mx-auto max-w-md text-center">
       <p
-        className="flex-1 text-[0.875rem] leading-snug min-h-[5rem]"
+        className="text-[0.875rem] leading-snug min-h-[3rem]"
         style={{ color: "var(--foreground)" }}
       >
         Acabe hoje com suas dúvidas sobre qualquer pessoa, investigando apenas pelo{" "}
