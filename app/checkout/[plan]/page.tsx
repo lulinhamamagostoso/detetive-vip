@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield } from "lucide-react"
+import { ArrowLeft, ArrowRight, Lock, CheckCircle2, ExternalLink, Copy, Check, Loader2, Clock, Shield, MessageCircle } from "lucide-react"
 import { trackViewContent, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase } from "@/lib/tracking-events"
 
 // ── Dados dos planos (sincronizados com api/pix/route.ts) ────────────
@@ -721,8 +721,9 @@ export default function CheckoutPage() {
                 <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
                   {plan.name}
                 </h3>
-                <p className="text-xs" style={{ color: "var(--muted)" }}>
-                  {phone}
+                <p className="text-xs flex items-center gap-1.5 mt-1" style={{ color: "var(--muted)" }}>
+                  <MessageCircle size={12} className="shrink-0" style={{ color: "var(--whatsapp)" }} aria-hidden="true" />
+                  <span>Resultado será enviado discretamente para: {phone}</span>
                 </p>
               </div>
               <ExternalLink size={16} style={{ color: "var(--muted)" }} aria-hidden="true" />
