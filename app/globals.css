@@ -6,48 +6,60 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-space), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
 }
 
 :root {
-  /* Core backgrounds - Light theme */
-  --background: #faf9f7;
-  --background-secondary: #f3f1ed;
+  /* Core backgrounds - Refined light theme with depth */
+  --background: #faf9f6;
+  --background-secondary: #f5f3ef;
   --background-card: #ffffff;
   --background-card-hover: #fefefe;
   --background-elevated: #f8f7f4;
   
-  /* Gold/Primary - Darker for contrast on light bg */
-  --primary: #b8963f;
-  --primary-light: #d4b458;
-  --primary-dark: #8a7030;
-  --primary-glow: rgba(184, 150, 63, 0.08);
-  --primary-glow-strong: rgba(184, 150, 63, 0.15);
+  /* Gold/Primary - Rich and confident */
+  --primary: #c9a227;
+  --primary-light: #dbb942;
+  --primary-dark: #9a7b1c;
+  --primary-glow: rgba(201, 162, 39, 0.08);
+  --primary-glow-strong: rgba(201, 162, 39, 0.18);
   
-  /* Text - Dark on light */
-  --foreground: #1a1a1f;
-  --muted-foreground: #4a4a56;
-  --muted: #5c5c68;
+  /* Text - High contrast for readability */
+  --foreground: #111111;
+  --muted-foreground: #3d3d3d;
+  --muted: #6b6b6b;
   
-  /* Borders - Soft gray */
+  /* Borders - Subtle definition */
   --border: rgba(0, 0, 0, 0.06);
-  --border-hover: rgba(184, 150, 63, 0.25);
+  --border-hover: rgba(201, 162, 39, 0.35);
   
   /* Accents */
-  --success: #16a34a;
+  --success: #059669;
   --destructive: #dc2626;
   --whatsapp: #25d366;
   
-  /* Glass effect - Light */
-  --glass: rgba(255, 255, 255, 0.85);
+  /* Glass effect */
+  --glass: rgba(255, 255, 255, 0.92);
   
-  /* Radius */
-  --radius: 0.75rem;
+  /* Radius - Slightly larger for modern feel */
+  --radius: 0.875rem;
 }
 
 * {
   border-color: var(--border);
+}
+
+/* Focus visible - accessible focus states */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Prevent double-tap zoom on touch devices */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(201, 162, 39, 0.1);
 }
 
 body {
@@ -55,13 +67,14 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.6;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -70,7 +83,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #d1c7b5;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -83,54 +96,7 @@ body {
   color: var(--foreground);
 }
 
-/* Noise overlay - only on desktop, delayed to not compete with LCP */
-@media (min-width: 768px) {
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    opacity: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 200px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: noise-fade-in 0.5s ease-out 1s forwards;
-    contain: strict;
-  }
-}
-
-@keyframes noise-fade-in {
-  to { opacity: 0.015; }
-}
-
-/* Animations - Pulse fade only on desktop for mobile performance */
-@media (min-width: 768px) {
-  @keyframes pulse-fade {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .animate-pulse-fade {
-    animation: pulse-fade 2s ease-in-out infinite;
-  }
-}
-
-/* Desktop-only animations */
-@media (min-width: 768px) {
-  @keyframes orb-float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(40px, -50px) scale(1.12); }
-    66% { transform: translate(-30px, 40px) scale(0.88); }
-  }
-
-  .animate-orb {
-    animation: orb-float 22s ease-in-out infinite;
-  }
-
-  .animate-orb-reverse {
-    animation: orb-float 28s ease-in-out infinite reverse;
-  }
-}
+/* Noise overlay removed - impacts performance on mobile */
 
 /* Glass effect */
 .glass {
@@ -151,28 +117,86 @@ body {
   background-clip: text;
 }
 
-/* Marquee animation for logo carousel */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* =====================================================
+   MODERN BUTTON STYLES
+   ===================================================== */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Typewriter cursor blink (hero mobile) */
-@keyframes typewriter-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  pointer-events: none;
 }
 
-.typewriter-cursor {
-  animation: typewriter-blink 1s step-end infinite;
-  display: inline-block;
-  margin-left: 1px;
-  color: var(--primary);
-  font-weight: 400;
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* =====================================================
-   FAQ/ACCORDION (<details> nativo — zero JS)
+   STAGGERED ENTRANCE ANIMATIONS
+   ===================================================== */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out backwards;
+}
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+/* =====================================================
+   CARD HOVER EFFECTS
+   ===================================================== */
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+/* =====================================================
+   GLOW EFFECTS
+   ===================================================== */
+.glow-gold {
+  box-shadow: 
+    0 0 0 1px rgba(201, 162, 39, 0.1),
+    0 4px 16px rgba(201, 162, 39, 0.15),
+    0 8px 32px rgba(201, 162, 39, 0.1);
+}
+
+.glow-green {
+  box-shadow: 
+    0 4px 20px rgba(37, 211, 102, 0.3),
+    0 8px 32px rgba(37, 211, 102, 0.15);
+}
+
+/* =====================================================
+   FAQ/ACCORDION (<details> nativo)
    ===================================================== */
 .faq-summary::-webkit-details-marker { display: none; }
 .faq-summary::marker { display: none; }
@@ -187,9 +211,7 @@ details[open] {
 }
 
 /* =====================================================
-   CONTENT-VISIBILITY — renderiza só quando próximo da viewport.
-   Reserva espaço via contain-intrinsic-size para evitar CLS.
-   Aplicado nas seções below-the-fold (não no hero/stats).
+   CONTENT-VISIBILITY
    ===================================================== */
 .cv-auto {
   content-visibility: auto;
@@ -197,7 +219,7 @@ details[open] {
 }
 
 /* =====================================================
-   DETECTIVE VISUAL (hero mobile) — CSS puro, carrega instantaneamente.
+   DETECTIVE VISUAL (hero mobile)
    ===================================================== */
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -217,15 +239,32 @@ details[open] {
   animation: detective-float 2.5s ease-in-out infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-pulse-slow,
-  .detective-float {
-    animation: none !important;
-  }
+/* =====================================================
+   TYPEWRITER
+   ===================================================== */
+@keyframes typewriter-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  animation: typewriter-blink 1s step-end infinite;
+  display: inline-block;
+  margin-left: 1px;
+  color: var(--primary);
+  font-weight: 400;
 }
 
 /* =====================================================
-   SCROLL HINT (hero mobile) — CSS puro, zero JS.
+   MARQUEE
+   ===================================================== */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* =====================================================
+   SCROLL HINT
    ===================================================== */
 @keyframes scroll-hint-bounce {
   0%, 100% { transform: translateY(0); opacity: 0.55; }
@@ -235,10 +274,6 @@ details[open] {
 .scroll-hint {
   animation: scroll-hint-bounce 1.6s ease-in-out infinite;
   will-change: transform, opacity;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-hint { animation: none; opacity: 0.7; }
 }
 
 /* =====================================================
@@ -416,18 +451,105 @@ details[open] {
   }
 }
 
-/* Respeita preferência de redução de movimento */
+/* =====================================================
+   TYPOGRAPHY UTILITIES
+   ===================================================== */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Tabular nums for numbers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================
+   MOBILE OPTIMIZATIONS - Core Web Vitals
+   ===================================================== */
+
+/* Prevent layout shift on images */
+img {
+  content-visibility: auto;
+}
+
+/* Smooth scrolling only on desktop (saves battery on mobile) */
+@media (min-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Mobile: Use 100svh for full viewport height */
+@supports (height: 100svh) {
+  .min-h-screen-mobile {
+    min-height: 100svh;
+  }
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 767px) {
+  /* Larger touch targets */
+  button, a, [role="button"], input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Prevent text size adjustment */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Improve tap responsiveness */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Optimize font rendering */
+  body {
+    text-rendering: optimizeSpeed;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Disable hover effects on touch */
+  @media (hover: none) {
+    .btn-primary:hover {
+      transform: none;
+    }
+    .card-lift:hover {
+      transform: none;
+    }
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .animate-orb,
-  .animate-orb-reverse,
-  .animate-pulse-fade,
-  .typewriter-cursor {
+  .animate-pulse-slow,
+  .detective-float,
+  .scroll-hint,
+  .typewriter-cursor,
+  .animate-fade-up {
     animation: none !important;
   }
 
-  .reveal {
-    opacity: 1;
-    transform: none;
+  .btn-primary,
+  .card-lift {
     transition: none;
   }
 
