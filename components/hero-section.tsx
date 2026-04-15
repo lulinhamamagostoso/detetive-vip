@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { ChevronDown } from "lucide-react"
+
 
 const trustItems = [
   { label: "100% Sigiloso" },
@@ -180,19 +180,6 @@ export function HeroSection() {
             >
               <span>&#128269;</span> Iniciar Investigação
             </button>
-          </div>
-
-          {/* Indicador visual mobile — seta decorativa (não clicável) */}
-          <div className="md:hidden flex justify-center mb-4" aria-hidden="true">
-            <div
-              className="inline-flex items-center justify-center w-12 h-12 rounded-full text-white"
-              style={{
-                background: "var(--whatsapp)",
-                boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)"
-              }}
-            >
-              <ChevronDown size={24} strokeWidth={2.5} />
-            </div>
           </div>
 
           {/* Trust Items */}
