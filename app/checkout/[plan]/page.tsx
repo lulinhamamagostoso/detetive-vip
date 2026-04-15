@@ -850,11 +850,11 @@ export default function CheckoutPage() {
               </div>
             )}
 
-            {/* Pay Button */}
+            {/* Pay Button — CTA ultra claro */}
             <button
               onClick={handlePayment}
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide mt-6 transition-all active:scale-[0.98] disabled:opacity-70"
+              className="w-full flex flex-col items-center justify-center gap-1 py-4 rounded-xl font-bold text-white text-base uppercase tracking-wide mt-6 transition-all active:scale-[0.98] disabled:opacity-70"
               style={{
                 background: "var(--whatsapp)",
                 boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
@@ -862,19 +862,24 @@ export default function CheckoutPage() {
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 size={16} className="animate-spin" />
-                  Gerando PIX...
+                  <div className="flex items-center gap-2">
+                    <Loader2 size={18} className="animate-spin" />
+                    <span>Gerando seu PIX...</span>
+                  </div>
+                  <span className="text-[0.65rem] font-normal opacity-80">Aguarde alguns segundos</span>
                 </>
               ) : (
                 <>
-                  <Lock size={16} />
-                  Pagar R$ {totalPrice},00 com Pix
+                  <div className="flex items-center gap-2">
+                    <span>GERAR MEU PIX DE R$ {totalPrice}</span>
+                  </div>
+                  <span className="text-[0.65rem] font-normal opacity-80">Clique aqui para pagar e comecar</span>
                 </>
               )}
             </button>
 
-            <p className="text-center text-[0.65rem] mt-3" style={{ color: "var(--muted)" }}>
-              Garantia: se não encontrarmos, devolvemos 100% do valor em até 24h via PIX
+            <p className="text-center text-[0.68rem] mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
+              Garantia total: se nao encontrarmos a pessoa, devolvemos 100% do valor em ate 24h
             </p>
           </div>
         </div>
@@ -982,29 +987,36 @@ export default function CheckoutPage() {
 
         <CheckoutStepper current="form" />
 
-        {/* Plan Info */}
+        {/* Plan Info — headline clara sobre o que fazer */}
         <div className="text-center mb-6">
           <h1
-            className="text-2xl md:text-3xl font-bold mb-1"
-            style={{ color: "var(--primary-dark)" }}
+            className="text-xl md:text-2xl font-bold mb-2"
+            style={{ color: "var(--foreground)" }}
           >
-            {plan.name}
+            Preencha seus dados para iniciar
           </h1>
-          <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-            {plan.description}
+          <p className="text-sm mb-4" style={{ color: "var(--muted-foreground)" }}>
+            Resultado enviado no seu WhatsApp em ate 5 minutos
           </p>
-          <div className="mt-3 inline-flex items-baseline gap-1">
-            <span className="text-xs line-through mr-2" style={{ color: "var(--muted)" }}>
-              R$ {plan.originalPrice},00
+          <div
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-full"
+            style={{
+              background: "rgba(184, 150, 63, 0.08)",
+              border: "1px solid rgba(184, 150, 63, 0.2)",
+            }}
+          >
+            <span className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>
+              {plan.name}
             </span>
-            <span className="text-lg" style={{ color: "var(--primary)" }}>R$</span>
+            <span className="text-xs line-through" style={{ color: "var(--muted)" }}>
+              R$ {plan.originalPrice}
+            </span>
             <span
-              className="text-4xl font-extrabold"
-              style={{ color: "var(--primary-dark)" }}
+              className="text-lg font-extrabold"
+              style={{ color: "var(--primary)" }}
             >
-              {plan.price}
+              R$ {plan.price}
             </span>
-            <span style={{ color: "var(--primary)" }}>,00</span>
           </div>
         </div>
 
@@ -1047,143 +1059,214 @@ export default function CheckoutPage() {
           </span>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Nome - Required */}
-          <div>
-            <label
-              htmlFor="nome"
-              className="block text-sm font-medium mb-2"
-              style={{ color: "var(--foreground)" }}
-            >
-              Seu Nome
-            </label>
-            <input
-              type="text"
-              id="nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              placeholder="Digite seu nome"
-              required
-              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
-              style={{
-                background: "var(--background-card)",
-                border: "1px solid var(--border)",
-                color: "var(--foreground)",
-              }}
-            />
-          </div>
+        {/* Form com instrucoes claras */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Secao 1: Seus dados */}
+          <div
+            className="p-4 rounded-xl space-y-4"
+            style={{
+              background: "var(--background-card)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{ background: "var(--primary)", color: "white" }}
+              >
+                1
+              </div>
+              <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
+                Seus dados (para receber o resultado)
+              </h3>
+            </div>
+            
+            {/* Nome */}
+            <div>
+              <label
+                htmlFor="nome"
+                className="block text-xs font-medium mb-1.5"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                Seu nome
+              </label>
+              <input
+                type="text"
+                id="nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                placeholder="Ex: Maria Silva"
+                required
+                className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
+                style={{
+                  background: "var(--background)",
+                  border: "1px solid var(--border)",
+                  color: "var(--foreground)",
+                }}
+              />
+            </div>
 
-          {/* Phone - Required */}
-          <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium mb-1"
-              style={{ color: "var(--foreground)" }}
-            >
-              Seu Número de Telefone/WhatsApp
-            </label>
-            <p
-              className="text-[0.75rem] mb-2"
-              style={{ color: "var(--muted)" }}
-            >
-              Você vai receber o resultado da investigação por lá em até 5 minutos
-            </p>
-            <input
-              type="tel"
-              id="phone"
-              value={phone}
-              onChange={handlePhoneChange}
-              onBlur={() => {
-                const err = validatePhone(phone)
-                if (err) setPhoneError(err)
-              }}
-              placeholder="(00) 00000-0000"
-              inputMode="numeric"
-              autoComplete="tel"
-              required
-              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
-              style={{
-                background: "var(--background-card)",
-                border: phoneError ? "1px solid var(--destructive)" : "1px solid var(--border)",
-                color: "var(--foreground)",
-              }}
-            />
-            {phoneError && (
-              <p className="mt-1.5 text-xs" style={{ color: "var(--destructive)" }}>
-                {phoneError}
+            {/* WhatsApp */}
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-xs font-medium mb-1.5"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                Seu WhatsApp (onde vai receber o resultado)
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                value={phone}
+                onChange={handlePhoneChange}
+                onBlur={() => {
+                  const err = validatePhone(phone)
+                  if (err) setPhoneError(err)
+                }}
+                placeholder="(11) 99999-9999"
+                inputMode="numeric"
+                autoComplete="tel"
+                required
+                className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
+                style={{
+                  background: "var(--background)",
+                  border: phoneError ? "1px solid var(--destructive)" : "1px solid var(--border)",
+                  color: "var(--foreground)",
+                }}
+              />
+              {phoneError && (
+                <p className="mt-1.5 text-xs" style={{ color: "var(--destructive)" }}>
+                  {phoneError}
+                </p>
+              )}
+              <p className="mt-1.5 text-[0.68rem]" style={{ color: "var(--muted)" }}>
+                Resultado chega em ate 5 min nesse numero
               </p>
-            )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-xs font-medium mb-1.5"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                E-mail (opcional, backup)
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="seu@email.com"
+                className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
+                style={{
+                  background: "var(--background)",
+                  border: "1px solid var(--border)",
+                  color: "var(--foreground)",
+                }}
+              />
+            </div>
           </div>
 
-          {/* Email - Optional */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium mb-2"
-              style={{ color: "var(--foreground)" }}
-            >
-              Seu E-mail <span style={{ color: "var(--muted)" }}>(opcional)</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="seu@email.com"
-              className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors focus:ring-2"
-              style={{
-                background: "var(--background-card)",
-                border: "1px solid var(--border)",
-                color: "var(--foreground)",
-              }}
-            />
-          </div>
-
-          {/* Dados para Investigar */}
-          <div>
-            <label
-              htmlFor="dados"
-              className="block text-sm font-medium mb-2"
-              style={{ color: "var(--foreground)" }}
-            >
-              Dados para Investigar
-            </label>
+          {/* Secao 2: Dados da pessoa investigada */}
+          <div
+            className="p-4 rounded-xl"
+            style={{
+              background: "var(--background-card)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{ background: "var(--primary)", color: "white" }}
+              >
+                2
+              </div>
+              <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
+                Dados da pessoa que voce quer investigar
+              </h3>
+            </div>
+            
+            <p className="text-[0.75rem] mb-3 leading-relaxed" style={{ color: "var(--muted)" }}>
+              Escreva abaixo o que voce sabe sobre a pessoa. Quanto mais informacao, melhor o resultado.
+            </p>
+            
             <textarea
               id="dados"
               value={dados}
               onChange={(e) => setDados(e.target.value)}
               placeholder={plan.inputPlaceholder}
               required
-              rows={4}
+              rows={5}
               maxLength={2000}
               className="w-full px-4 py-3 rounded-lg text-sm outline-none transition-colors resize-none focus:ring-2"
               style={{
-                background: "var(--background-card)",
+                background: "var(--background)",
                 border: "1px solid var(--border)",
                 color: "var(--foreground)",
               }}
             />
+            
+            {/* Exemplos visuais do que pode colocar */}
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {["Nome", "CPF", "Telefone", "Placa", "Chave PIX", "E-mail"].map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[0.65rem] px-2 py-1 rounded-full"
+                  style={{
+                    background: "rgba(184, 150, 63, 0.1)",
+                    color: "var(--primary)",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
 
-          {/* Microline de reasseguro */}
-          <p className="text-center text-[0.72rem] leading-snug px-2" style={{ color: "var(--muted)" }}>
-            Você ainda vai confirmar os dados antes de começar a investigação.
-          </p>
+          {/* Aviso de seguranca */}
+          <div
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg"
+            style={{
+              background: "rgba(37, 211, 102, 0.06)",
+              border: "1px solid rgba(37, 211, 102, 0.15)",
+            }}
+          >
+            <Shield size={16} className="shrink-0" style={{ color: "var(--whatsapp)" }} />
+            <span className="text-[0.72rem]" style={{ color: "var(--muted-foreground)" }}>
+              Seus dados estao protegidos. A investigacao e 100% sigilosa.
+            </span>
+          </div>
 
-          {/* Submit Button */}
+          {/* Submit Button — CTA claro e direto */}
           <button
             type="submit"
             disabled={isSubmitting || !nome.trim() || !phone.trim() || !dados.trim()}
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-sm uppercase tracking-wide transition-all active:scale-[0.98] disabled:opacity-70"
+            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-base uppercase tracking-wide transition-all active:scale-[0.98] disabled:opacity-70"
             style={{
               background: "var(--whatsapp)",
               boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)",
             }}
           >
-            {isSubmitting ? "Enviando..." : "Ir para Pagamento Seguro"}
-            <ArrowRight size={18} />
+            {isSubmitting ? (
+              <>
+                <Loader2 size={18} className="animate-spin" />
+                Processando...
+              </>
+            ) : (
+              <>
+                Continuar para Pagamento
+                <ArrowRight size={18} />
+              </>
+            )}
           </button>
+          
+          <p className="text-center text-[0.68rem]" style={{ color: "var(--muted)" }}>
+            Voce ainda vai revisar tudo antes de pagar
+          </p>
         </form>
 
         {/* Guarantee */}

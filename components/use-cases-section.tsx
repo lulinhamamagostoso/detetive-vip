@@ -1,33 +1,44 @@
-import Link from "next/link"
 import {
   Banknote,
   HeartCrack,
   MapPinned,
-  Handshake,
   ShieldAlert,
-  Search,
-  Gavel,
-  Building2,
-  Car,
   UserSearch,
   PackageX,
-  FileWarning,
-  ChevronRight,
 } from "lucide-react"
 
+// 6 casos mais comuns e que mais convertem — reduzido para evitar paralisia de decisao
 const useCases = [
-  { icon: Banknote, text: "Fui v\u00EDtima de golpe no PIX", slug: "fui-vitima-de-golpe-no-pix" },
-  { icon: HeartCrack, text: "Suspeito de infidelidade do meu parceiro(a)", slug: "suspeito-de-infidelidade" },
-  { icon: MapPinned, text: "Preciso localizar um devedor que desapareceu", slug: "localizar-devedor" },
-  { icon: Handshake, text: "Quero verificar algu\u00E9m antes de fechar neg\u00F3cio", slug: "verificar-pessoa-antes-de-negocio" },
-  { icon: ShieldAlert, text: "Recebi amea\u00E7as de um n\u00FAmero desconhecido", slug: "ameacas-numero-desconhecido" },
-  { icon: Search, text: "Quero encontrar um parente ou pessoa perdida", slug: "encontrar-parente-perdido" },
-  { icon: Gavel, text: "Sou advogado e preciso localizar uma parte processual", slug: "localizar-parte-processual" },
-  { icon: Building2, text: "Quero saber se uma empresa \u00E9 confi\u00E1vel antes de comprar", slug: "verificar-empresa" },
-  { icon: Car, text: "Preciso descobrir o dono de um ve\u00EDculo", slug: "descobrir-dono-veiculo" },
-  { icon: UserSearch, text: "Conheci algu\u00E9m online e quero confirmar a identidade", slug: "confirmar-identidade-online" },
-  { icon: PackageX, text: "Comprei algo online e o vendedor sumiu", slug: "vendedor-sumiu" },
-  { icon: FileWarning, text: "Preciso de informa\u00E7\u00F5es para um Boletim de Ocorr\u00EAncia", slug: "informacoes-boletim-ocorrencia" },
+  { 
+    icon: Banknote, 
+    text: "Fui v\u00EDtima de golpe no PIX",
+    subtext: "Descubra quem \u00E9 o golpista"
+  },
+  { 
+    icon: HeartCrack, 
+    text: "Suspeito de trai\u00E7\u00E3o",
+    subtext: "Saiba a verdade sobre seu parceiro(a)"
+  },
+  { 
+    icon: MapPinned, 
+    text: "Preciso localizar um devedor",
+    subtext: "Encontre quem te deve dinheiro"
+  },
+  { 
+    icon: ShieldAlert, 
+    text: "Recebi amea\u00E7as de n\u00FAmero desconhecido",
+    subtext: "Descubra quem est\u00E1 te amea\u00E7ando"
+  },
+  { 
+    icon: UserSearch, 
+    text: "Conheci algu\u00E9m online",
+    subtext: "Confirme se a pessoa \u00E9 quem diz ser"
+  },
+  { 
+    icon: PackageX, 
+    text: "Comprei online e o vendedor sumiu",
+    subtext: "Encontre o vendedor e recupere seu dinheiro"
+  },
 ]
 
 export function UseCasesSection() {
@@ -63,42 +74,39 @@ export function UseCasesSection() {
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-3">
-          {useCases.map((item) => {
+        {/* Grid — 2 colunas no mobile, 3 no desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-3">
+          {useCases.map((item, index) => {
             const Icon = item.icon
             return (
-              <div
-                key={item.slug}
-                className="flex flex-col p-3.5 md:p-4 rounded-lg md:rounded-xl transition-colors"
+              <a
+                key={index}
+                href="#planos"
+                className="flex flex-col p-3.5 md:p-4 rounded-lg md:rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                 style={{
                   background: "var(--background-card)",
                   border: "1px solid var(--border)",
                 }}
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: "rgba(0, 0, 0, 0.05)", color: "#1a1a1f" }}
-                  >
-                    <Icon size={18} strokeWidth={2} aria-hidden="true" />
-                  </div>
-                  <span
-                    className="text-[0.8rem] md:text-[0.85rem] leading-snug font-medium"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {item.text}
-                  </span>
-                </div>
-                <Link
-                  href={`/casos/${item.slug}`}
-                  className="flex items-center gap-1 mt-2.5 ml-12 text-[0.72rem] font-semibold transition-opacity hover:opacity-70"
-                  style={{ color: "var(--primary)" }}
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-2"
+                  style={{ background: "rgba(184, 150, 63, 0.1)", color: "var(--primary)" }}
                 >
-                  Saber mais
-                  <ChevronRight size={13} />
-                </Link>
-              </div>
+                  <Icon size={20} strokeWidth={2} aria-hidden="true" />
+                </div>
+                <span
+                  className="text-[0.8rem] md:text-[0.9rem] leading-snug font-semibold mb-1"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  {item.text}
+                </span>
+                <span
+                  className="text-[0.7rem] leading-snug"
+                  style={{ color: "var(--muted)" }}
+                >
+                  {item.subtext}
+                </span>
+              </a>
             )
           })}
         </div>
