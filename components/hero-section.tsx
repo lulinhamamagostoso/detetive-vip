@@ -209,24 +209,17 @@ export function HeroSection() {
             </button>
           </div>
 
-          {/* CTA Mobile — seta para baixo no mesmo espaço do botão */}
-          <div className="md:hidden flex justify-center mb-4">
-            <button
-              onClick={() => {
-                const planosSection = document.getElementById("planos")
-                if (planosSection) {
-                  planosSection.scrollIntoView({ behavior: "smooth" })
-                }
-              }}
-              aria-label="Ver planos de investigação"
-              className="inline-flex items-center justify-center w-12 h-12 rounded-full transition-all active:scale-[0.92] text-white"
+          {/* Indicador visual mobile — seta decorativa (não clicável) */}
+          <div className="md:hidden flex justify-center mb-4" aria-hidden="true">
+            <div
+              className="inline-flex items-center justify-center w-12 h-12 rounded-full text-white"
               style={{
                 background: "var(--whatsapp)",
                 boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)"
               }}
             >
               <ChevronDown size={24} strokeWidth={2.5} />
-            </button>
+            </div>
           </div>
 
           {/* Trust Items */}

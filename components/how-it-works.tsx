@@ -1,5 +1,4 @@
 import { ChevronDown } from "lucide-react"
-import Image from "next/image"
 
 const steps = [
   {
@@ -56,21 +55,6 @@ export function HowItWorksSection() {
           <p className="text-sm md:text-base leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
             Receba em poucos passos no WhatsApp.
           </p>
-
-          {/* Mockup mobile */}
-          <div className="mt-6 flex justify-center">
-            <div className="relative w-[220px] md:w-[260px]">
-              <Image
-                src="/mockup-whatsapp.webp"
-                alt="Exemplo de entrega da investigação via WhatsApp no celular"
-                width={752}
-                height={1395}
-                className="w-full h-auto drop-shadow-2xl"
-                loading="lazy"
-                quality={75}
-              />
-            </div>
-          </div>
         </div>
 
         {/* Steps Accordion — primeiro item aberto por padrão */}
