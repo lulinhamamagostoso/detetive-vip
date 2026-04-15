@@ -1,45 +1,49 @@
 import { ChevronDown } from "lucide-react"
 
+// FAQ reordenado estrategicamente:
+// 1-4: Beneficios e como funciona (gera confianca)
+// 5-7: Garantias e seguranca (reduz medo)
+// 8-10: Objecoes legais (deixa pro final quando ja esta convencido)
 const faqs = [
   {
-    question: "É legal usar esse serviço?",
-    answer: "Sim. O Detetive VIP atua dentro da Lei 13.432/17 que regulamenta a profissão de detetive particular no Brasil. Todas as informações são obtidas de fontes legais e públicas, seguindo rigorosos protocolos de compliance.",
+    question: "Quanto tempo demora pra receber o resultado?",
+    answer: "Rápido: em até 5 minutos após o pagamento você recebe tudo no seu WhatsApp. Em casos mais complexos, pode levar até 1 hora — mas isso é raro. A maioria recebe em minutos.",
   },
   {
-    question: "Quanto tempo demora pra receber o relatório?",
-    answer: "O relatório é entregue em até 5 minutos após a confirmação do pagamento. Em alguns casos específicos, pode se estender até 1 hora dependendo da complexidade da investigação.",
+    question: "A pessoa investigada fica sabendo?",
+    answer: "Não, jamais. A investigação é 100% sigilosa. A pessoa NÃO recebe nenhuma notificação, mensagem ou alerta. Ninguém fica sabendo além de você. Trabalhamos com criptografia e não guardamos registros.",
   },
   {
-    question: "A pessoa pesquisada fica sabendo?",
-    answer: "Absolutamente não. A investigação é 100% sigilosa. Nenhum tipo de notificação é enviada ao investigado. Trabalhamos com criptografia ponta a ponta e não mantemos registros das pesquisas após a entrega.",
+    question: "Como funciona? O que eu preciso fazer?",
+    answer: "Super simples: 1) Escolha o plano, 2) Informe os dados da pessoa (nome, CPF, telefone ou placa), 3) Pague via PIX, 4) Receba o relatório completo no WhatsApp. Você não precisa fazer mais nada — nós cuidamos de tudo.",
   },
   {
-    question: "Quais formas de pagamento são aceitas?",
-    answer: "Aceitamos apenas PIX como forma de pagamento. É instantâneo, seguro e permite que sua investigação seja iniciada imediatamente após a confirmação.",
+    question: "E se as informações estiverem erradas ou incompletas?",
+    answer: "Garantia total: se algum dado estiver errado ou incompleto, refazemos a investigação de graça ou devolvemos 100% do seu dinheiro em até 24h via PIX. Sem burocracia, sem enrolação.",
   },
   {
-    question: "E se as informações estiverem erradas?",
-    answer: "Garantimos a precisão das informações. Caso haja algum dado incorreto ou desatualizado, refazemos a investigação gratuitamente ou devolvemos seu dinheiro integralmente.",
+    question: "E se a pessoa não for encontrada?",
+    answer: "Nosso sistema cobre 99% dos brasileiros com CPF ativo. Se excepcionalmente não encontrarmos a pessoa, você recebe seu dinheiro de volta integralmente. Risco zero pra você.",
   },
   {
-    question: "Posso pesquisar qualquer pessoa?",
-    answer: "Sim, desde que seja para fins lícitos como verificação de antecedentes, localização de devedores, investigação de fraudes, ou proteção patrimonial. Não realizamos investigações para fins de perseguição, stalking ou qualquer atividade ilegal.",
+    question: "Meus dados ficam salvos? É seguro pra mim?",
+    answer: "Totalmente seguro. Seus dados são protegidos com criptografia. Após entregar o relatório, apagamos tudo — nenhum registro fica vinculado ao seu nome. A investigação é anônima.",
   },
   {
-    question: "Como sei que o Detetive VIP não é golpe?",
-    answer: "O Detetive VIP é regulamentado pela Lei 13.432/17 que reconhece a profissão de detetive particular no Brasil. Operamos com CNPJ ativo, domínio verificado, pagamento via PIX institucional e milhares de clientes atendidos. Oferecemos garantia de resultado ou dinheiro de volta — um golpista jamais faria isso.",
+    question: "Como sei que não é golpe?",
+    answer: "Entendo a desconfiança — tem muito golpe por aí. O Detetive VIP opera com CNPJ ativo, domínio verificado e milhares de clientes atendidos. Oferecemos garantia de resultado ou dinheiro de volta em 24h. Golpista não dá garantia, nós damos.",
   },
   {
-    question: "Posso usar as informações como prova judicial?",
-    answer: "As informações do relatório podem servir como subsídio para procedimentos legais, Boletins de Ocorrência e ações judiciais. Muitos advogados utilizam nosso serviço para localizar partes processuais e reunir informações relevantes para seus casos.",
+    question: "Posso usar o relatório como prova na justiça?",
+    answer: "Sim. As informações podem ser usadas como subsídio para Boletins de Ocorrência, processos judiciais e procedimentos legais. Muitos advogados usam nosso serviço para localizar partes processuais.",
   },
   {
-    question: "Meus dados ficam salvos? É seguro?",
-    answer: "Seus dados são protegidos com criptografia ponta a ponta. Não armazenamos informações das pesquisas após a entrega do relatório. Nenhum registro fica vinculado ao seu nome — a investigação é completamente anônima e sigilosa.",
+    question: "Isso é legal?",
+    answer: "Sim, 100% legal. O Detetive VIP atua dentro da Lei 13.432/17 que regulamenta a profissão de detetive particular no Brasil. Todas as informações vêm de fontes legais e públicas.",
   },
   {
-    question: "E se a pessoa não for encontrada no sistema?",
-    answer: "Nossos bancos de dados cobrem mais de 99% da população brasileira com CPF ativo. Caso excepcionalmente uma pessoa não seja encontrada ou os dados estejam insuficientes, refazemos a busca gratuitamente ou devolvemos o valor integral.",
+    question: "Posso investigar qualquer pessoa?",
+    answer: "Sim, para fins lícitos: verificar antecedentes, localizar devedores, investigar fraudes, proteção patrimonial, etc. Não realizamos investigações para perseguição, stalking ou atividades ilegais.",
   },
 ]
 

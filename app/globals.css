@@ -83,19 +83,24 @@ body {
   color: var(--foreground);
 }
 
-/* Noise overlay - only on desktop (muito pesado para mobile) */
+/* Noise overlay - only on desktop, delayed to not compete with LCP */
 @media (min-width: 768px) {
   body::after {
     content: '';
     position: fixed;
     inset: 0;
-    opacity: 0.015;
+    opacity: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 200px;
     pointer-events: none;
     z-index: 9999;
-    will-change: auto;
+    animation: noise-fade-in 0.5s ease-out 1s forwards;
+    contain: strict;
   }
+}
+
+@keyframes noise-fade-in {
+  to { opacity: 0.015; }
 }
 
 /* Animations - Pulse fade only on desktop for mobile performance */
@@ -189,6 +194,34 @@ details[open] {
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 800px;
+}
+
+/* =====================================================
+   DETECTIVE VISUAL (hero mobile) — CSS puro, carrega instantaneamente.
+   ===================================================== */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.08); }
+}
+
+@keyframes detective-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.detective-float {
+  animation: detective-float 2.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-slow,
+  .detective-float {
+    animation: none !important;
+  }
 }
 
 /* =====================================================
