@@ -31,13 +31,6 @@ const testimonials = [
   },
 ]
 
-const satisfactionRates = [
-  { label: "Dados Corretos", value: 98 },
-  { label: "Entrega no Prazo", value: 95 },
-  { label: "Recomendariam", value: 97 },
-  { label: "Repetiram Compra", value: 89 },
-]
-
 export function TestimonialsSection() {
   return (
     <section
@@ -122,32 +115,6 @@ export function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Satisfaction Rates - Simplified for mobile */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {satisfactionRates.map((rate) => (
-            <div
-              key={rate.label}
-              className="text-center p-3 md:p-4 rounded-lg"
-              style={{ 
-                background: "var(--background-card)",
-                border: "1px solid var(--border)"
-              }}
-            >
-              <div 
-                className="text-2xl md:text-3xl font-bold mb-1"
-                style={{ color: "var(--primary)" }}
-              >
-                {rate.value}%
-              </div>
-              <div 
-                className="text-[0.65rem] md:text-[0.75rem] font-medium"
-                style={{ color: "var(--muted)" }}
-              >
-                {rate.label}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
