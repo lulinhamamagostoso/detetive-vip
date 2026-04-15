@@ -84,25 +84,32 @@ function HeroTypewriter() {
 }
 
 // Lottie detetive no mobile. Container tem altura fixa (h-64 = 256px) para
-// reservar espaço → CLS = 0. Fetch do JSON via requestIdleCallback → não
-// bloqueia LCP (que agora é o subtitle do hero).
+// reservar espaço → CLS = 0. Preload hint em layout.tsx inicia download em
+// paralelo com HTML parsing → fetch aqui pega a resposta do cache do browser.
 function DetectiveLottie() {
   const [animationData, setAnimationData] = useState<object | null>(null)
 
   useEffect(() => {
-    const loadLottie = () => {
-      fetch("/Mr Detective.json")
-        .then((res) => res.json())
-        .then(setAnimationData)
-        .catch(() => {})
-    }
+    if (typeof window === "undefined") return
+    // Skip no desktop (componente tem md:hidden mas ainda monta) → zero bandwidth
+    if (!window.matchMedia("(max-width: 767px)").matches) return
 
-    if ("requestIdleCallback" in window) {
-      const id = requestIdleCallback(loadLottie, { timeout: 5000 })
-      return () => cancelIdleCallback(id)
-    } else {
-      const timer = setTimeout(loadLottie, 4500)
-      return () => clearTimeout(timer)
+    let cancelled = false
+
+    // Warm-up do módulo lottie-react em paralelo com o fetch do JSON
+    // (fire-and-forget — quando <Lottie> renderizar, o módulo já está em cache)
+    import("lottie-react").catch(() => {})
+
+    // Fetch imediato — o preload hint já iniciou o download no <head>
+    fetch("/Mr Detective.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled) setAnimationData(data)
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
     }
   }, [])
 
