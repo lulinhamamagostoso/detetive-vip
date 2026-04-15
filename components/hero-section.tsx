@@ -210,12 +210,6 @@ export function HeroSection() {
             <span className="text-[0.6rem] uppercase tracking-[0.15em] font-semibold" style={{ color: "var(--muted)" }}>
               Role para continuar
             </span>
-            <ChevronDown
-              size={16}
-              strokeWidth={2.5}
-              className="scroll-hint"
-              style={{ color: "var(--primary)" }}
-            />
           </div>
 
           {/* Tags */}
