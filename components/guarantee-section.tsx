@@ -25,7 +25,7 @@ function LawSeal() {
 
 export function GuaranteeSection() {
   return (
-    <section className="relative z-[1] pt-10 pb-6 md:pt-14 md:pb-10 px-4 md:px-8">
+    <section className="relative z-[1] pt-2 pb-6 md:pt-4 md:pb-10 px-4 md:px-8">
       <div className="max-w-[750px] mx-auto flex flex-col sm:flex-row gap-3">
         {/* Money-back guarantee */}
         <div

@@ -35,7 +35,7 @@ export function TestimonialsSection() {
   return (
     <section
       id="depoimentos"
-      className="relative z-[1] py-12 md:py-20 px-4 md:px-8"
+      className="relative z-[1] pt-12 pb-4 md:pt-20 md:pb-8 px-4 md:px-8"
       style={{ background: "var(--background)" }}
       aria-labelledby="depoimentos-heading"
     >
