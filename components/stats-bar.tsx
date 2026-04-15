@@ -6,7 +6,7 @@ import { Users, Target, Clock } from "lucide-react"
 const stats = [
   { value: 12, suffix: " mil+", label: "investigações realizadas com sucesso em todo o Brasil", icon: Users },
   { value: 97, suffix: "%", label: "de sucesso nas investigações", icon: Target },
-  { value: 5, suffix: " minutos", label: "para receber o resultado no seu WhatsApp", icon: Clock },
+  { value: 1, suffix: " hora", label: "para receber o resultado no seu WhatsApp", icon: Clock },
 ]
 
 function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) {

@@ -24,7 +24,7 @@ const steps = [
   {
     number: 5,
     title: "Receba sua Investigação",
-    description: "Logo após a confirmação do pagamento, em até 5 minutos, um de nossos detetives investigadores enviarão no seu WhatsApp informado o documento com a ficha completa da sua investigação.",
+    description: "Logo após a confirmação do pagamento, em até 1 hora, um de nossos detetives investigadores enviará no seu WhatsApp o documento com a ficha completa da sua investigação.",
   },
 ]
 

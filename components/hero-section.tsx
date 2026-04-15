@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { ChevronDown } from "lucide-react"
+
 
 const trustItems = [
   { label: "100% Sigiloso" },
-  { label: "Entrega em 5min" },
+  { label: "Resultado em até 1h" },
   { label: "Dados Verificados" },
 ]
 
@@ -153,8 +153,8 @@ export function HeroSection() {
             className="text-[0.9rem] md:text-lg leading-relaxed max-w-xl mb-4 md:mb-6 mx-auto lg:mx-0"
             style={{ color: "var(--muted-foreground)" }}
           >
-            Você fornece um único nome, cpf, número de telefone, placa ou chave PIX e nós investigamos a fundo tudo sobre. Você recebe a ficha completa no seu WhatsApp em até{" "}
-            <strong style={{ color: "var(--foreground)" }}>5 minutos</strong>.
+            Você fornece qualquer dado que tenha — nome, CPF, telefone, placa ou chave PIX — e nós investigamos a fundo tudo sobre. Você recebe a{" "}
+            <strong style={{ color: "var(--foreground)" }}>ficha completa no seu WhatsApp</strong>.
           </p>
 
           {/* Visual Detetive — apenas mobile, carrega instantaneamente */}
@@ -182,19 +182,6 @@ export function HeroSection() {
             </button>
           </div>
 
-          {/* Indicador visual mobile — seta decorativa (não clicável) */}
-          <div className="md:hidden flex justify-center mb-4" aria-hidden="true">
-            <div
-              className="inline-flex items-center justify-center w-12 h-12 rounded-full text-white"
-              style={{
-                background: "var(--whatsapp)",
-                boxShadow: "0 4px 20px rgba(37, 211, 102, 0.3)"
-              }}
-            >
-              <ChevronDown size={24} strokeWidth={2.5} />
-            </div>
-          </div>
-
           {/* Trust Items */}
           <div className="flex items-center gap-2 mb-3 md:mb-6 justify-center lg:justify-start text-[0.65rem] md:text-[0.78rem]" style={{ color: "var(--muted-foreground)" }}>
             {trustItems.map((item, index) => (
@@ -210,12 +197,6 @@ export function HeroSection() {
             <span className="text-[0.6rem] uppercase tracking-[0.15em] font-semibold" style={{ color: "var(--muted)" }}>
               Role para continuar
             </span>
-            <ChevronDown
-              size={16}
-              strokeWidth={2.5}
-              className="scroll-hint"
-              style={{ color: "var(--primary)" }}
-            />
           </div>
 
           {/* Tags */}
