@@ -1,16 +1,22 @@
 import type { Metadata, Viewport } from "next"
-import { Playfair_Display } from "next/font/google"
+import { Playfair_Display, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import MetaPixel from "@/components/tracking/meta-pixel"
 import GoogleAnalytics from "@/components/tracking/google-analytics"
 import MicrosoftClarity from "@/components/tracking/microsoft-clarity"
 import UTMTracker from "@/components/tracking/utm-tracker"
 
-// Playfair Display apenas para títulos (H1/H2). display: optional = se não carregar
-// rápido, usa fallback serif e não re-renderiza (não impacta LCP).
+// Playfair Display para títulos elegantes (H1/H2)
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+  display: "optional",
+})
+
+// Space Grotesk para body text moderno e distintivo
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space",
   display: "optional",
 })
 
@@ -19,7 +25,7 @@ const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.detetive.vip"
 export const metadata: Metadata = {
   title: "Detetive VIP | Investigação Digital Profissional",
   description:
-    "Detetive VIP: investigação digital profissional no Brasil. Descubra tudo sobre qualquer pessoa por nome, CPF, telefone, placa ou PIX. Resultado em 5 minutos via WhatsApp. Lei 13.432/17.",
+    "Detetive VIP: investigacao digital profissional no Brasil. Descubra tudo sobre qualquer pessoa por nome, CPF, telefone, placa ou PIX. Resultado em ate 1 hora via WhatsApp. Lei 13.432/17.",
   keywords: [
     "detetive particular",
     "investigação digital",
@@ -41,9 +47,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Detetive VIP — Investigação Digital Profissional",
+    title: "Detetive VIP — Investigacao Digital Profissional",
     description:
-      "Descubra a verdade sobre qualquer pessoa. Investigação digital com entrega em 5 minutos via WhatsApp. 100% legal e sigiloso.",
+      "Descubra a verdade sobre qualquer pessoa. Investigacao digital com entrega em ate 1 hora via WhatsApp. 100% legal e sigiloso.",
     type: "website",
     locale: "pt_BR",
     url: siteUrl,
@@ -59,9 +65,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Detetive VIP — Investigação Digital Profissional",
+    title: "Detetive VIP — Investigacao Digital Profissional",
     description:
-      "Descubra a verdade sobre qualquer pessoa. Investigação digital com entrega em 5 minutos via WhatsApp. 100% legal e sigiloso.",
+      "Descubra a verdade sobre qualquer pessoa. Investigacao digital com entrega em ate 1 hora via WhatsApp. 100% legal e sigiloso.",
     images: [`${siteUrl}/logo.png`],
   },
   robots: {
@@ -93,7 +99,7 @@ const organizationJsonLd = {
   url: siteUrl,
   logo: `${siteUrl}/logo.png`,
   description:
-    "Serviço de investigação digital profissional com entrega via WhatsApp em até 5 minutos. Regulamentado pela Lei 13.432/17. Investigações por CPF, telefone, placa, chave PIX e CNPJ.",
+    "Servico de investigacao digital profissional com entrega via WhatsApp em ate 1 hora. Regulamentado pela Lei 13.432/17. Investigacoes por CPF, telefone, placa, chave PIX e CNPJ.",
   foundingDate: "2024",
   areaServed: { "@type": "Country", name: "Brasil" },
   serviceArea: { "@type": "Country", name: "Brasil" },
@@ -120,46 +126,46 @@ const organizationJsonLd = {
 // JSON-LD — Services
 const servicesJsonLd = [
   {
-    name: "Investigação por CPF/Nome",
+    name: "Investigacao por CPF/Nome",
     description:
-      "Investigação digital completa a partir do nome ou CPF. Inclui dados pessoais, endereços, vínculos familiares, telefones e mais. Entrega via WhatsApp em até 5 minutos.",
+      "Investigacao digital completa a partir do nome ou CPF. Inclui dados pessoais, enderecos, vinculos familiares, telefones e mais. Entrega via WhatsApp em ate 1 hora.",
     price: "40.00",
-    priceDescription: "Investigação básica por Nome ou CPF",
+    priceDescription: "Investigacao basica por Nome ou CPF",
   },
   {
-    name: "Investigação por Telefone",
+    name: "Investigacao por Telefone",
     description:
-      "Localize o titular de qualquer número de celular ou fixo. Inclui nome completo, CPF, endereço e ficha completa. Entrega via WhatsApp em até 5 minutos.",
+      "Localize o titular de qualquer numero de celular ou fixo. Inclui nome completo, CPF, endereco e ficha completa. Entrega via WhatsApp em ate 1 hora.",
     price: "79.00",
-    priceDescription: "Investigação por Número de Telefone",
+    priceDescription: "Investigacao por Numero de Telefone",
   },
   {
-    name: "Investigação por Placa de Veículo",
+    name: "Investigacao por Placa de Veiculo",
     description:
-      "Descubra o proprietário de qualquer veículo pela placa. Inclui dados do proprietário, histórico e situação do veículo. Entrega via WhatsApp em até 5 minutos.",
+      "Descubra o proprietario de qualquer veiculo pela placa. Inclui dados do proprietario, historico e situacao do veiculo. Entrega via WhatsApp em ate 1 hora.",
     price: "79.00",
-    priceDescription: "Investigação por Placa de Veículo",
+    priceDescription: "Investigacao por Placa de Veiculo",
   },
   {
-    name: "Investigação por Chave PIX",
+    name: "Investigacao por Chave PIX",
     description:
-      "Identifique golpistas pela chave PIX. Descubra o titular, CPF, endereço e dados completos do dono da chave. Entrega via WhatsApp em até 5 minutos.",
+      "Identifique golpistas pela chave PIX. Descubra o titular, CPF, endereco e dados completos do dono da chave. Entrega via WhatsApp em ate 1 hora.",
     price: "197.00",
-    priceDescription: "Investigação Premium por Chave PIX",
+    priceDescription: "Investigacao Premium por Chave PIX",
   },
   {
-    name: "Investigação por CNPJ/Empresa",
+    name: "Investigacao por CNPJ/Empresa",
     description:
-      "Investigação completa de empresas por CNPJ. Sócios, faturamento estimado, situação cadastral e débitos. Entrega via WhatsApp em até 5 minutos.",
+      "Investigacao completa de empresas por CNPJ. Socios, faturamento estimado, situacao cadastral e debitos. Entrega via WhatsApp em ate 1 hora.",
     price: "197.00",
-    priceDescription: "Investigação Premium por CNPJ",
+    priceDescription: "Investigacao Premium por CNPJ",
   },
   {
-    name: "Investigação Premium",
+    name: "Investigacao Premium",
     description:
-      "Investigação aprofundada com acesso a 20+ bancos de dados brasileiros oficiais e mais de 2.000 fontes abertas. Inclui processos judiciais, veículos, parentes, score e dívidas.",
+      "Investigacao aprofundada com acesso a 20+ bancos de dados brasileiros oficiais e mais de 2.000 fontes abertas. Inclui processos judiciais, veiculos, parentes, score e dividas.",
     price: "197.00",
-    priceDescription: "Investigação Premium completa",
+    priceDescription: "Investigacao Premium completa",
   },
 ].map((s) => ({
   "@context": "https://schema.org",
@@ -192,10 +198,10 @@ const faqJsonLd = {
     },
     {
       "@type": "Question",
-      name: "Quanto tempo demora pra receber o relatório?",
+      name: "Quanto tempo demora pra receber o relatorio?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "O relatório é entregue em até 5 minutos após a confirmação do pagamento. Em alguns casos específicos, pode se estender até 1 hora dependendo da complexidade da investigação.",
+        text: "O relatorio e entregue em ate 1 hora apos a confirmacao do pagamento. Em casos de alta demanda, pode se estender um pouco mais, mas sempre com atualizacao via WhatsApp.",
       },
     },
     {
@@ -237,9 +243,9 @@ const faqJsonLd = {
 const ratingJsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
-  name: "Detetive VIP — Investigação Digital Profissional",
+  name: "Detetive VIP — Investigacao Digital Profissional",
   description:
-    "Serviço de investigação digital com entrega via WhatsApp em até 5 minutos.",
+    "Servico de investigacao digital com entrega via WhatsApp em ate 1 hora.",
   brand: { "@type": "Brand", name: "Detetive VIP" },
   aggregateRating: {
     "@type": "AggregateRating",
@@ -255,7 +261,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" className={playfair.variable}>
+    <html lang="pt-BR" className={`${playfair.variable} ${spaceGrotesk.variable}`}>
       <head>
         {/* Preload LCP images - inicia download em paralelo com HTML parsing */}
         <link
