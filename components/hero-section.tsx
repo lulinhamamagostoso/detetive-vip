@@ -80,20 +80,20 @@ function HeroTypewriter() {
   )
 }
 
-// Detetive SVG inline otimizado — carrega instantaneamente em qualquer conexao.
-// Estilo emoji: chapeu fedora cinza, rosto, bigode, sobretudo dourado, lupa.
+// Detetive PNG otimizado — carrega rapido em qualquer conexao.
+// Imagem estatica com animacao CSS leve.
 function DetectiveVisual() {
   return (
     <div className="relative flex justify-center my-4 md:hidden">
       {/* Container com tamanho fixo para evitar CLS */}
-      <div className="relative w-44 h-44">
+      <div className="relative w-48 h-48">
         {/* Glow dourado sutil */}
         <div
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
           aria-hidden="true"
         >
           <div
-            className="w-36 h-36 rounded-full animate-pulse-slow"
+            className="w-40 h-40 rounded-full animate-pulse-slow"
             style={{
               background:
                 "radial-gradient(circle, rgba(184, 150, 63, 0.18) 0%, transparent 70%)",
@@ -101,124 +101,16 @@ function DetectiveVisual() {
           />
         </div>
 
-        {/* SVG Detetive */}
-        <svg
-          viewBox="0 0 120 120"
-          className="w-full h-full detective-float"
-          aria-label="Detetive"
-          role="img"
-        >
-          <defs>
-            {/* Gradientes para efeito 3D */}
-            <linearGradient id="hatGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#8a8a8a" />
-              <stop offset="100%" stopColor="#5a5a5a" />
-            </linearGradient>
-            <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffd93d" />
-              <stop offset="100%" stopColor="#f4c430" />
-            </linearGradient>
-            <linearGradient id="coatGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#c9a227" />
-              <stop offset="100%" stopColor="#9a7b0a" />
-            </linearGradient>
-            <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#e8f4fc" />
-              <stop offset="50%" stopColor="#cce7f5" />
-              <stop offset="100%" stopColor="#a8d4e8" />
-            </linearGradient>
-          </defs>
-
-          {/* Sobretudo / Corpo */}
-          <path
-            d="M35 85 L40 105 L80 105 L85 85 Q85 72 60 70 Q35 72 35 85Z"
-            fill="url(#coatGrad)"
-          />
-          {/* Gola do sobretudo */}
-          <path
-            d="M45 72 L50 85 L55 75 L60 85 L65 75 L70 85 L75 72"
-            fill="none"
-            stroke="#8a6914"
-            strokeWidth="2"
-          />
-          
-          {/* Camisa branca */}
-          <path
-            d="M52 75 L55 90 L60 80 L65 90 L68 75"
-            fill="#ffffff"
-          />
-          
-          {/* Gravata */}
-          <path
-            d="M57 78 L60 95 L63 78 L60 82 Z"
-            fill="#2d2d2d"
-          />
-
-          {/* Rosto */}
-          <ellipse cx="60" cy="52" rx="22" ry="24" fill="url(#faceGrad)" />
-          
-          {/* Cabelo castanho nas laterais */}
-          <path
-            d="M38 48 Q36 42 40 38 Q42 50 38 52Z"
-            fill="#8b5a2b"
-          />
-          <path
-            d="M82 48 Q84 42 80 38 Q78 50 82 52Z"
-            fill="#8b5a2b"
-          />
-
-          {/* Sobrancelhas */}
-          <path d="M48 44 Q52 42 56 44" stroke="#6b4423" strokeWidth="2" fill="none" strokeLinecap="round" />
-          <path d="M64 44 Q68 42 72 44" stroke="#6b4423" strokeWidth="2" fill="none" strokeLinecap="round" />
-
-          {/* Olhos */}
-          <ellipse cx="52" cy="50" rx="5" ry="5" fill="#ffffff" />
-          <ellipse cx="68" cy="50" rx="5" ry="5" fill="#ffffff" />
-          <ellipse cx="52" cy="50" rx="3.5" ry="3.5" fill="#6b4423" />
-          <ellipse cx="68" cy="50" rx="3.5" ry="3.5" fill="#6b4423" />
-          <ellipse cx="53" cy="49" rx="1.2" ry="1.2" fill="#ffffff" />
-          <ellipse cx="69" cy="49" rx="1.2" ry="1.2" fill="#ffffff" />
-
-          {/* Nariz */}
-          <ellipse cx="60" cy="58" rx="3" ry="2.5" fill="#e8b92e" />
-
-          {/* Bigode */}
-          <path
-            d="M48 64 Q52 68 60 66 Q68 68 72 64 Q68 66 60 65 Q52 66 48 64Z"
-            fill="#6b4423"
-          />
-
-          {/* Chapeu fedora - aba */}
-          <ellipse cx="60" cy="32" rx="32" ry="8" fill="url(#hatGrad)" />
-          
-          {/* Chapeu fedora - copa */}
-          <path
-            d="M38 32 Q38 18 48 14 Q55 12 60 14 Q65 12 72 14 Q82 18 82 32Z"
-            fill="url(#hatGrad)"
-          />
-          
-          {/* Faixa do chapeu */}
-          <rect x="40" y="26" width="40" height="5" fill="#3d3d3d" rx="1" />
-
-          {/* Lupa - cabo */}
-          <rect x="18" y="88" width="18" height="6" rx="2" fill="#4a4a4a" transform="rotate(-35 27 91)" />
-          
-          {/* Lupa - aro */}
-          <circle cx="22" cy="78" r="14" fill="none" stroke="#4a4a4a" strokeWidth="4" />
-          
-          {/* Lupa - vidro */}
-          <circle cx="22" cy="78" r="11" fill="url(#glassGrad)" opacity="0.9" />
-          
-          {/* Lupa - reflexo */}
-          <path
-            d="M16 72 Q18 70 22 72"
-            stroke="#ffffff"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            opacity="0.7"
-          />
-        </svg>
+        {/* Imagem do Detetive */}
+        <Image
+          src="/detective-hero.png"
+          alt="Detetive"
+          width={192}
+          height={192}
+          className="w-full h-full object-contain detective-float"
+          loading="eager"
+          fetchPriority="high"
+        />
       </div>
     </div>
   )
