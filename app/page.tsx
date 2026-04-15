@@ -24,15 +24,17 @@ export default function HomePage() {
         <HeroSection />
         <StatsBar />
 
-        {/* Below-the-fold — content-visibility:auto pula render/layout
-            até próximo da viewport. contain-intrinsic-size reserva espaço
-            para evitar CLS durante scroll. */}
-        <div className="cv-auto"><HowItWorksSection /></div>
-        <div className="cv-auto"><UseCasesSection /></div>
-        <div className="cv-auto"><ReportPreviewSection /></div>
-        <div className="cv-auto"><TestimonialsSection /></div>
-        <div className="cv-auto"><GuaranteeSection /></div>
-        <div className="cv-auto"><PricingSection /></div>
+        {/* Seções entre hero e #planos ficam SEM cv-auto para não
+            quebrar o scroll-to-anchor do CTA do hero — o placeholder
+            intrinsic-size de 800px causava miscálculo da posição de destino. */}
+        <HowItWorksSection />
+        <UseCasesSection />
+        <ReportPreviewSection />
+        <TestimonialsSection />
+        <GuaranteeSection />
+        <PricingSection />
+
+        {/* Below-the-fold após #planos — cv-auto aqui é seguro */}
         <div className="cv-auto"><FAQSection /></div>
         <div className="cv-auto"><CTASection /></div>
       </main>

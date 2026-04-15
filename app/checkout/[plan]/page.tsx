@@ -1122,10 +1122,7 @@ export default function CheckoutPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: "var(--foreground)" }}
             >
-              Seu E-mail{" "}
-              <span style={{ color: "var(--muted)" }}>
-                (opcional — usamos só como backup caso o WhatsApp falhe)
-              </span>
+              Seu E-mail <span style={{ color: "var(--muted)" }}>(opcional)</span>
             </label>
             <input
               type="email"
@@ -1169,7 +1166,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Microline de reasseguro */}
-          <p className="text-center text-[0.7rem] -mb-2" style={{ color: "var(--muted)" }}>
+          <p className="text-center text-[0.72rem] leading-snug px-2" style={{ color: "var(--muted)" }}>
             Você ainda vai confirmar os dados antes de começar a investigação.
           </p>
 
