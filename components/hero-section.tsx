@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 const trustItems = [
   { label: "100% Sigiloso" },
-  { label: "Resultado em 1h" },
+  { label: "Resultado em ate 1h" },
   { label: "Dados Verificados" },
 ]
 
@@ -134,11 +135,11 @@ export function HeroSection() {
           </div>
 
           {/* Headline - Large, bold, memorable */}
-          <h1 className="animate-fade-up stagger-2 font-serif text-[2rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] tracking-tight mb-4 md:mb-6">
+          <h1 className="animate-fade-up stagger-2 font-serif text-[2rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] tracking-tight mb-4 md:mb-6 text-balance">
             <span className="block">Descubra a Verdade</span>
             <span className="block mt-1">
               Sobre{" "}
-              <em className="italic not-italic relative" style={{ color: "var(--primary)" }}>
+              <em className="not-italic relative" style={{ color: "var(--primary)" }}>
                 Qualquer Pessoa
                 <svg 
                   className="absolute -bottom-1 left-0 w-full" 
@@ -179,22 +180,17 @@ export function HeroSection() {
 
           {/* CTA Button */}
           <div className="animate-fade-up stagger-4 flex flex-col items-center lg:items-start mb-6 md:mb-8">
-            <button
-              onClick={() => {
-                const planosSection = document.getElementById("planos")
-                if (planosSection) {
-                  planosSection.scrollIntoView({ behavior: "smooth" })
-                }
-              }}
-              className="btn-primary group inline-flex items-center justify-center gap-3 px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-sm md:text-base uppercase tracking-wider text-white"
+            <Link
+              href="#planos"
+              className="btn-primary group inline-flex items-center justify-center gap-3 px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-sm md:text-base uppercase tracking-wider text-white touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
               style={{
                 background: "var(--whatsapp)",
                 boxShadow: "0 4px 24px rgba(37, 211, 102, 0.35)"
               }}
             >
-              <span className="text-lg">&#128269;</span>
+              <span className="text-lg" aria-hidden="true">&#128269;</span>
               <span>Iniciar Investigacao</span>
-            </button>
+            </Link>
             
             {/* Sub-CTA text */}
             <p className="mt-3 text-[0.7rem] md:text-xs tracking-wide" style={{ color: "var(--muted)" }}>

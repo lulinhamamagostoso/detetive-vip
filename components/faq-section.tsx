@@ -68,8 +68,8 @@ export function FAQSection() {
             FAQ
             <span className="w-4 h-px" style={{ background: "var(--primary)" }} aria-hidden="true" />
           </div>
-          <h2 className="font-serif text-2xl md:text-4xl font-bold leading-tight tracking-tight">
-            Dúvidas{" "}
+          <h2 className="font-serif text-2xl md:text-4xl font-bold leading-tight tracking-tight text-balance">
+            Duvidas{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Frequentes</em>
           </h2>
         </div>
@@ -87,7 +87,7 @@ export function FAQSection() {
               open={index === 0}
             >
               <summary
-                className="faq-summary w-full flex items-center justify-between p-4 md:p-5 text-left min-h-[48px] cursor-pointer list-none"
+                className="faq-summary w-full flex items-center justify-between p-4 md:p-5 text-left min-h-[48px] cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--primary)]"
                 style={{ color: "var(--foreground)" }}
               >
                 <span className="text-[0.8rem] md:text-[0.9rem] font-semibold pr-3">{faq.question}</span>

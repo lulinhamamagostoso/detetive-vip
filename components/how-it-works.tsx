@@ -54,7 +54,7 @@ export function HowItWorksSection() {
           </div>
           <h2 
             id="como-funciona-heading" 
-            className="font-serif text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-3"
+            className="font-serif text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-3 text-balance"
           >
             Simples, Rapido e{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Sigiloso</em>
@@ -82,7 +82,7 @@ export function HowItWorksSection() {
                 open={index === 0}
               >
                 <summary
-                  className="faq-summary w-full flex items-center gap-4 p-4 md:p-5 text-left cursor-pointer list-none"
+                  className="faq-summary w-full flex items-center gap-4 p-4 md:p-5 text-left cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--primary)]"
                 >
                   {/* Step Number */}
                   <div
@@ -137,7 +137,7 @@ export function HowItWorksSection() {
         <div className="text-center mt-10">
           <a 
             href="#planos"
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-80"
+            className="inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm"
             style={{ color: "var(--primary)" }}
           >
             <span>Iniciar minha investigacao</span>

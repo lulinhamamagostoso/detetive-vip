@@ -105,10 +105,11 @@ function Countdown() {
         ].map((unit, idx) => (
           <span key={unit.label} className="flex items-center gap-0.5">
             <span
-              className="px-2 py-1 rounded-lg font-bold text-sm md:text-base min-w-[32px] md:min-w-[36px] text-center tabular-nums"
+              className="px-2 py-1 rounded-lg font-bold text-sm md:text-base min-w-[32px] md:min-w-[36px] text-center"
               style={{ 
                 background: "rgba(220, 38, 38, 0.08)", 
-                color: "var(--destructive)" 
+                color: "var(--destructive)",
+                fontVariantNumeric: "tabular-nums"
               }}
             >
               {pad(unit.value)}
@@ -161,7 +162,7 @@ export function PricingSection() {
             Oferta Especial
           </div>
           
-          <h2 className="font-serif text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-4">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-4 text-balance">
             Investigacao{" "}
             <em className="italic" style={{ color: "var(--primary)" }}>Completa</em>
           </h2>
@@ -300,7 +301,7 @@ export function PricingSection() {
             {/* CTA Button */}
             <a
               href="/checkout/investigacao"
-              className="btn-primary flex items-center justify-center gap-2.5 w-full py-4 md:py-5 rounded-full font-bold text-white text-base md:text-lg uppercase tracking-wide"
+              className="btn-primary flex items-center justify-center gap-2.5 w-full py-4 md:py-5 rounded-full font-bold text-white text-base md:text-lg uppercase tracking-wide touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2"
               style={{
                 background: "var(--whatsapp)",
                 boxShadow: "0 6px 28px rgba(37, 211, 102, 0.4)",
@@ -320,7 +321,7 @@ export function PricingSection() {
             <div className="text-center mt-5 pt-5" style={{ borderTop: "1px solid var(--border)" }}>
               <a
                 href="#relatorio-heading"
-                className="inline-flex items-center gap-1.5 text-[0.75rem] font-semibold transition-colors hover:opacity-80"
+                className="inline-flex items-center gap-1.5 text-[0.75rem] font-semibold transition-colors hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm"
                 style={{ color: "var(--primary)" }}
               >
                 <span>Ver exemplo de investigacao completa</span>
