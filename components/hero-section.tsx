@@ -2,11 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import dynamic from "next/dynamic"
-import { ChevronDown } from "lucide-react"
-
-// lottie-react carregado lazy no client (~50KB gzipped)
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
+import { ChevronDown, Search, Eye, Shield } from "lucide-react"
 
 const trustItems = [
   { label: "100% Sigiloso" },
@@ -84,60 +80,93 @@ function HeroTypewriter() {
   )
 }
 
-// Lottie detetive no mobile. Container tem altura fixa (h-64 = 256px) para
-// reservar espaço → CLS = 0. Preload hint em layout.tsx inicia download em
-// paralelo com HTML parsing → fetch aqui pega a resposta do cache do browser.
-function DetectiveLottie() {
-  const [animationData, setAnimationData] = useState<object | null>(null)
-
-  useEffect(() => {
-    if (typeof window === "undefined") return
-    // Skip no desktop (componente tem md:hidden mas ainda monta) → zero bandwidth
-    if (!window.matchMedia("(max-width: 767px)").matches) return
-
-    let cancelled = false
-
-    // Fetch do JSON — o preload hint em layout.tsx já iniciou o download.
-    // O import dinâmico do Lottie (dynamic() no topo) só dispara quando
-    // <Lottie> renderiza, que só acontece se animationData existir.
-    fetch("/Mr Detective.json")
-      .then((r) => r.json())
-      .then((data) => {
-        if (!cancelled) setAnimationData(data)
-      })
-      .catch(() => {})
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
+// Elemento visual otimizado para mobile — carrega instantaneamente.
+// SVG inline com ícones Lucide + animação CSS leve. Zero fetch, zero JS extra.
+function DetectiveVisual() {
   return (
-    <div className="relative flex justify-center my-2 md:hidden h-64">
-      {/* Glow dourado sutil */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        aria-hidden="true"
-      >
+    <div className="relative flex justify-center my-4 md:hidden">
+      {/* Container com tamanho fixo para evitar CLS */}
+      <div className="relative w-48 h-48">
+        {/* Glow dourado sutil */}
         <div
-          className="w-52 h-52 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(184, 150, 63, 0.12) 0%, transparent 70%)",
-            filter: "blur(24px)",
-          }}
-        />
-      </div>
-
-      <div className="relative w-64 h-64 -ml-3">
-        {animationData && (
-          <Lottie
-            animationData={animationData}
-            loop
-            autoplay
-            style={{ width: "100%", height: "100%" }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          aria-hidden="true"
+        >
+          <div
+            className="w-40 h-40 rounded-full animate-pulse-slow"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(184, 150, 63, 0.15) 0%, transparent 70%)",
+            }}
           />
-        )}
+        </div>
+
+        {/* Círculo central com ícone principal */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            className="w-24 h-24 rounded-full flex items-center justify-center detective-badge"
+            style={{
+              background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+              boxShadow: "0 8px 32px rgba(184, 150, 63, 0.35)",
+            }}
+          >
+            <Search className="w-10 h-10 text-white" strokeWidth={2.5} />
+          </div>
+        </div>
+
+        {/* Ícones orbitando — animação CSS pura */}
+        <div className="absolute inset-0 detective-orbit" aria-hidden="true">
+          {/* Olho - investigação */}
+          <div
+            className="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+            style={{
+              background: "var(--background-card)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+              border: "2px solid var(--primary-glow-strong)",
+            }}
+          >
+            <Eye className="w-5 h-5" style={{ color: "var(--primary)" }} />
+          </div>
+
+          {/* Escudo - sigilo */}
+          <div
+            className="absolute bottom-1 right-4 w-10 h-10 rounded-full flex items-center justify-center"
+            style={{
+              background: "var(--background-card)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+              border: "2px solid var(--primary-glow-strong)",
+            }}
+          >
+            <Shield className="w-5 h-5" style={{ color: "var(--primary)" }} />
+          </div>
+
+          {/* Chapéu de detetive — SVG inline minimalista */}
+          <div
+            className="absolute bottom-1 left-4 w-10 h-10 rounded-full flex items-center justify-center"
+            style={{
+              background: "var(--background-card)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+              border: "2px solid var(--primary-glow-strong)",
+            }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ color: "var(--primary)" }}
+            >
+              {/* Chapéu fedora estilizado */}
+              <path d="M2 18h20" />
+              <path d="M4 18c0-2 2-3 4-3h8c2 0 4 1 4 3" />
+              <path d="M6 15c0-3 2-6 6-6s6 3 6 6" />
+              <path d="M9 9c0-1.5 1.5-3 3-3s3 1.5 3 3" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -184,8 +213,8 @@ export function HeroSection() {
             <strong style={{ color: "var(--foreground)" }}>5 minutos</strong>.
           </p>
 
-          {/* Lottie Detetive — apenas mobile */}
-          <DetectiveLottie />
+          {/* Visual Detetive — apenas mobile, carrega instantaneamente */}
+          <DetectiveVisual />
 
           {/* Typewriter minimalista — apenas mobile */}
           <HeroTypewriter />
